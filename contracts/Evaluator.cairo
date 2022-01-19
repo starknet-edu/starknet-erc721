@@ -24,6 +24,7 @@ from contracts.utils.ex00_base import (
     ex_initializer
 )
 from contracts.token.IERC721 import IERC721
+from contracts.IExerciceSolution import IExerciceSolution
 from starkware.starknet.common.syscalls import (get_contract_address)
 from starkware.cairo.common.uint256 import (
     Uint256, uint256_add, uint256_sub, uint256_le, uint256_lt, uint256_check, uint256_eq
@@ -38,25 +39,71 @@ func has_been_paired(contract_address: felt) -> (has_been_paired: felt):
 end
 
 @storage_var
-func student_exercise_solution(student_address: felt) -> (contract_address: felt):
+func student_exercise_solution_storage(student_address: felt) -> (contract_address: felt):
 end
 
 @storage_var
-func exercises_validation(student_address: felt, exercise_number: felt) -> (has_validated: felt):
+func exercises_validation_storage(student_address: felt, exercise_number: felt) -> (has_validated: felt):
 end
 
-	# mapping(address => bool) public teachers;
-	# ERC20TD TDERC20;
+@storage_var
+func assigned_rank_storage(student_address: felt) -> (rank: felt):
+end
 
- # 	mapping(address => mapping(uint256 => bool)) public exerciseProgression;
- # 	mapping(address => IexerciseSolution) public studentexerciseSolution;
- 	
-	# string[20] private randomNames;
-	# uint256[20] private randomLegs;
-	# uint256[20] private randomSex;
-	# bool[20] private randomWings;
-	# mapping(address => uint256) public assignedRank;
-	# uint public nextValueStoreRank;
+@storage_var
+func next_rank_storage() -> (next_rank: felt):
+end	
+
+@storage_var
+func random_attributes_storage(column: felt, rank: felt) -> (legs: felt):
+end	
+
+@storage_var
+func was_initialized() -> (was_initialized: felt):
+end
+#
+# Declaring getters
+# Public variables should be declared explicitly with a getter
+#
+
+@view
+func student_exercise_solution{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(student_address: felt) -> (contract_address: felt):
+    let (contract_address) = student_exercise_solution_storage.read(student_address)
+    return (contract_address)
+end
+
+@view
+func exercises_validation{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(student_address: felt, exercise_number: felt) -> (has_validated: felt):
+    let (has_validated) = exercises_validation_storage.read(student_address, exercise_number)
+    return (has_validated)
+end
+
+@view
+func assigned_rank{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(student_address: felt) -> (rank: felt):
+    let (rank) = assigned_rank_storage.read(student_address)
+    return (rank)
+end
+
+@view
+func assigned_legs_number{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(student_address: felt) -> (legs: felt):
+	let (rank) = assigned_rank(student_address)
+    let (legs) = random_attributes_storage.read(0, rank)
+    return (legs)
+end
+
+@view
+func assigned_sex_number{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(student_address: felt) -> (sex: felt):
+	let (rank) = assigned_rank(student_address)
+    let (sex) = random_attributes_storage.read(1, rank)
+    return (sex)
+end
+
+@view
+func assigned_wings_number{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(student_address: felt) -> (wings: felt):
+	let (rank) = assigned_rank(student_address)
+    let (wings) = random_attributes_storage.read(2, rank)
+    return (wings)
+end
 
 ######### Constructor
 # This function is called when the contract is deployed
@@ -75,10 +122,11 @@ end
 
 @external
 func ex1_test_erc721{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(sender_address: felt,salt: felt):
-	
+	# Allocating locals. Make your code easier to write and read by avoiding some revoked references
+	alloc_locals
 	let token_id: Uint256 = Uint256(1,0)
 	# Retrieve exercise address
-	let (submited_exercise_address) = student_exercise_solution.read(sender_address)
+	let (submited_exercise_address) = student_exercise_solution_storage.read(sender_address)
 
 	# Reading evaluator address
 	let (evaluator_address) = get_contract_address()
@@ -89,13 +137,13 @@ func ex1_test_erc721{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
 
 	# Reading balance of evaluator in exercise
 	let (evaluator_init_balance) = IERC721.balanceOf(contract_address = submited_exercise_address, owner = evaluator_address)
-	# Verifying that balance is not 0. Not a perfect check but good enough for this tutorial
-	assert_not_zero(evaluator_init_balance.low)
-
-	# Retrieve exercise address again, because of revoked references after calling uint256_eq
-	let (submited_exercise_address) = student_exercise_solution.read(sender_address)
 	# Reading balance of msg sender in exercise
 	let (sender_init_balance) = IERC721.balanceOf(contract_address = submited_exercise_address, owner = evaluator_address)
+
+	# Instanciating a zero in uint format
+	let zero_as_uint256: Uint256 = Uint256(0,0)
+	let (is_equal) = uint256_eq(evaluator_init_balance, zero_as_uint256)
+	assert is_equal = 0
 
 	# Check that token 1 can be transferred back to msg.sender
 	IERC721.transferFrom(contract_address = submited_exercise_address, _from=evaluator_address, to=sender_address, token_id = token_id)
@@ -108,22 +156,19 @@ func ex1_test_erc721{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
 	let (token_1_owner_end) = IERC721.ownerOf(contract_address = submited_exercise_address, token_id = token_id)
 	# Verifying that token 1 belongs to sender
 	assert token_1_owner_end = sender_address
-	# verifying that balances where updated correctly
-	# Here I didn't want to burden the code with too much complexity, so I took some shortcuts (bad, I know)
 	# I need value 1 in the uint format to be able to substract it, and add it, to compare balances
 	let one_as_uint256: Uint256 = Uint256(1,0)
 	# Store expected balance in a variable, since I can't use everything on a single line
-	tempvar evaluator_expected_balance : Uint256 = uint256_sub(evaluator_init_balance, one_as_uint256)
-	tempvar sender_expected_balance : Uint256 = uint256_add(sender_init_balance, one_as_uint256)
-	# Comparing uint is possible, but introduces some cognitive overhead because of revoked references.
-	# So I'll just compare manually the two components of the uints I want to compare
-	assert evaluator_expected_balance.high = evaluator_end_balance.high
-	assert evaluator_expected_balance.low = evaluator_end_balance.low
-	assert sender_expected_balance.high = sender_end_balance.high
-	assert sender_expected_balance.low = sender_end_balance.low
+	let evaluator_expected_balance : Uint256 = uint256_sub(evaluator_init_balance, one_as_uint256)
+	let sender_expected_balance : Uint256 = uint256_add(sender_init_balance, one_as_uint256)
+	# Verifying that balances where updated correctly
+	let (is_sender_balance_equal_to_expected) = uint256_eq(evaluator_expected_balance, evaluator_end_balance)
+	assert is_sender_balance_equal_to_expected = 1
+	let (is_evaluator_balance_equal_to_expected) = uint256_eq(sender_expected_balance, sender_end_balance)
+	assert is_evaluator_balance_equal_to_expected = 1
 
 	# Checking if student has validated this exercise before
-	let (has_validated) = exercises_validation.read(sender_address, 1)
+	let (has_validated) = exercises_validation_storage.read(sender_address, 1)
 	# This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
 
 	tempvar syscall_ptr = syscall_ptr
@@ -132,7 +177,7 @@ func ex1_test_erc721{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
 
 	if has_validated == 0:
 		# Student has validated
-		exercises_validation.write(sender_address, 1, 1)
+		exercises_validation_storage.write(sender_address, 1, 1)
 		# Sending points
 		distribute_points(sender_address, 2)
 	end
@@ -140,17 +185,71 @@ func ex1_test_erc721{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
 end
 
 @external
+func ex2a_get_animal_rank{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(sender_address: felt, salt: felt):
+	alloc_locals
+	let (next_rank) = next_rank_storage.read()
+	assigned_rank_storage.write(sender_address, next_rank)
+	let new_next_rank = next_rank + 1
+	next_rank_storage.write(new_next_rank)
+	return()
+end
+
+@external
+func ex2b_test_declare_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(sender_address: felt, token_id: Uint256, salt: felt):
+	alloc_locals
+
+	# Retrieve expected characteristics
+	let (expected_sex) = assigned_sex_number(sender_address)
+	let (expected_wings) = assigned_wings_number(sender_address)
+	let (expected_legs) = assigned_legs_number(sender_address)
+
+	# Retrieve exercise address
+	let (submited_exercise_address) = student_exercise_solution_storage.read(sender_address)
+	# Check animal belongs to Evaluator
+	let (evaluator_address) = get_contract_address()
+	# Reading who owns token 1 of exercise
+	let (token_owner) = IERC721.ownerOf(contract_address = submited_exercise_address, token_id = token_id)
+	# Verifying that token 1 belongs to evaluator
+	assert evaluator_address = token_owner
+
+	# Reading animal characteristic in student solution
+	let (read_sex, read_wings, read_legs) = IExerciceSolution.get_animal_characteristics(contract_address = submited_exercise_address, token_id=token_id)
+	# Checking characteristics are correct
+	assert read_sex = expected_sex
+	assert read_wings = expected_wings
+	assert read_legs = expected_legs
+
+	# Checking if student has validated this exercise before
+	let (has_validated) = exercises_validation_storage.read(sender_address, 2)
+	# This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
+	tempvar syscall_ptr = syscall_ptr
+    tempvar pedersen_ptr = pedersen_ptr
+    tempvar range_check_ptr = range_check_ptr
+
+	if has_validated == 0:
+		# Student has validated
+		exercises_validation_storage.write(sender_address, 2, 1)
+		# Sending points
+		distribute_points(sender_address, 2)
+	end
+	return()
+end
+
+
+
+	
+@external
 func submit_exercise{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(sender_address: felt, erc721_address: felt, salt: felt):
 	# Checking this contract was not used by another group before
 	let (has_solution_been_submitted_before) = has_been_paired.read(erc721_address)
 	assert has_solution_been_submitted_before = 0
 
 	# Assigning passed ERC721 as student ERC721
-	student_exercise_solution.write(sender_address, erc721_address)
+	student_exercise_solution_storage.write(sender_address, erc721_address)
 	has_been_paired.write(erc721_address, 1)
 
 	# Checking if student has validated this exercise before
-	let (has_validated) = exercises_validation.read(sender_address, 0)
+	let (has_validated) = exercises_validation_storage.read(sender_address, 0)
 	# This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
 
 	tempvar syscall_ptr = syscall_ptr
@@ -159,7 +258,7 @@ func submit_exercise{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
 
 	if has_validated == 0:
 		# Student has validated
-		exercises_validation.write(sender_address, 0, 1)
+		exercises_validation_storage.write(sender_address, 0, 1)
 		# Sending points
 		# setup points
 		distribute_points(sender_address, 2)
@@ -172,3 +271,46 @@ func submit_exercise{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
 end
 
 
+
+#
+# External functions - Administration
+# Only admins can call these. You don't need to understand them to finish the exercice.
+#
+
+@external
+func set_random_values{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(values_len: felt, values: felt*, column: felt):
+
+    # Check if the random values were already initialized
+    let (was_initialized_read) = was_initialized.read()
+    assert was_initialized_read = 0
+    
+    # Storing passed values in the store
+    set_a_random_value(values_len, values, column)
+
+    return()
+end
+
+@external
+func finish_setup{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}():
+
+    # Check if the random values were already initialized
+    let (was_initialized_read) = was_initialized.read()
+    assert was_initialized_read = 0
+   
+    # Mark that value store was initialized
+    was_initialized.write(1)
+    return()
+end
+
+func set_a_random_value{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(values_len: felt, values: felt*, column: felt):
+    if values_len == 0:
+        # Start with sum=0.
+        return ()
+    end
+
+
+    set_a_random_value(values_len=values_len - 1, values=values + 1, column=column)
+    random_attributes_storage.write(column, values_len-1, [values])
+
+    return ()
+end

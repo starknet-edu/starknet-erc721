@@ -14,7 +14,7 @@ namespace IExerciceSolution:
     end
     func declare_animal(sex: felt, legs: felt, wings: felt) -> (token_id: felt):
     end
-    func get_animal_characteristics(token_id: felt) -> (sex: felt, legs: felt, wings: felt) :
+    func get_animal_characteristics(token_id: Uint256) -> (sex: felt, legs: felt, wings: felt) :
     end
     func token_of_owner_by_index(account:felt, index:felt) -> (token_id: felt):
     end
