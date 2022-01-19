@@ -106,12 +106,17 @@ func ex1_test_erc721{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
 	let (evaluator_end_balance) = IERC721.balanceOf(contract_address = submited_exercise_address, owner = evaluator_address)
 	# Reading who owns token 1 of exercise
 	let (token_1_owner_end) = IERC721.ownerOf(contract_address = submited_exercise_address, token_id = token_id)
-
 	# Verifying that token 1 belongs to sender
+	assert token_1_owner_end = sender_address
+	# verifying that balances where updated correctly
+	# Here I didn't want to burden the code with too much complexity, so I took some shortcuts (bad, I know)
+	# I need value 1 in the uint format to be able to substract it, and add it, to compare balances
 	let one_as_uint256: Uint256 = Uint256(1,0)
-	assert evaluator_address = sender_address
-	let evaluator_expected_balance : Uint256 = uint256_sub(evaluator_init_balance, one_as_uint256)
-	let sender_expected_balance : Uint256 = uint256_add(sender_init_balance, one_as_uint256)
+	# Store expected balance in a variable, since I can't use everything on a single line
+	tempvar evaluator_expected_balance : Uint256 = uint256_sub(evaluator_init_balance, one_as_uint256)
+	tempvar sender_expected_balance : Uint256 = uint256_add(sender_init_balance, one_as_uint256)
+	# Comparing uint is possible, but introduces some cognitive overhead because of revoked references.
+	# So I'll just compare manually the two components of the uints I want to compare
 	assert evaluator_expected_balance.high = evaluator_end_balance.high
 	assert evaluator_expected_balance.low = evaluator_end_balance.low
 	assert sender_expected_balance.high = sender_end_balance.high
