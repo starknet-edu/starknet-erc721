@@ -1,16 +1,5 @@
-######### Ex 01
-## Using a simple public contract function
-# In this exercise, you need to:
-# - Use this contract's claim_points() function
-# - Your points are credited by the contract
-
-## What you'll learn
-# - General smart contract syntax
-# - Calling a function
-
-######### General directives and imports
-#
-#
+######### ERC 721 evaluator
+# Soundtrack https://www.youtube.com/watch?v=iuWa5wh8lG0
 
 %lang starknet
 %builtins pedersen range_check
@@ -168,9 +157,9 @@ func ex1_test_erc721{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
 	let evaluator_expected_balance : Uint256 = uint256_sub(evaluator_init_balance, one_as_uint256)
 	let sender_expected_balance : Uint256 = uint256_add(sender_init_balance, one_as_uint256)
 	# Verifying that balances where updated correctly
-	let (is_sender_balance_equal_to_expected) = uint256_eq(evaluator_expected_balance, evaluator_end_balance)
+	let (is_sender_balance_equal_to_expected) = uint256_eq(sender_expected_balance, sender_end_balance) 
 	assert is_sender_balance_equal_to_expected = 1
-	let (is_evaluator_balance_equal_to_expected) = uint256_eq(sender_expected_balance, sender_end_balance)
+	let (is_evaluator_balance_equal_to_expected) = uint256_eq(evaluator_expected_balance, evaluator_end_balance)
 	assert is_evaluator_balance_equal_to_expected = 1
 
 	# Checking if student has validated this exercise before
@@ -328,6 +317,59 @@ func ex4_declare_new_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ra
 	end
 	return()
 end
+
+@external
+func ex5_declare_dead_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(sender_address: felt, salt: felt):
+	alloc_locals
+	# Retrieve exercise address
+	let (submited_exercise_address) = student_exercise_solution_storage.read(sender_address)
+	# Reading evaluator address
+	let (evaluator_address) = get_contract_address()
+	# Getting initial token balance. Must be at least 1
+	let (evaluator_init_balance) = IERC721.balanceOf(contract_address = submited_exercise_address, owner = evaluator_address)
+
+	# Getting an animal id of Evaluator. tokenOfOwnerByIndex should return the list of NFTs owned by and address
+	let (token_id) = IExerciceSolution.token_of_owner_by_index(contract_address = submited_exercise_address, account=evaluator_address, index=0)
+
+	# Declaring it as dead
+	IExerciceSolution.declare_dead_animal(contract_address = submited_exercise_address, token_id=token_id)
+
+	# Checking end balance
+	let (evaluator_end_balance) = IERC721.balanceOf(contract_address = submited_exercise_address, owner = evaluator_address)
+	# I need value 1 in the uint format to be able to substract it, and add it, to compare balances
+	let one_as_uint256: Uint256 = Uint256(1,0)
+	# Store expected balance in a variable, since I can't use everything on a single line
+	let evaluator_expected_balance : Uint256 = uint256_sub(evaluator_init_balance, one_as_uint256)
+	# Verifying that balances where updated correctly
+	let (is_evaluator_balance_equal_to_expected) = uint256_eq(evaluator_expected_balance, evaluator_end_balance)
+	assert is_evaluator_balance_equal_to_expected = 1
+
+	# Check that properties are deleted 
+	# Reading animal characteristic in student solution
+	let (read_sex, read_wings, read_legs) = IExerciceSolution.get_animal_characteristics(contract_address = submited_exercise_address, token_id=token_id)
+	# Checking characteristics are correct
+	assert read_sex = 0
+	assert read_wings = 0
+	assert read_legs = 0
+	# TODO Testing killing another person's animal. The caller has to hold an animal
+	# Requires try / catch, or something smarter. I'll think about it.
+	
+	# Checking if student has validated this exercise before
+	let (has_validated) = exercises_validation_storage.read(sender_address, 5)
+	# This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
+	tempvar syscall_ptr = syscall_ptr
+    tempvar pedersen_ptr = pedersen_ptr
+    tempvar range_check_ptr = range_check_ptr
+
+	if has_validated == 0:
+		# Student has validated
+		exercises_validation_storage.write(sender_address, 5, 1)
+		# Sending points
+		distribute_points(sender_address, 2)
+	end
+	return()
+end
+
 
 @external
 func submit_exercise{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(sender_address: felt, erc721_address: felt, salt: felt):
