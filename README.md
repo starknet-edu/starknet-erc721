@@ -42,6 +42,25 @@ Your objective is to gather as many TD-ERC721 points as possible. Please note :
 - The Evaluator contract sometimes needs to make payments to buy your tokens. Make sure he has enough tokens to do so! If not, you can send ETH directly to the contract.
 
 
+### Checking your progress
+​
+#### Counting your points
+​
+Your points will get credited in Argent X; though this may take some time. If you want to monitor your points count in real time, you can also see your balance in voyager!
+​
+-   Go to the  [ERC20 counter](https://goerli.voyager.online/contract/0x0555750f277a7abd2d7abf4c16806554bd750eb26d87ce58c6cb13b2158dcbc1#readContract)  in voyager, in the "read contract" tab
+-   Enter your address in decimal in the "balanceOf" function
+​
+#### [](https://github.com/l-henri/starknet-cairo-101/blob/main/README.md#transaction-status)Transaction status
+​
+You sent a transaction, and it is shown as "undetected" in voyager? This can mean two things:
+​
+-   Your transaction is pending, and will be included in a block shortly. It will then be visible in voyager.
+-   Your transaction was invalid, and will NOT be included in a block (there is no such thing as a failed transaction in StarkNet).
+​
+You can (and should) check the status of your transaction with the following URL  [https://alpha4.starknet.io/feeder_gateway/get_transaction_receipt?transactionHash=](https://alpha4.starknet.io/feeder_gateway/get_transaction_receipt?transactionHash=)  , where you can append your transaction hash.
+​
+
 ### Getting to work
 - Clone the repo on your machine
 - Setup the environment following [these instructions](https://starknet.io/docs/quickstart.html#quickstart)
@@ -52,55 +71,30 @@ nile compile
 ```
 
 ## Points list
-### Setting up
-- Create a git repository and share it with the teacher
-- Install truffle and create an empty truffle project (2 pts). Create an infura API key to be able to deploy to the Rinkeby testnet
-These points will be attributed manually if you do not manage to have your contract interact with the evaluator, or automatically when calling `submitExercice()` for the first time.
-
 ### ERC721 basics
-- Create an ERC721 token contract wand give token 1 to Evaluator contract
-- Deploy it to the Rinkeby testnet
-- Call `submitExercice()` in the Evaluator to configure the contract you want evaluated (2 pts)
-- Call `ex1_testERC721()` in the evaluator to receive your points (2 pts) 
-- Call `ex2a_getAnimalToCreateAttributes()` to get assigned a random creature to create. Mint it and give it to the evaluator
-- Call `ex2b_testDeclaredAnimal()` to receive points (2 pts)
+- Create an ERC721 token contract. You can use [this implementation](contracts/token/ERC721/)
+- Deploy it to the testnet
+- Give token #1 to Evaluator contract
+- Call `submit_exercise()` in the Evaluator to configure the contract you want evaluated (2 pts)
+- Call `ex1_test_erc721()` in the evaluator to receive your points (2 pts) 
+- Call `ex2a_get_animal_rank()` to get assigned a random creature to create. 
+- Read the expected characteristics of your animal 
+- Mint it and give it to the evaluator
+- Call `ex2b_test_declare_animal()` to receive points (2 pts)
 - Create a function to allow breeder registration. Only allow listed breeders should be able to create animals
-- Call `ex3_testRegisterBreeder()` to prove your function works (2pts)
+- Call `ex3_register_breeder()` to prove your function works (2pts)
 
 ### Minting and burning NFTs from contracts
-- Create a function to allow breeders to declare animals 
-- Call `ex4_testDeclareAnimal()` to get points (2 pts)
+- Create a function to allow breeders to declare new animals 
+- Call `ex4_declare_new_animal()` to get points (2 pts)
 - Create a function to allow breeders to declare dead animals
-- Call `ex5_declareDeadAnimal()` to get points (2 pts)
+- Call `ex5_declare_dead_animal()` to get points (2 pts)
 
-### Selling and transferring 
-- Create a function to offer an animal on sale
-- Create a getter for animal sale status and price
-- Create a function to buy the animal
-- Call `ex6a_auctionAnimal_offer()` to show your code work (1 pt)
-- Call `ex6b_auctionAnimal_buy()` to show your code work (2 pt)
+## Exercises & Contract addresses 
+|Contract code|Contract on voyager|
+|---|---|
+|[Points counter ERC20](contracts/token/ERC20/TDERC20.cairo)|[](https://goerli.voyager.online/contract/)|
+|[Evaluator](contracts/Evaluator.cairo)|[](https://goerli.voyager.online/contract/)|
 
-### Mix and match
-- The following exercices are in `Evaluator2.sol` . 
-- Create a function `declareAnimalWithParents()` to declare parents of an animal when creating it
-- Create a getter to retrieve parents id `getParents()`
-- Call `ex7a_breedAnimalWithParents() ` to get points (1pt)
-- Create a function to offer an animal for reproduction, against payment
-- Create a getter for animal reproduction status and price
-- Call `ex7b_offerAnimalForReproduction()` to get points (1pt)
-- Create a function to pay for reproductive rights
-- Call `ex7c_payForReproduction()` to get points (1pt)
-
-### Extra points
-Extra points if you find bugs / corrections this TD can benefit from, and submit a PR to make it better.  Ideas:
-- Adding a way to check the code of a specific contract was only used once (no copying) 
-- Publish the code of the Evaluator on Etherscan using the "Verify and publish" functionnality 
-
-## TD addresses
-- Points contracts `0x8B7441Cb0449c71B09B96199cCE660635dE49A1D`
-- Evaluator `0xa0b9f62A0dC5cCc21cfB71BA70070C3E1C66510E`
-- Evaluator2 `0x4f82f7A130821F61931C7675A40fab723b70d1B8`
-
-## Installing
-
-
+​
+​
