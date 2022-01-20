@@ -1,0 +1,18 @@
+{
+	"title": "Asset Metadata",
+	"type": "object",
+	"properties": {
+		"name": {
+			"type": "string",
+			"description": "Saturn"
+		},
+		"description": {
+			"type": "string",
+			"description": "Triton hovering over Neptune"
+		},
+		"image": {
+			"type": "string",
+			"description": "https://gateway.pinata.cloud/ipfs/QmVssTuX59jX7aCjcse8LdVPLUb5K94PZWaj5sLjyenumH"
+		}
+	}
+}

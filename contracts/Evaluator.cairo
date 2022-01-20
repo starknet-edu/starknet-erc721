@@ -14,7 +14,7 @@ from contracts.utils.ex00_base import (
 )
 from contracts.token.ERC721.IERC721 import IERC721
 from contracts.IExerciceSolution import IExerciceSolution
-from starkware.starknet.common.syscalls import (get_contract_address)
+from starkware.starknet.common.syscalls import (get_contract_address, get_caller_address)
 from starkware.cairo.common.uint256 import (
     Uint256, uint256_add, uint256_sub, uint256_le, uint256_lt, uint256_check, uint256_eq
 )
@@ -116,9 +116,11 @@ end
 
 
 @external
-func ex1_test_erc721{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(sender_address: felt,salt: felt):
+func ex1_test_erc721{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}():
 	# Allocating locals. Make your code easier to write and read by avoiding some revoked references
 	alloc_locals
+	# Reading caller address
+	let (sender_address) = get_caller_address()
 	let token_id: Uint256 = Uint256(1,0)
 	# Retrieve exercise address
 	let (submited_exercise_address) = student_exercise_solution_storage.read(sender_address)
@@ -180,69 +182,33 @@ func ex1_test_erc721{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
 end
 
 @external
-func ex2a_get_animal_rank{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(sender_address: felt, salt: felt):
+func ex2a_get_animal_rank{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}():
 	alloc_locals
-	# Reading next available slot
-	let (next_rank) = next_rank_storage.read()
-	# Assigning to user
-	assigned_rank_storage.write(sender_address, next_rank)
 
-	let new_next_rank = next_rank + 1
-	let (max_rank) = max_rank_storage.read()
+	# Reading caller address
+	let (sender_address) = get_caller_address()
+	
+	ex2a_get_animal_rank_internal(sender_address)
 
-	# Checking if we reach max_rank
-	if new_next_rank == max_rank:
-		next_rank_storage.write(0)
-	else:
-		next_rank_storage.write(new_next_rank)
-	end
 	return()
 end
 
 @external
-func ex2b_test_declare_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(sender_address: felt, token_id: Uint256, salt: felt):
+func ex2b_test_declare_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(token_id: Uint256):
 	alloc_locals
+	# Reading caller address
+	let (sender_address) = get_caller_address()
 
-	# Retrieve expected characteristics
-	let (expected_sex) = assigned_sex_number(sender_address)
-	let (expected_wings) = assigned_wings_number(sender_address)
-	let (expected_legs) = assigned_legs_number(sender_address)
+	ex2b_test_declare_animal_internal(sender_address, token_id)
 
-	# Retrieve exercise address
-	let (submited_exercise_address) = student_exercise_solution_storage.read(sender_address)
-	# Get current contract address
-	let (evaluator_address) = get_contract_address()
-	# Reading who owns token 1 of exercise
-	let (token_owner) = IERC721.ownerOf(contract_address = submited_exercise_address, token_id = token_id)
-	# Verifying that token 1 belongs to evaluator
-	assert evaluator_address = token_owner
-
-	# Reading animal characteristic in student solution
-	let (read_sex, read_wings, read_legs) = IExerciceSolution.get_animal_characteristics(contract_address = submited_exercise_address, token_id=token_id)
-	# Checking characteristics are correct
-	assert read_sex = expected_sex
-	assert read_wings = expected_wings
-	assert read_legs = expected_legs
-
-	# Checking if student has validated this exercise before
-	let (has_validated) = exercises_validation_storage.read(sender_address, 2)
-	# This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
-	tempvar syscall_ptr = syscall_ptr
-    tempvar pedersen_ptr = pedersen_ptr
-    tempvar range_check_ptr = range_check_ptr
-
-	if has_validated == 0:
-		# Student has validated
-		exercises_validation_storage.write(sender_address, 2, 1)
-		# Sending points
-		distribute_points(sender_address, 2)
-	end
 	return()
 end
 
 @external
-func ex3_register_breeder{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(sender_address: felt, salt: felt):
+func ex3_register_breeder{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}():
 	alloc_locals
+	# Reading caller address
+	let (sender_address) = get_caller_address()
 	# Retrieve exercise address
 	let (submited_exercise_address) = student_exercise_solution_storage.read(sender_address)
 	# Get evaluator address
@@ -276,17 +242,18 @@ func ex3_register_breeder{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, rang
 end
 
 @external
-func ex4_declare_new_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(sender_address: felt, salt: felt):
+func ex4_declare_new_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}():
 	alloc_locals
+	# Reading caller address
+	let (sender_address) = get_caller_address()
 	# Retrieve exercise address
 	let (submited_exercise_address) = student_exercise_solution_storage.read(sender_address)
 	# Reading evaluator address
 	let (evaluator_address) = get_contract_address()
 	# Reading balance of evaluator in exercise
 	let (evaluator_init_balance) = IERC721.balanceOf(contract_address = submited_exercise_address, owner = evaluator_address)
-	# Requesting new attributes. Note that this will not be possible anymore once transactions are sent through contract account directly, without sender_address. 
-	# But I'll correct it later, I am in a hurry now
-	ex2a_get_animal_rank(sender_address, 0)
+	# Requesting new attributes
+	ex2a_get_animal_rank_internal(sender_address)
 
 	# Retrieve expected characteristics
 	let (expected_sex) = assigned_sex_number(sender_address)
@@ -298,12 +265,12 @@ func ex4_declare_new_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ra
 
 	# Checking that the animal was declared correctly. We basically reuse ex2 lol
 	# If it wasn't done correctly, this should fail
-	# Same, I'll have to modify this later on. Internal functions will be useful.
-	ex2b_test_declare_animal(sender_address,created_token,0)
+	ex2b_test_declare_animal_internal(sender_address,created_token)
 
 	# Ok so if I got until here then... nothing failed. I get points
 	# Checking if student has validated this exercise before
 	let (has_validated) = exercises_validation_storage.read(sender_address, 4)
+	
 	# This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
 	tempvar syscall_ptr = syscall_ptr
     tempvar pedersen_ptr = pedersen_ptr
@@ -319,8 +286,10 @@ func ex4_declare_new_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ra
 end
 
 @external
-func ex5_declare_dead_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(sender_address: felt, salt: felt):
+func ex5_declare_dead_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}():
 	alloc_locals
+	# Reading caller address
+	let (sender_address) = get_caller_address()
 	# Retrieve exercise address
 	let (submited_exercise_address) = student_exercise_solution_storage.read(sender_address)
 	# Reading evaluator address
@@ -372,7 +341,9 @@ end
 
 
 @external
-func submit_exercise{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(sender_address: felt, erc721_address: felt, salt: felt):
+func submit_exercise{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(erc721_address: felt):
+	# Reading caller address
+	let (sender_address) = get_caller_address()
 	# Checking this contract was not used by another group before
 	let (has_solution_been_submitted_before) = has_been_paired.read(erc721_address)
 	assert has_solution_been_submitted_before = 0
@@ -404,7 +375,68 @@ func submit_exercise{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
 end
 
 
+#
+# Internal functions
+#
 
+func ex2a_get_animal_rank_internal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(sender_address:felt):
+	alloc_locals
+
+	# Reading next available slot
+	let (next_rank) = next_rank_storage.read()
+	# Assigning to user
+	assigned_rank_storage.write(sender_address, next_rank)
+
+	let new_next_rank = next_rank + 1
+	let (max_rank) = max_rank_storage.read()
+
+	# Checking if we reach max_rank
+	if new_next_rank == max_rank:
+		next_rank_storage.write(0)
+	else:
+		next_rank_storage.write(new_next_rank)
+	end
+	return()
+end
+
+func ex2b_test_declare_animal_internal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(sender_address:felt, token_id: Uint256):
+	alloc_locals
+	# Retrieve expected characteristics
+	let (expected_sex) = assigned_sex_number(sender_address)
+	let (expected_wings) = assigned_wings_number(sender_address)
+	let (expected_legs) = assigned_legs_number(sender_address)
+
+	# Retrieve exercise address
+	let (submited_exercise_address) = student_exercise_solution_storage.read(sender_address)
+	# Get current contract address
+	let (evaluator_address) = get_contract_address()
+	# Reading who owns token 1 of exercise
+	let (token_owner) = IERC721.ownerOf(contract_address = submited_exercise_address, token_id = token_id)
+	# Verifying that token 1 belongs to evaluator
+	assert evaluator_address = token_owner
+
+	# Reading animal characteristic in student solution
+	let (read_sex, read_wings, read_legs) = IExerciceSolution.get_animal_characteristics(contract_address = submited_exercise_address, token_id=token_id)
+	# Checking characteristics are correct
+	assert read_sex = expected_sex
+	assert read_wings = expected_wings
+	assert read_legs = expected_legs
+
+	# Checking if student has validated this exercise before
+	let (has_validated) = exercises_validation_storage.read(sender_address, 2)
+	# This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
+	tempvar syscall_ptr = syscall_ptr
+    tempvar pedersen_ptr = pedersen_ptr
+    tempvar range_check_ptr = range_check_ptr
+
+	if has_validated == 0:
+		# Student has validated
+		exercises_validation_storage.write(sender_address, 2, 1)
+		# Sending points
+		distribute_points(sender_address, 2)
+	end
+	return()
+end
 #
 # External functions - Administration
 # Only admins can call these. You don't need to understand them to finish the exercice.

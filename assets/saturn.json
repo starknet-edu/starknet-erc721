@@ -1,0 +1,18 @@
+{
+	"title": "Asset Metadata",
+	"type": "object",
+	"properties": {
+		"name": {
+			"type": "string",
+			"description": "Saturn"
+		},
+		"description": {
+			"type": "string",
+			"description": "Saturn from above, with its landmark hexagon"
+		},
+		"image": {
+			"type": "string",
+			"description": "https://gateway.pinata.cloud/ipfs/QmaBJPLVf8taMcKDVKUBXYXARTx8JJsmtVihhv2wvngxaV"
+		}
+	}
+}

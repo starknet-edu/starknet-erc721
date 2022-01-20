@@ -84,17 +84,22 @@ nile compile
 - Create a function to allow breeder registration. Only allow listed breeders should be able to create animals
 - Call `ex3_register_breeder()` to prove your function works (2pts)
 
-### Minting and burning NFTs from contracts
+### Minting and burning NFTs
 - Create a function to allow breeders to declare new animals 
 - Call `ex4_declare_new_animal()` to get points (2 pts)
 - Create a function to allow breeders to declare dead animals
 - Call `ex5_declare_dead_animal()` to get points (2 pts)
 
+### Minting NFTs with Metadata
+- Deploy a new ERC721 contract that supports metadata
+
+
+
 ## Exercises & Contract addresses 
 |Contract code|Contract on voyager|
 |---|---|
-|[Points counter ERC20](contracts/token/ERC20/TDERC20.cairo)|[](https://goerli.voyager.online/contract/)|
-|[Evaluator](contracts/Evaluator.cairo)|[](https://goerli.voyager.online/contract/)|
+|[Points counter ERC20](contracts/token/ERC20/TDERC20.cairo)|[0x0266dc612fd2c86f3c059e04be8e25e229dfc039372a5318c71b7c3b8b1b37d0](https://goerli.voyager.online/contract/0x0266dc612fd2c86f3c059e04be8e25e229dfc039372a5318c71b7c3b8b1b37d0)|
+|[Evaluator](contracts/Evaluator.cairo)|[0x05cd0c4bd0551f889c245756c03f308ec334f331c9d7297d93141b035d1bb982](https://goerli.voyager.online/contract/0x05cd0c4bd0551f889c245756c03f308ec334f331c9d7297d93141b035d1bb982)|
 
 ​
 ​
