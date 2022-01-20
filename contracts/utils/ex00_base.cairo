@@ -3,7 +3,7 @@
 
 %lang starknet
 
-from contracts.token.ITDERC20 import ITDERC20
+from contracts.token.ERC20.ITDERC20 import ITDERC20
 from starkware.cairo.common.cairo_builtins import HashBuiltin
 from starkware.cairo.common.uint256 import (
     Uint256, uint256_add, uint256_sub, uint256_le, uint256_lt, uint256_check

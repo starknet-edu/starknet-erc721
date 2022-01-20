@@ -12,7 +12,7 @@ from contracts.utils.ex00_base import (
     distribute_points,
     ex_initializer
 )
-from contracts.token.IERC721 import IERC721
+from contracts.token.ERC721.IERC721 import IERC721
 from contracts.IExerciceSolution import IExerciceSolution
 from starkware.starknet.common.syscalls import (get_contract_address)
 from starkware.cairo.common.uint256 import (
