@@ -91,9 +91,11 @@ nile compile
 - Call `ex5_declare_dead_animal()` to get points (2 pts)
 
 ### Minting NFTs with Metadata
-- Deploy a new ERC721 contract that supports metadata
-
-
+- Deploy a new ERC721 contract that supports metadata (2 pts)
+- Each token should have an associated IPFS hash (2 pts)
+- The base token URI is the chose IPFS gateway
+- You can use [these assets](assets/)
+- Your token will be visible on [Oasis](https://testnet.playoasis.xyz/)
 
 ## Exercises & Contract addresses 
 |Contract code|Contract on voyager|

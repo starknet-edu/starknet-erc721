@@ -21,27 +21,27 @@ namespace IExerciceSolution:
     func declare_dead_animal(token_id: Uint256):
     end
     # Selling functions
-    func is_animal_for_sale(token_id: felt) -> (is_for_sale: felt):
-    end
-    func get_animal_price(token_id: felt) -> (price: felt):
-    end
-    func buy_animal(token_id: felt) -> (bought: felt):
-    end
-    func offer_for_sale(token_id: felt) -> (offered: felt):
-    end
+    # func is_animal_for_sale(token_id: felt) -> (is_for_sale: felt):
+    # end
+    # func get_animal_price(token_id: felt) -> (price: felt):
+    # end
+    # func buy_animal(token_id: felt) -> (bought: felt):
+    # end
+    # func offer_for_sale(token_id: felt) -> (offered: felt):
+    # end
     # Reproduction functions
-    func declare_animals_with_parents(sex: felt, legs: felt, wings: felt, parent1: felt, parent2: felt) -> (token_id: felt):
-    end
-    func get_parents(token_id: felt) -> (parent1: felt, parent2: felt):
-    end
-    func can_reproduce(token_id: felt) -> (can_it: felt):
-    end
-    func reproduction_price(token_id: felt) -> (price: felt):
-    end
-    func offer_for_reproduction(token_id: felt, price: felt) -> (offer_created: felt):
-    end
-    func authorized_breeder_to_reproduce(token_id: felt) -> (account: felt):
-    end
-    func pay_to_reproduce(token_id: felt) -> (reproduced: felt):
-    end
+    # func declare_animals_with_parents(sex: felt, legs: felt, wings: felt, parent1: felt, parent2: felt) -> (token_id: felt):
+    # end
+    # func get_parents(token_id: felt) -> (parent1: felt, parent2: felt):
+    # end
+    # func can_reproduce(token_id: felt) -> (can_it: felt):
+    # end
+    # func reproduction_price(token_id: felt) -> (price: felt):
+    # end
+    # func offer_for_reproduction(token_id: felt, price: felt) -> (offer_created: felt):
+    # end
+    # func authorized_breeder_to_reproduce(token_id: felt) -> (account: felt):
+    # end
+    # func pay_to_reproduce(token_id: felt) -> (reproduced: felt):
+    # end
 end
