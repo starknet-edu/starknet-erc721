@@ -108,9 +108,9 @@ func transfer{
         pedersen_ptr : HashBuiltin*,
         range_check_ptr
     }(recipient: felt, amount: Uint256) -> (success: felt):
-    # ERC20_transfer(recipient, amount)
-    # Cairo equivalent to 'return (false)'
-    return (0)
+    ERC20_transfer(recipient, amount)
+    # Cairo equivalent to 'return (true)'
+    return (1)
 end
 
 @external
@@ -123,9 +123,9 @@ func transferFrom{
         recipient: felt, 
         amount: Uint256
     ) -> (success: felt):
-    # ERC20_transferFrom(sender, recipient, amount)
-    # Cairo equivalent to 'return (false)'
-    return (0)
+    ERC20_transferFrom(sender, recipient, amount)
+    # Cairo equivalent to 'return (true)'
+    return (1)
 end
 
 @external
