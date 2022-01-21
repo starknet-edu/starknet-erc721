@@ -30,12 +30,12 @@ Do you have a question? Join our [Discord server](https://discord.gg/YHz7drT3), 
 ## How to work on this TD
 ### Introduction
 The TD has three components:
-- An [ERC20 token](contracts/token/TDERC20.cairo), ticker TD-ERC721, that is used to keep track of points 
-- An [evaluator contract](contracts/Evaluator.cairo), that is able to mint and distribute TD-ERC721 points
-- A second [ERC20 token](contracts/token/dummy_token.cairo), ticker DTK, that is used to make fake payments
+- An [ERC20 token](contracts/token/ERC20/TDERC20.cairo), ticker ERC721-101, that is used to keep track of points 
+- An [evaluator contract](contracts/Evaluator.cairo), that is able to mint and distribute ERC721-101 points
+- A second [ERC20 token](contracts/token/ERC20/dummy_token.cairo), ticker DTK, that is used to make fake payments
 
-Your objective is to gather as many TD-ERC721 points as possible. Please note :
-- The 'transfer' function of TD-ERC721 has been disabled to encourage you to finish the TD with only one address
+Your objective is to gather as many ERC721-101 points as possible. Please note :
+- The 'transfer' function of ERC721-101 has been disabled to encourage you to finish the TD with only one address
 - You can answer the various questions of this workshop with different ERC721 contracts. However, an evaluated address has only one evaluated ERC721 contract at a time. To change the evaluated ERC721 contract associated with your address, call `submit_exercise()`  within the evaluator with that specific address.
 - In order to receive points, you will have to do execute code in `Evaluator.cairo` such that the function `distribute_points(sender_address, 2)` is triggered, and distributes n points.
 - This repo contains an interface `IExerciceSolution.cairo`. Your ERC721 contract will have to conform to this interface in order to validate the exercice; that is, your contract needs to implement all the functions described in `IExerciceSolution.cairo`. 
@@ -49,7 +49,7 @@ Your objective is to gather as many TD-ERC721 points as possible. Please note :
 ​
 Your points will get credited in Argent X; though this may take some time. If you want to monitor your points count in real time, you can also see your balance in voyager!
 ​
--   Go to the  [ERC20 counter](https://goerli.voyager.online/contract/0x0555750f277a7abd2d7abf4c16806554bd750eb26d87ce58c6cb13b2158dcbc1#readContract)  in voyager, in the "read contract" tab
+-   Go to the  [ERC20 counter](https://goerli.voyager.online/contract/0x0703cd133bfadfa9990b6e4200a9af3309c44876174b5dac5036a27a18ff6e19#readContract)  in voyager, in the "read contract" tab
 -   Enter your address in decimal in the "balanceOf" function
 ​
 #### [](https://github.com/l-henri/starknet-cairo-101/blob/main/README.md#transaction-status)Transaction status
@@ -93,7 +93,7 @@ Today we are creating an animal registry! Animals are bred by breeders. They can
 - Call `ex4_declare_dead_animal()` to get points (2 pts)
 
 ### Adding permissions and payments
-- Use [dummy token faucet](contracts/token/dummy_token.cairo) to get dummy tokens 
+- Use [dummy token faucet](contracts/token/ERC20/dummy_token.cairo) to get dummy tokens 
 - Use `ex5a_i_have_dtk()` to show you managed to use the faucet (2 pts)
 - Create a function to allow breeder registration. 
 - This function should charge the registrant for a fee, paid in dummy tokens
