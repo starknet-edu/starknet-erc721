@@ -2,6 +2,7 @@
 
 from starkware.cairo.common.cairo_builtins import HashBuiltin
 from starkware.cairo.common.uint256 import Uint256
+from starkware.starknet.common.syscalls import get_caller_address
 
 from contracts.token.ERC20.ERC20_base import (
     ERC20_name,
@@ -10,6 +11,7 @@ from contracts.token.ERC20.ERC20_base import (
     ERC20_decimals,
     ERC20_balanceOf,
     ERC20_allowance,
+    ERC20_mint,
 
     ERC20_initializer,
     ERC20_approve,
@@ -101,6 +103,19 @@ end
 #
 # Externals
 #
+
+@external
+func faucet{
+        syscall_ptr : felt*, 
+        pedersen_ptr : HashBuiltin*,
+        range_check_ptr
+    }() -> (success: felt):
+    let amount: Uint256 = Uint256(100*1000000000000000000, 0)
+    let (caller) = get_caller_address()
+    ERC20_mint(caller, amount)
+    # Cairo equivalent to 'return (true)'
+    return (1)
+end
 
 @external
 func transfer{

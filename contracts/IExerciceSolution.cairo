@@ -8,8 +8,8 @@ namespace IExerciceSolution:
     # Breeding function
     func is_breeder(account: felt) -> (is_approved: felt):
     end
-    # func registration_price() -> (price: felt):
-    # end
+    func registration_price() -> (price: Uint256):
+    end
     func register_me_as_breeder() -> (is_added: felt):
     end
     func declare_animal(sex: felt, legs: felt, wings: felt) -> (token_id: Uint256):

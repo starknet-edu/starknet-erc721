@@ -2,6 +2,7 @@
 
 from starkware.cairo.common.cairo_builtins import HashBuiltin
 from starkware.cairo.common.uint256 import Uint256
+from starkware.starknet.common.syscalls import get_caller_address
 
 from contracts.token.ERC20.ERC20_base import (
     ERC20_name,
@@ -10,7 +11,8 @@ from contracts.token.ERC20.ERC20_base import (
     ERC20_decimals,
     ERC20_balanceOf,
     ERC20_allowance,
-
+    ERC20_mint,
+    ERC20_burn,
     ERC20_initializer,
     ERC20_approve,
     ERC20_increaseAllowance,
@@ -18,6 +20,14 @@ from contracts.token.ERC20.ERC20_base import (
     ERC20_transfer,
     ERC20_transferFrom
 )
+
+@storage_var
+func Teacher_accounts(account: felt) -> (balance: felt):
+end
+
+@storage_var
+func setup_is_finished() -> (setup_is_finished : felt):
+end
 
 @constructor
 func constructor{
@@ -28,7 +38,8 @@ func constructor{
         name: felt,
         symbol: felt,
         initial_supply: Uint256,
-        recipient: felt
+        recipient: felt,
+        owner: felt
     ):
     ERC20_initializer(name, symbol, initial_supply, recipient)
     return ()
@@ -159,4 +170,130 @@ func decreaseAllowance{
     ERC20_decreaseAllowance(spender, subtracted_value)
     # Cairo equivalent to 'return (true)'
     return (1)
+end
+
+func only_teacher_or_exercice{
+        syscall_ptr : felt*, 
+        pedersen_ptr : HashBuiltin*,
+        range_check_ptr
+    }():
+    let (caller) = get_caller_address()
+    let (permission) = Teacher_accounts.read(account=caller)
+    assert permission = 1
+    return ()
+end
+
+
+@external
+func distribute_points{
+        syscall_ptr: felt*,
+        pedersen_ptr: HashBuiltin*,
+        range_check_ptr
+    }(to: felt, amount: Uint256):
+    only_teacher_or_exercice()
+    ERC20_mint(to, amount)
+    return ()
+end
+
+@external
+func remove_points{
+        syscall_ptr: felt*,
+        pedersen_ptr: HashBuiltin*,
+        range_check_ptr
+    }(to: felt, amount: Uint256):
+    only_teacher_or_exercice()
+    ERC20_burn(to, amount)
+    return ()
+end
+
+@external
+func set_teacher{
+        syscall_ptr: felt*,
+        pedersen_ptr: HashBuiltin*,
+        range_check_ptr
+    }(account: felt, permission: felt):
+    only_teacher_or_exercice()
+    Teacher_accounts.write(account, permission)
+
+    return ()
+end
+
+@view
+func isTeacher{
+        syscall_ptr : felt*, 
+        pedersen_ptr : HashBuiltin*,
+        range_check_ptr
+    }(account: felt) -> (permission: felt):
+    let (permission: felt) = Teacher_accounts.read(account)
+    return (permission)
+end
+
+##
+## Temporary functions, will remove once account contracts are live and usable with Nile
+##
+##
+
+func only_during_setup{
+        syscall_ptr : felt*, 
+        pedersen_ptr : HashBuiltin*,
+        range_check_ptr
+    }():
+    let (permission) = setup_is_finished.read()
+    assert permission = 0
+    return ()
+end
+
+@external
+func finish_setup{
+        syscall_ptr: felt*,
+        pedersen_ptr: HashBuiltin*,
+        range_check_ptr
+    }():
+    only_during_setup()
+    Teacher_accounts.write(0, 0)
+    setup_is_finished.write(1)
+
+    return ()
+end
+
+@external
+func set_teachers_temp{
+        syscall_ptr: felt*,
+        pedersen_ptr: HashBuiltin*,
+        range_check_ptr
+    }(accounts_len: felt, accounts: felt*):
+    only_during_setup()
+    set_teacher_internal(accounts_len, accounts)
+    return ()
+end
+
+@external
+func set_teacher_temp{
+        syscall_ptr: felt*,
+        pedersen_ptr: HashBuiltin*,
+        range_check_ptr
+    }(account: felt):
+    only_during_setup()
+    Teacher_accounts.write(account, 1)
+    return ()
+end
+
+func set_teacher_internal{
+        syscall_ptr: felt*,
+        pedersen_ptr: HashBuiltin*,
+        range_check_ptr
+    }(accounts_len: felt, accounts: felt*):
+    only_during_setup()
+
+    if accounts_len == 0:
+        # Start with sum=0.
+        return ()
+    end
+
+    # If length is NOT zero, then the function calls itself again, by moving forward one slot
+    set_teacher_internal(accounts_len=accounts_len - 1, accounts=accounts + 1)
+
+    # This part of the function is first reached when length=0.
+    Teacher_accounts.write([accounts], 1)
+    return ()
 end

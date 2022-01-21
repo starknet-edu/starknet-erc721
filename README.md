@@ -29,9 +29,10 @@ Do you have a question? Join our [Discord server](https://discord.gg/YHz7drT3), 
 
 ## How to work on this TD
 ### Introduction
-The TD has two components:
+The TD has three components:
 - An [ERC20 token](contracts/token/TDERC20.cairo), ticker TD-ERC721, that is used to keep track of points 
 - An [evaluator contract](contracts/Evaluator.cairo), that is able to mint and distribute TD-ERC721 points
+- A second [ERC20 token](contracts/token/dummy_token.cairo), ticker DTK, that is used to make fake payments
 
 Your objective is to gather as many TD-ERC721 points as possible. Please note :
 - The 'transfer' function of TD-ERC721 has been disabled to encourage you to finish the TD with only one address
@@ -39,7 +40,7 @@ Your objective is to gather as many TD-ERC721 points as possible. Please note :
 - In order to receive points, you will have to do execute code in `Evaluator.cairo` such that the function `distribute_points(sender_address, 2)` is triggered, and distributes n points.
 - This repo contains an interface `IExerciceSolution.cairo`. Your ERC721 contract will have to conform to this interface in order to validate the exercice; that is, your contract needs to implement all the functions described in `IExerciceSolution.cairo`. 
 - A high level description of what is expected for each exercice is in this readme. A low level description of what is expected can be inferred by reading the code in `Evaluator.cairo`.
-- The Evaluator contract sometimes needs to make payments to buy your tokens. Make sure he has enough tokens to do so! If not, you can send ETH directly to the contract.
+- The Evaluator contract sometimes needs to make payments to buy your tokens. Make sure he has enough dummy tokens to do so! If not, you should get dummy tokens from the dummy tokens contract and send them to the evaluator
 
 
 ### Checking your progress
@@ -81,14 +82,22 @@ nile compile
 - Read the expected characteristics of your animal 
 - Mint it and give it to the evaluator
 - Call `ex2b_test_declare_animal()` to receive points (2 pts)
-- Create a function to allow breeder registration. Only allow listed breeders should be able to create animals
-- Call `ex3_register_breeder()` to prove your function works (2pts)
 
 ### Minting and burning NFTs
 - Create a function to allow breeders to declare new animals 
-- Call `ex4_declare_new_animal()` to get points (2 pts)
+- Call `ex3_declare_new_animal()` to get points (2 pts)
 - Create a function to allow breeders to declare dead animals
-- Call `ex5_declare_dead_animal()` to get points (2 pts)
+- Call `ex4_declare_dead_animal()` to get points (2 pts)
+
+### Adding permissions and payments
+- Use [dummy token faucet](contracts/token/dummy_token.cairo) to get dummy tokens (2 pts)
+- Use `ex5a_i_have_dtk()` to show you managed to use the faucet
+- Send dummy tokens to the evaluator if needed
+- Create a function to allow breeder registration. 
+- This function should charge the registrant for a fee, paid in dummy tokens
+- Add permissions. Only allow listed breeders should be able to create animals
+- Call `ex5b_register_breeder()` to prove your function works (2pts)
+
 
 ### Minting NFTs with Metadata
 Not automated yet, soon, but you can still have fun

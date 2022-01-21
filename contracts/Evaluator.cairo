@@ -18,6 +18,9 @@ from starkware.starknet.common.syscalls import (get_contract_address, get_caller
 from starkware.cairo.common.uint256 import (
     Uint256, uint256_add, uint256_sub, uint256_le, uint256_lt, uint256_check, uint256_eq
 )
+from contracts.token.ERC20.ITDERC20 import ITDERC20
+from contracts.token.ERC20.IERC20 import IERC20
+
 #
 # Declaring storage vars
 # Storage vars are by default not visible through the ABI. They are similar to "private" variables in Solidity
@@ -48,12 +51,17 @@ func max_rank_storage() -> (max_rank: felt):
 end	
 
 @storage_var
-func random_attributes_storage(column: felt, rank: felt) -> (legs: felt):
+func random_attributes_storage(column: felt, rank: felt) -> (value: felt):
 end	
 
 @storage_var
 func was_initialized() -> (was_initialized: felt):
 end
+
+@storage_var
+func dummy_token_address_storage() -> (dummy_token_address_storage: felt):
+end	
+
 #
 # Declaring getters
 # Public variables should be declared explicitly with a getter
@@ -103,8 +111,9 @@ end
 #
 @constructor
 func constructor{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
-        _tderc20_address : felt):
+        _tderc20_address : felt, _dummy_token_address: felt):
     ex_initializer(_tderc20_address)
+    dummy_token_address_storage.write(_dummy_token_address)
     # Hard coded value for now
     max_rank_storage.write(100)
     return ()
@@ -205,44 +214,7 @@ func ex2b_test_declare_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, 
 end
 
 @external
-func ex3_register_breeder{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}():
-	alloc_locals
-	# Reading caller address
-	let (sender_address) = get_caller_address()
-	# Retrieve exercise address
-	let (submited_exercise_address) = student_exercise_solution_storage.read(sender_address)
-	# Get evaluator address
-	let (evaluator_address) = get_contract_address()
-	# Is evaluator currently a breeder?
-	let (is_evaluator_breeder_init) = IExerciceSolution.is_breeder(contract_address = submited_exercise_address, account = sender_address)
-	assert is_evaluator_breeder_init = 0
-	# TODO test that evaluator can not yet declare an animal (requires try/catch)
-	
-	# Require breeder permission. 
-	IExerciceSolution.register_me_as_breeder(contract_address = submited_exercise_address)
-
-	# Check that I am indeed a breeder
-	let (is_evaluator_breeder_end) = IExerciceSolution.is_breeder(contract_address = submited_exercise_address, account = sender_address)
-	assert is_evaluator_breeder_init = 1
-
-	# Checking if student has validated this exercise before
-	let (has_validated) = exercises_validation_storage.read(sender_address, 3)
-	# This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
-	tempvar syscall_ptr = syscall_ptr
-    tempvar pedersen_ptr = pedersen_ptr
-    tempvar range_check_ptr = range_check_ptr
-
-	if has_validated == 0:
-		# Student has validated
-		exercises_validation_storage.write(sender_address, 3, 1)
-		# Sending points
-		distribute_points(sender_address, 2)
-	end
-	return()
-end
-
-@external
-func ex4_declare_new_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}():
+func ex3_declare_new_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}():
 	alloc_locals
 	# Reading caller address
 	let (sender_address) = get_caller_address()
@@ -269,7 +241,7 @@ func ex4_declare_new_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ra
 
 	# Ok so if I got until here then... nothing failed. I get points
 	# Checking if student has validated this exercise before
-	let (has_validated) = exercises_validation_storage.read(sender_address, 4)
+	let (has_validated) = exercises_validation_storage.read(sender_address, 3)
 	
 	# This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
 	tempvar syscall_ptr = syscall_ptr
@@ -278,7 +250,7 @@ func ex4_declare_new_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ra
 
 	if has_validated == 0:
 		# Student has validated
-		exercises_validation_storage.write(sender_address, 4, 1)
+		exercises_validation_storage.write(sender_address, 3, 1)
 		# Sending points
 		distribute_points(sender_address, 2)
 	end
@@ -286,7 +258,7 @@ func ex4_declare_new_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ra
 end
 
 @external
-func ex5_declare_dead_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}():
+func ex4_declare_dead_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}():
 	alloc_locals
 	# Reading caller address
 	let (sender_address) = get_caller_address()
@@ -324,7 +296,7 @@ func ex5_declare_dead_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, r
 	# Requires try / catch, or something smarter. I'll think about it.
 	
 	# Checking if student has validated this exercise before
-	let (has_validated) = exercises_validation_storage.read(sender_address, 5)
+	let (has_validated) = exercises_validation_storage.read(sender_address, 4)
 	# This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
 	tempvar syscall_ptr = syscall_ptr
     tempvar pedersen_ptr = pedersen_ptr
@@ -332,13 +304,96 @@ func ex5_declare_dead_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, r
 
 	if has_validated == 0:
 		# Student has validated
-		exercises_validation_storage.write(sender_address, 5, 1)
+		exercises_validation_storage.write(sender_address, 4, 1)
 		# Sending points
 		distribute_points(sender_address, 2)
 	end
 	return()
 end
 
+@external
+func ex5a_i_have_dtk{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}():
+	alloc_locals
+	# Reading caller address
+	let (sender_address) = get_caller_address()
+	# Reading sender balance in dummy token
+	let (dummy_token_address) = dummy_token_address_storage.read()
+	let (dummy_token_init_balance) = IERC20.balanceOf(contract_address = dummy_token_address, account=sender_address)
+	
+	# Verifying it's not 0
+	# Instanciating a zero in uint format
+	let zero_as_uint256: Uint256 = Uint256(0,0)
+	let (is_equal) = uint256_eq(dummy_token_init_balance, zero_as_uint256)
+	assert is_equal = 0
+
+	# Checking if student has validated this exercise before
+	let (has_validated) = exercises_validation_storage.read(sender_address, 51)
+	# This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
+	tempvar syscall_ptr = syscall_ptr
+    tempvar pedersen_ptr = pedersen_ptr
+    tempvar range_check_ptr = range_check_ptr
+
+	if has_validated == 0:
+		# Student has validated
+		exercises_validation_storage.write(sender_address, 51, 1)
+		# Sending points
+		distribute_points(sender_address, 2)
+	end
+	return()
+end
+
+@external
+func ex5b_register_breeder{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}():
+	alloc_locals
+	# Reading caller address
+	let (sender_address) = get_caller_address()
+	# Retrieve exercise address
+	let (submited_exercise_address) = student_exercise_solution_storage.read(sender_address)
+	# Get evaluator address
+	let (evaluator_address) = get_contract_address()
+	# Is evaluator currently a breeder?
+	let (is_evaluator_breeder_init) = IExerciceSolution.is_breeder(contract_address = submited_exercise_address, account = sender_address)
+	assert is_evaluator_breeder_init = 0
+	# TODO test that evaluator can not yet declare an animal (requires try/catch)
+	
+	# Reading registration price. Registration is payable in dummy token
+	let (registration_price) = IExerciceSolution.registration_price(contract_address = submited_exercise_address)
+	# Reading evaluator balance in dummy token
+	let (dummy_token_address) = dummy_token_address_storage.read()
+	let (dummy_token_init_balance) = IERC20.balanceOf(contract_address = dummy_token_address, account=evaluator_address)
+	# Approve the exercice for spending my dummy tokens
+	IERC20.approve(contract_address = dummy_token_address, spender=submited_exercise_address, amount=registration_price)
+	
+	# Require breeder permission. 
+	IExerciceSolution.register_me_as_breeder(contract_address = submited_exercise_address)
+
+	# Check that I am indeed a breeder
+	let (is_evaluator_breeder_end) = IExerciceSolution.is_breeder(contract_address = submited_exercise_address, account = sender_address)
+	assert is_evaluator_breeder_init = 1
+
+	# Check that my balance has been updated
+	let (dummy_token_end_balance) = IERC20.balanceOf(contract_address = dummy_token_address, account=evaluator_address)
+	# Store expected balance in a variable, since I can't use everything on a single line
+	let evaluator_expected_balance : Uint256 = uint256_sub(dummy_token_init_balance, registration_price)
+	# Verifying that balances where updated correctly
+	let (is_evaluator_balance_equal_to_expected) = uint256_eq(evaluator_expected_balance, dummy_token_end_balance)
+	assert is_evaluator_balance_equal_to_expected = 1
+
+	# Checking if student has validated this exercise before
+	let (has_validated) = exercises_validation_storage.read(sender_address, 52)
+	# This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
+	tempvar syscall_ptr = syscall_ptr
+    tempvar pedersen_ptr = pedersen_ptr
+    tempvar range_check_ptr = range_check_ptr
+
+	if has_validated == 0:
+		# Student has validated
+		exercises_validation_storage.write(sender_address, 52, 1)
+		# Sending points
+		distribute_points(sender_address, 2)
+	end
+	return()
+end
 
 @external
 func submit_exercise{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(erc721_address: felt):
