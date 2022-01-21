@@ -123,7 +123,6 @@ end
 # These functions are callable by other contracts
 #
 
-
 @external
 func ex1_test_erc721{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}():
 	# Allocating locals. Make your code easier to write and read by avoiding some revoked references
@@ -190,6 +189,7 @@ func ex1_test_erc721{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
 	return()
 end
 
+# Call this function to get assigned a rank, and the associate characteristics expected from your animal
 @external
 func ex2a_get_animal_rank{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}():
 	alloc_locals
@@ -202,6 +202,7 @@ func ex2a_get_animal_rank{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, rang
 	return()
 end
 
+# Show that you properly declared your animal
 @external
 func ex2b_test_declare_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(token_id: Uint256):
 	alloc_locals
@@ -213,6 +214,7 @@ func ex2b_test_declare_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, 
 	return()
 end
 
+# Create a function that allows any breeder to call your contract and declare a new animal
 @external
 func ex3_declare_new_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}():
 	alloc_locals
@@ -257,6 +259,7 @@ func ex3_declare_new_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ra
 	return()
 end
 
+# Sometimes, animals die. Your contract should implement that.
 @external
 func ex4_declare_dead_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}():
 	alloc_locals
@@ -311,6 +314,7 @@ func ex4_declare_dead_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, r
 	return()
 end
 
+# For ex5 you need ERC20 tokens. Go get them 
 @external
 func ex5a_i_have_dtk{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}():
 	alloc_locals
@@ -342,6 +346,7 @@ func ex5a_i_have_dtk{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
 	return()
 end
 
+# Allow breeder to pay for registration as a breeder
 @external
 func ex5b_register_breeder{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}():
 	alloc_locals

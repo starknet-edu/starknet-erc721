@@ -72,42 +72,45 @@ nile compile
 ```
 
 ## Points list
+Today we are creating an animal registry! Animals are bred by breeders. They can be born, die, reproduce, be sold. You will implement these features little by little.
+
 ### ERC721 basics
-- Create an ERC721 token contract. You can use [this implementation](contracts/token/ERC721/)
+- Create an ERC721 token contract. You can use [this implementation](contracts/token/ERC721/ERC721.cairo) as a base
 - Deploy it to the testnet
 - Give token #1 to Evaluator contract
 - Call `submit_exercise()` in the Evaluator to configure the contract you want evaluated (2 pts)
 - Call `ex1_test_erc721()` in the evaluator to receive your points (2 pts) 
 - Call `ex2a_get_animal_rank()` to get assigned a random creature to create. 
-- Read the expected characteristics of your animal 
-- Mint it and give it to the evaluator
+- Read the expected characteristics of your animal from the Evaluator
+- Create the tools necessary to record animals characteristics in your contract
+- Mint the desired animal and give it to the evaluator
 - Call `ex2b_test_declare_animal()` to receive points (2 pts)
 
 ### Minting and burning NFTs
-- Create a function to allow breeders to declare new animals 
+- Create a function to allow breeders to declare new animals
 - Call `ex3_declare_new_animal()` to get points (2 pts)
 - Create a function to allow breeders to declare dead animals
 - Call `ex4_declare_dead_animal()` to get points (2 pts)
 
 ### Adding permissions and payments
-- Use [dummy token faucet](contracts/token/dummy_token.cairo) to get dummy tokens (2 pts)
-- Use `ex5a_i_have_dtk()` to show you managed to use the faucet
-- Send dummy tokens to the evaluator if needed
+- Use [dummy token faucet](contracts/token/dummy_token.cairo) to get dummy tokens 
+- Use `ex5a_i_have_dtk()` to show you managed to use the faucet (2 pts)
 - Create a function to allow breeder registration. 
 - This function should charge the registrant for a fee, paid in dummy tokens
 - Add permissions. Only allow listed breeders should be able to create animals
-- Call `ex5b_register_breeder()` to prove your function works (2pts)
+- Call `ex5b_register_breeder()` to prove your function works. If needed, send dummy tokens first to the evaluator (2pts)
 
 
 ### Minting NFTs with Metadata
-Not automated yet, soon, but you can still have fun
+Not automated yet, but you can still have fun
 - Mint an NFT with metadata on contract 0x0447e9377de46a1b6d46ca00311f51c9613831a803dc8085e5b8e0f69db19a6d (through voyager, function mint_with_metadata)
 - You can use [these assets](assets/)
 - Check it on [Oasis](https://testnet.playoasis.xyz/)
-- Deploy a new ERC721 contract that supports metadata 
-- Each token should have an associated IPFS hash 
+- Create a new ERC721 contract that supports metadata. You can use [this contract](contracts/token/ERC721/ERC721_metadata.cairo) as a base
+- Each token should have an associated IPFS hash. So you'll need to modify the functions reading/writing/storing the URIs
 - The base token URI is the chosen IPFS gateway
-- Your token will be visible on [Oasis](https://testnet.playoasis.xyz/)
+- You can upload your NFTs directly on [this website](https://www.pinata.cloud/)
+- Your tokens should be visible on [Oasis](https://testnet.playoasis.xyz/) once minted!
 
 ## Exercises & Contract addresses 
 |Contract code|Contract on voyager|
