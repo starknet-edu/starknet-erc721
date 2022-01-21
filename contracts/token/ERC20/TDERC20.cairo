@@ -42,6 +42,7 @@ func constructor{
         owner: felt
     ):
     ERC20_initializer(name, symbol, initial_supply, recipient)
+    Teacher_accounts.write(owner, 1)
     return ()
 end
 

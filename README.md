@@ -115,9 +115,9 @@ Not automated yet, but you can still have fun
 ## Exercises & Contract addresses 
 |Contract code|Contract on voyager|
 |---|---|
-|[Points counter ERC20](contracts/token/ERC20/TDERC20.cairo)|[0x0703cd133bfadfa9990b6e4200a9af3309c44876174b5dac5036a27a18ff6e19](https://goerli.voyager.online/contract/0x0703cd133bfadfa9990b6e4200a9af3309c44876174b5dac5036a27a18ff6e19)|
-|[Evaluator](contracts/Evaluator.cairo)|[0x03571c91adcd3258856bf0c58c8938044fd2939224d5ae9878d14d3ad43c333b](https://goerli.voyager.online/contract/0x03571c91adcd3258856bf0c58c8938044fd2939224d5ae9878d14d3ad43c333b)|
-|[Dummy token](contracts/token/ERC20/dummy_token.cairo)|[0x018c5d499cb7632fc8b21dbddcb93bc558937e773d6016212e428a98f418ed13](https://goerli.voyager.online/contract/0x018c5d499cb7632fc8b21dbddcb93bc558937e773d6016212e428a98f418ed13)|
+|[Points counter ERC20](contracts/token/ERC20/TDERC20.cairo)|[0x01be1ef1c88ed2588c47d460ac9147a09b0cb47854075adb53105d8121bdb93a](https://goerli.voyager.online/contract/0x01be1ef1c88ed2588c47d460ac9147a09b0cb47854075adb53105d8121bdb93a)|
+|[Evaluator](contracts/Evaluator.cairo)|[0x0798c47c1bc91bc09d3b060e18cbc895405a75021494cc87d328aeacb71898d5](https://goerli.voyager.online/contract/0x0798c47c1bc91bc09d3b060e18cbc895405a75021494cc87d328aeacb71898d5)|
+|[Dummy token](contracts/token/ERC20/dummy_token.cairo)|[0x023a167923cc146b9871519ca2949d6c418584ce7fbb7132fa9c9e903c49fddd](https://goerli.voyager.online/contract/0x023a167923cc146b9871519ca2949d6c418584ce7fbb7132fa9c9e903c49fddd)|
 
 ​
 ​
