@@ -119,5 +119,6 @@ Not automated yet, but you can still have fun
 |[Evaluator](contracts/Evaluator.cairo)|[0x0798c47c1bc91bc09d3b060e18cbc895405a75021494cc87d328aeacb71898d5](https://goerli.voyager.online/contract/0x0798c47c1bc91bc09d3b060e18cbc895405a75021494cc87d328aeacb71898d5)|
 |[Dummy token](contracts/token/ERC20/dummy_token.cairo)|[0x023a167923cc146b9871519ca2949d6c418584ce7fbb7132fa9c9e903c49fddd](https://goerli.voyager.online/contract/0x023a167923cc146b9871519ca2949d6c418584ce7fbb7132fa9c9e903c49fddd)|
 
+
 ​
 ​

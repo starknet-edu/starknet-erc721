@@ -31,7 +31,7 @@ func constructor{
         syscall_ptr : felt*,
         pedersen_ptr : HashBuiltin*,
         range_check_ptr
-    }(name: felt, symbol: felt, owner: felt, base_token_uri_len: felt, base_token_uri: felt*):
+    }(name: felt, symbol: felt, owner: felt):
     ERC721_initializer(name, symbol)
     let to = 1510851416778934944204297693229363058079533847382583980692826508708240175931
     let token_id: Uint256 = Uint256(1,0)
