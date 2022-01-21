@@ -101,7 +101,7 @@ nile compile
 
 ### Minting NFTs with Metadata
 Not automated yet, soon, but you can still have fun
-- Mint an NFT with metadata on contract 0x02b4805efc6815576e9a514cf053febe51a42d0c5c2d1f9ed73da3d25aaf76ad (through voyager, function mint_with_metadata)
+- Mint an NFT with metadata on contract 0x0447e9377de46a1b6d46ca00311f51c9613831a803dc8085e5b8e0f69db19a6d (through voyager, function mint_with_metadata)
 - You can use [these assets](assets/)
 - Check it on [Oasis](https://testnet.playoasis.xyz/)
 - Deploy a new ERC721 contract that supports metadata 
