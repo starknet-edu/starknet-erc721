@@ -44,15 +44,15 @@ end
 
 @storage_var
 func next_rank_storage() -> (next_rank: felt):
-end	
+end
 
 @storage_var
 func max_rank_storage() -> (max_rank: felt):
-end	
+end
 
 @storage_var
 func random_attributes_storage(column: felt, rank: felt) -> (value: felt):
-end	
+end
 
 @storage_var
 func was_initialized() -> (was_initialized: felt):
@@ -60,7 +60,7 @@ end
 
 @storage_var
 func dummy_token_address_storage() -> (dummy_token_address_storage: felt):
-end	
+end
 
 #
 # Declaring getters
@@ -167,7 +167,7 @@ func ex1_test_erc721{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
 	let evaluator_expected_balance : Uint256 = uint256_sub(evaluator_init_balance, one_as_uint256)
 	let sender_expected_balance : Uint256 = uint256_add(sender_init_balance, one_as_uint256)
 	# Verifying that balances where updated correctly
-	let (is_sender_balance_equal_to_expected) = uint256_eq(sender_expected_balance, sender_end_balance) 
+	let (is_sender_balance_equal_to_expected) = uint256_eq(sender_expected_balance, sender_end_balance)
 	assert is_sender_balance_equal_to_expected = 1
 	let (is_evaluator_balance_equal_to_expected) = uint256_eq(evaluator_expected_balance, evaluator_end_balance)
 	assert is_evaluator_balance_equal_to_expected = 1
@@ -196,7 +196,7 @@ func ex2a_get_animal_rank{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, rang
 
 	# Reading caller address
 	let (sender_address) = get_caller_address()
-	
+
 	ex2a_get_animal_rank_internal(sender_address)
 
 	return()
@@ -244,7 +244,7 @@ func ex3_declare_new_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ra
 	# Ok so if I got until here then... nothing failed. I get points
 	# Checking if student has validated this exercise before
 	let (has_validated) = exercises_validation_storage.read(sender_address, 3)
-	
+
 	# This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
 	tempvar syscall_ptr = syscall_ptr
     tempvar pedersen_ptr = pedersen_ptr
@@ -288,7 +288,7 @@ func ex4_declare_dead_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, r
 	let (is_evaluator_balance_equal_to_expected) = uint256_eq(evaluator_expected_balance, evaluator_end_balance)
 	assert is_evaluator_balance_equal_to_expected = 1
 
-	# Check that properties are deleted 
+	# Check that properties are deleted
 	# Reading animal characteristic in student solution
 	let (read_sex, read_legs, read_wings) = IExerciceSolution.get_animal_characteristics(contract_address = submited_exercise_address, token_id=token_id)
 	# Checking characteristics are correct
@@ -297,7 +297,7 @@ func ex4_declare_dead_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, r
 	assert read_wings = 0
 	# TODO Testing killing another person's animal. The caller has to hold an animal
 	# Requires try / catch, or something smarter. I'll think about it.
-	
+
 	# Checking if student has validated this exercise before
 	let (has_validated) = exercises_validation_storage.read(sender_address, 4)
 	# This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
@@ -314,7 +314,7 @@ func ex4_declare_dead_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, r
 	return()
 end
 
-# For ex5 you need ERC20 tokens. Go get them 
+# For ex5 you need ERC20 tokens. Go get them
 @external
 func ex5a_i_have_dtk{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}():
 	alloc_locals
@@ -323,7 +323,7 @@ func ex5a_i_have_dtk{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
 	# Reading sender balance in dummy token
 	let (dummy_token_address) = dummy_token_address_storage.read()
 	let (dummy_token_init_balance) = IERC20.balanceOf(contract_address = dummy_token_address, account=sender_address)
-	
+
 	# Verifying it's not 0
 	# Instanciating a zero in uint format
 	let zero_as_uint256: Uint256 = Uint256(0,0)
@@ -357,10 +357,10 @@ func ex5b_register_breeder{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ran
 	# Get evaluator address
 	let (evaluator_address) = get_contract_address()
 	# Is evaluator currently a breeder?
-	let (is_evaluator_breeder_init) = IExerciceSolution.is_breeder(contract_address = submited_exercise_address, account = sender_address)
+	let (is_evaluator_breeder_init) = IExerciceSolution.is_breeder(contract_address = submited_exercise_address, account = evaluator_address)
 	assert is_evaluator_breeder_init = 0
 	# TODO test that evaluator can not yet declare an animal (requires try/catch)
-	
+
 	# Reading registration price. Registration is payable in dummy token
 	let (registration_price) = IExerciceSolution.registration_price(contract_address = submited_exercise_address)
 	# Reading evaluator balance in dummy token
@@ -368,12 +368,12 @@ func ex5b_register_breeder{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ran
 	let (dummy_token_init_balance) = IERC20.balanceOf(contract_address = dummy_token_address, account=evaluator_address)
 	# Approve the exercice for spending my dummy tokens
 	IERC20.approve(contract_address = dummy_token_address, spender=submited_exercise_address, amount=registration_price)
-	
-	# Require breeder permission. 
+  
+	# Require breeder permission.
 	IExerciceSolution.register_me_as_breeder(contract_address = submited_exercise_address)
 
 	# Check that I am indeed a breeder
-	let (is_evaluator_breeder_end) = IExerciceSolution.is_breeder(contract_address = submited_exercise_address, account = sender_address)
+	let (is_evaluator_breeder_end) = IExerciceSolution.is_breeder(contract_address = submited_exercise_address, account = evaluator_address)
 	assert is_evaluator_breeder_init = 1
 
 	# Check that my balance has been updated
@@ -512,7 +512,7 @@ func set_random_values{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_c
     # Check that we fill max_ranK_storage cells
     let (max_rank) = max_rank_storage.read()
     assert values_len = max_rank
-    
+
     # Storing passed values in the store
     set_a_random_value(values_len, values, column)
 
@@ -525,7 +525,7 @@ func finish_setup{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_
     # Check if the random values were already initialized
     let (was_initialized_read) = was_initialized.read()
     assert was_initialized_read = 0
-   
+
     # Mark that value store was initialized
     was_initialized.write(1)
     return()
