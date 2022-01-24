@@ -2,12 +2,12 @@
 
 ## Introduction
 Welcome! This is an automated workshop that will explain how to deploy an ERC721 token on StarkNet and customize it to perform specific functions.
-It is aimed at developpers that:
+It is aimed at developers that:
 - Understand Cairo syntax
 - Understand the ERC721 token standard
 
 ​
-This workshop is the first in a serie that will cover broad smart contract concepts (writing and deploying ERC20/ERC721, bridging assets, L1 <-> L2 messaging...). 
+This workshop is the first in a series that will cover broad smart contract concepts (writing and deploying ERC20/ERC721, bridging assets, L1 <-> L2 messaging...). 
 Interested in helping writing those? [Reach out](https://twitter.com/HenriLieutaud)!
 ​
 
@@ -38,8 +38,8 @@ Your objective is to gather as many ERC721-101 points as possible. Please note :
 - The 'transfer' function of ERC721-101 has been disabled to encourage you to finish the TD with only one address
 - You can answer the various questions of this workshop with different ERC721 contracts. However, an evaluated address has only one evaluated ERC721 contract at a time. To change the evaluated ERC721 contract associated with your address, call `submit_exercise()`  within the evaluator with that specific address.
 - In order to receive points, you will have to do execute code in `Evaluator.cairo` such that the function `distribute_points(sender_address, 2)` is triggered, and distributes n points.
-- This repo contains an interface `IExerciceSolution.cairo`. Your ERC721 contract will have to conform to this interface in order to validate the exercice; that is, your contract needs to implement all the functions described in `IExerciceSolution.cairo`. 
-- A high level description of what is expected for each exercice is in this readme. A low level description of what is expected can be inferred by reading the code in `Evaluator.cairo`.
+- This repo contains an interface `IExerciceSolution.cairo`. Your ERC721 contract will have to conform to this interface in order to validate the exercise; that is, your contract needs to implement all the functions described in `IExerciceSolution.cairo`. 
+- A high level description of what is expected for each exercise is in this readme. A low level description of what is expected can be inferred by reading the code in `Evaluator.cairo`.
 - The Evaluator contract sometimes needs to make payments to buy your tokens. Make sure he has enough dummy tokens to do so! If not, you should get dummy tokens from the dummy tokens contract and send them to the evaluator
 
 
@@ -64,7 +64,7 @@ You can (and should) check the status of your transaction with the following URL
 
 ### Getting to work
 - Clone the repo on your machine
-- Setup the environment following [these instructions](https://starknet.io/docs/quickstart.html#quickstart)
+- Set up the environment following [these instructions](https://starknet.io/docs/quickstart.html#quickstart)
 - Install [Nile](https://github.com/OpenZeppelin/nile).
 - Test that you are able to compile the project
 ```

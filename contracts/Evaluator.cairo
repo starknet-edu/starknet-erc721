@@ -231,8 +231,8 @@ func ex3_declare_new_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ra
 
 	# Retrieve expected characteristics
 	let (expected_sex) = assigned_sex_number(sender_address)
-	let (expected_wings) = assigned_wings_number(sender_address)
 	let (expected_legs) = assigned_legs_number(sender_address)
+	let (expected_wings) = assigned_wings_number(sender_address)
 
 	# Declaring a new animal with the desired parameters
 	let (created_token) = IExerciceSolution.declare_animal(contract_address = submited_exercise_address, sex=expected_sex, legs=expected_legs, wings=expected_wings)
@@ -290,11 +290,11 @@ func ex4_declare_dead_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, r
 
 	# Check that properties are deleted 
 	# Reading animal characteristic in student solution
-	let (read_sex, read_wings, read_legs) = IExerciceSolution.get_animal_characteristics(contract_address = submited_exercise_address, token_id=token_id)
+	let (read_sex, read_legs, read_wings) = IExerciceSolution.get_animal_characteristics(contract_address = submited_exercise_address, token_id=token_id)
 	# Checking characteristics are correct
 	assert read_sex = 0
-	assert read_wings = 0
 	assert read_legs = 0
+	assert read_wings = 0
 	# TODO Testing killing another person's animal. The caller has to hold an animal
 	# Requires try / catch, or something smarter. I'll think about it.
 	
@@ -463,8 +463,8 @@ func ex2b_test_declare_animal_internal{syscall_ptr : felt*, pedersen_ptr : HashB
 	alloc_locals
 	# Retrieve expected characteristics
 	let (expected_sex) = assigned_sex_number(sender_address)
-	let (expected_wings) = assigned_wings_number(sender_address)
 	let (expected_legs) = assigned_legs_number(sender_address)
+	let (expected_wings) = assigned_wings_number(sender_address)
 
 	# Retrieve exercise address
 	let (submited_exercise_address) = student_exercise_solution_storage.read(sender_address)
@@ -476,11 +476,11 @@ func ex2b_test_declare_animal_internal{syscall_ptr : felt*, pedersen_ptr : HashB
 	assert evaluator_address = token_owner
 
 	# Reading animal characteristic in student solution
-	let (read_sex, read_wings, read_legs) = IExerciceSolution.get_animal_characteristics(contract_address = submited_exercise_address, token_id=token_id)
+	let (read_sex, read_legs, read_wings) = IExerciceSolution.get_animal_characteristics(contract_address = submited_exercise_address, token_id=token_id)
 	# Checking characteristics are correct
 	assert read_sex = expected_sex
-	assert read_wings = expected_wings
 	assert read_legs = expected_legs
+	assert read_wings = expected_wings
 
 	# Checking if student has validated this exercise before
 	let (has_validated) = exercises_validation_storage.read(sender_address, 2)
