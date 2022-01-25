@@ -368,13 +368,13 @@ func ex5b_register_breeder{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ran
 	let (dummy_token_init_balance) = IERC20.balanceOf(contract_address = dummy_token_address, account=evaluator_address)
 	# Approve the exercice for spending my dummy tokens
 	IERC20.approve(contract_address = dummy_token_address, spender=submited_exercise_address, amount=registration_price)
-  
+
 	# Require breeder permission.
 	IExerciceSolution.register_me_as_breeder(contract_address = submited_exercise_address)
 
 	# Check that I am indeed a breeder
 	let (is_evaluator_breeder_end) = IExerciceSolution.is_breeder(contract_address = submited_exercise_address, account = evaluator_address)
-	assert is_evaluator_breeder_init = 1
+	assert is_evaluator_breeder_end = 1
 
 	# Check that my balance has been updated
 	let (dummy_token_end_balance) = IERC20.balanceOf(contract_address = dummy_token_address, account=evaluator_address)
