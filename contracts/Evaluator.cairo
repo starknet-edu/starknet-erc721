@@ -10,7 +10,9 @@ from starkware.cairo.common.math import assert_not_zero
 from contracts.utils.ex00_base import (
     tderc20_address,
     distribute_points,
-    ex_initializer
+    ex_initializer,
+    has_validated_exercise,
+    validate_exercice
 )
 from contracts.token.ERC721.IERC721 import IERC721
 from contracts.IExerciceSolution import IExerciceSolution
@@ -31,15 +33,11 @@ func has_been_paired(contract_address: felt) -> (has_been_paired: felt):
 end
 
 @storage_var
-func student_exercise_solution_storage(student_address: felt) -> (contract_address: felt):
+func player_exercise_solution_storage(player_address: felt) -> (contract_address: felt):
 end
 
 @storage_var
-func exercises_validation_storage(student_address: felt, exercise_number: felt) -> (has_validated: felt):
-end
-
-@storage_var
-func assigned_rank_storage(student_address: felt) -> (rank: felt):
+func assigned_rank_storage(player_address: felt) -> (rank: felt):
 end
 
 @storage_var
@@ -68,40 +66,34 @@ end
 #
 
 @view
-func student_exercise_solution{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(student_address: felt) -> (contract_address: felt):
-    let (contract_address) = student_exercise_solution_storage.read(student_address)
+func player_exercise_solution{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(player_address: felt) -> (contract_address: felt):
+    let (contract_address) = player_exercise_solution_storage.read(player_address)
     return (contract_address)
 end
 
 @view
-func exercises_validation{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(student_address: felt, exercise_number: felt) -> (has_validated: felt):
-    let (has_validated) = exercises_validation_storage.read(student_address, exercise_number)
-    return (has_validated)
-end
-
-@view
-func assigned_rank{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(student_address: felt) -> (rank: felt):
-    let (rank) = assigned_rank_storage.read(student_address)
+func assigned_rank{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(player_address: felt) -> (rank: felt):
+    let (rank) = assigned_rank_storage.read(player_address)
     return (rank)
 end
 
 @view
-func assigned_legs_number{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(student_address: felt) -> (legs: felt):
-	let (rank) = assigned_rank(student_address)
+func assigned_legs_number{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(player_address: felt) -> (legs: felt):
+	let (rank) = assigned_rank(player_address)
     let (legs) = random_attributes_storage.read(0, rank)
     return (legs)
 end
 
 @view
-func assigned_sex_number{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(student_address: felt) -> (sex: felt):
-	let (rank) = assigned_rank(student_address)
+func assigned_sex_number{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(player_address: felt) -> (sex: felt):
+	let (rank) = assigned_rank(player_address)
     let (sex) = random_attributes_storage.read(1, rank)
     return (sex)
 end
 
 @view
-func assigned_wings_number{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(student_address: felt) -> (wings: felt):
-	let (rank) = assigned_rank(student_address)
+func assigned_wings_number{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(player_address: felt) -> (wings: felt):
+	let (rank) = assigned_rank(player_address)
     let (wings) = random_attributes_storage.read(2, rank)
     return (wings)
 end
@@ -111,8 +103,11 @@ end
 #
 @constructor
 func constructor{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
-        _tderc20_address : felt, _dummy_token_address: felt):
-    ex_initializer(_tderc20_address)
+	_tderc20_address : felt, 
+	_dummy_token_address: felt, 
+        _players_registry: felt, 
+        _workshop_id: felt):
+    ex_initializer(_tderc20_address, _players_registry, _workshop_id)
     dummy_token_address_storage.write(_dummy_token_address)
     # Hard coded value for now
     max_rank_storage.write(100)
@@ -131,7 +126,7 @@ func ex1_test_erc721{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
 	let (sender_address) = get_caller_address()
 	let token_id: Uint256 = Uint256(1,0)
 	# Retrieve exercise address
-	let (submited_exercise_address) = student_exercise_solution_storage.read(sender_address)
+	let (submited_exercise_address) = player_exercise_solution_storage.read(sender_address)
 
 	# Reading evaluator address
 	let (evaluator_address) = get_contract_address()
@@ -172,8 +167,8 @@ func ex1_test_erc721{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
 	let (is_evaluator_balance_equal_to_expected) = uint256_eq(evaluator_expected_balance, evaluator_end_balance)
 	assert is_evaluator_balance_equal_to_expected = 1
 
-	# Checking if student has validated this exercise before
-	let (has_validated) = exercises_validation_storage.read(sender_address, 1)
+	# Checking if player has validated this exercise before
+	let (has_validated) = has_validated_exercise(sender_address, 1)
 	# This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
 
 	tempvar syscall_ptr = syscall_ptr
@@ -181,8 +176,8 @@ func ex1_test_erc721{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
     tempvar range_check_ptr = range_check_ptr
 
 	if has_validated == 0:
-		# Student has validated
-		exercises_validation_storage.write(sender_address, 1, 1)
+		# player has validated
+		validate_exercice(sender_address, 1)
 		# Sending points
 		distribute_points(sender_address, 2)
 	end
@@ -221,7 +216,7 @@ func ex3_declare_new_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ra
 	# Reading caller address
 	let (sender_address) = get_caller_address()
 	# Retrieve exercise address
-	let (submited_exercise_address) = student_exercise_solution_storage.read(sender_address)
+	let (submited_exercise_address) = player_exercise_solution_storage.read(sender_address)
 	# Reading evaluator address
 	let (evaluator_address) = get_contract_address()
 	# Reading balance of evaluator in exercise
@@ -242,8 +237,8 @@ func ex3_declare_new_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ra
 	ex2b_test_declare_animal_internal(sender_address,created_token)
 
 	# Ok so if I got until here then... nothing failed. I get points
-	# Checking if student has validated this exercise before
-	let (has_validated) = exercises_validation_storage.read(sender_address, 3)
+	# Checking if player has validated this exercise before
+	let (has_validated) = has_validated_exercise(sender_address, 3)
 
 	# This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
 	tempvar syscall_ptr = syscall_ptr
@@ -251,8 +246,8 @@ func ex3_declare_new_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ra
     tempvar range_check_ptr = range_check_ptr
 
 	if has_validated == 0:
-		# Student has validated
-		exercises_validation_storage.write(sender_address, 3, 1)
+		# player has validated
+		validate_exercice(sender_address, 3)
 		# Sending points
 		distribute_points(sender_address, 2)
 	end
@@ -266,7 +261,7 @@ func ex4_declare_dead_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, r
 	# Reading caller address
 	let (sender_address) = get_caller_address()
 	# Retrieve exercise address
-	let (submited_exercise_address) = student_exercise_solution_storage.read(sender_address)
+	let (submited_exercise_address) = player_exercise_solution_storage.read(sender_address)
 	# Reading evaluator address
 	let (evaluator_address) = get_contract_address()
 	# Getting initial token balance. Must be at least 1
@@ -289,7 +284,7 @@ func ex4_declare_dead_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, r
 	assert is_evaluator_balance_equal_to_expected = 1
 
 	# Check that properties are deleted
-	# Reading animal characteristic in student solution
+	# Reading animal characteristic in player solution
 	let (read_sex, read_legs, read_wings) = IExerciceSolution.get_animal_characteristics(contract_address = submited_exercise_address, token_id=token_id)
 	# Checking characteristics are correct
 	assert read_sex = 0
@@ -298,16 +293,16 @@ func ex4_declare_dead_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, r
 	# TODO Testing killing another person's animal. The caller has to hold an animal
 	# Requires try / catch, or something smarter. I'll think about it.
 
-	# Checking if student has validated this exercise before
-	let (has_validated) = exercises_validation_storage.read(sender_address, 4)
+	# Checking if player has validated this exercise before
+	let (has_validated) = has_validated_exercise(sender_address, 4)
 	# This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
 	tempvar syscall_ptr = syscall_ptr
     tempvar pedersen_ptr = pedersen_ptr
     tempvar range_check_ptr = range_check_ptr
 
 	if has_validated == 0:
-		# Student has validated
-		exercises_validation_storage.write(sender_address, 4, 1)
+		# player has validated
+		validate_exercice(sender_address, 4)
 		# Sending points
 		distribute_points(sender_address, 2)
 	end
@@ -330,16 +325,16 @@ func ex5a_i_have_dtk{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
 	let (is_equal) = uint256_eq(dummy_token_init_balance, zero_as_uint256)
 	assert is_equal = 0
 
-	# Checking if student has validated this exercise before
-	let (has_validated) = exercises_validation_storage.read(sender_address, 51)
+	# Checking if player has validated this exercise before
+	let (has_validated) = has_validated_exercise(sender_address, 51)
 	# This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
 	tempvar syscall_ptr = syscall_ptr
     tempvar pedersen_ptr = pedersen_ptr
     tempvar range_check_ptr = range_check_ptr
 
 	if has_validated == 0:
-		# Student has validated
-		exercises_validation_storage.write(sender_address, 51, 1)
+		# player has validated
+		validate_exercice(sender_address, 51)
 		# Sending points
 		distribute_points(sender_address, 2)
 	end
@@ -353,7 +348,7 @@ func ex5b_register_breeder{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ran
 	# Reading caller address
 	let (sender_address) = get_caller_address()
 	# Retrieve exercise address
-	let (submited_exercise_address) = student_exercise_solution_storage.read(sender_address)
+	let (submited_exercise_address) = player_exercise_solution_storage.read(sender_address)
 	# Get evaluator address
 	let (evaluator_address) = get_contract_address()
 	# Is evaluator currently a breeder?
@@ -384,16 +379,16 @@ func ex5b_register_breeder{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ran
 	let (is_evaluator_balance_equal_to_expected) = uint256_eq(evaluator_expected_balance, dummy_token_end_balance)
 	assert is_evaluator_balance_equal_to_expected = 1
 
-	# Checking if student has validated this exercise before
-	let (has_validated) = exercises_validation_storage.read(sender_address, 52)
+	# Checking if player has validated this exercise before
+	let (has_validated) = has_validated_exercise(sender_address, 52)
 	# This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
 	tempvar syscall_ptr = syscall_ptr
     tempvar pedersen_ptr = pedersen_ptr
     tempvar range_check_ptr = range_check_ptr
 
 	if has_validated == 0:
-		# Student has validated
-		exercises_validation_storage.write(sender_address, 52, 1)
+		# player has validated
+		validate_exercice(sender_address, 52)
 		# Sending points
 		distribute_points(sender_address, 2)
 	end
@@ -408,12 +403,12 @@ func submit_exercise{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
 	let (has_solution_been_submitted_before) = has_been_paired.read(erc721_address)
 	assert has_solution_been_submitted_before = 0
 
-	# Assigning passed ERC721 as student ERC721
-	student_exercise_solution_storage.write(sender_address, erc721_address)
+	# Assigning passed ERC721 as player ERC721
+	player_exercise_solution_storage.write(sender_address, erc721_address)
 	has_been_paired.write(erc721_address, 1)
 
-	# Checking if student has validated this exercise before
-	let (has_validated) = exercises_validation_storage.read(sender_address, 0)
+	# Checking if player has validated this exercise before
+	let (has_validated) = has_validated_exercise(sender_address, 0)
 	# This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
 
 	tempvar syscall_ptr = syscall_ptr
@@ -421,8 +416,8 @@ func submit_exercise{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
     tempvar range_check_ptr = range_check_ptr
 
 	if has_validated == 0:
-		# Student has validated
-		exercises_validation_storage.write(sender_address, 0, 1)
+		# player has validated
+		validate_exercice(sender_address, 0)
 		# Sending points
 		# setup points
 		distribute_points(sender_address, 2)
@@ -467,7 +462,7 @@ func ex2b_test_declare_animal_internal{syscall_ptr : felt*, pedersen_ptr : HashB
 	let (expected_wings) = assigned_wings_number(sender_address)
 
 	# Retrieve exercise address
-	let (submited_exercise_address) = student_exercise_solution_storage.read(sender_address)
+	let (submited_exercise_address) = player_exercise_solution_storage.read(sender_address)
 	# Get current contract address
 	let (evaluator_address) = get_contract_address()
 	# Reading who owns token 1 of exercise
@@ -475,23 +470,23 @@ func ex2b_test_declare_animal_internal{syscall_ptr : felt*, pedersen_ptr : HashB
 	# Verifying that token 1 belongs to evaluator
 	assert evaluator_address = token_owner
 
-	# Reading animal characteristic in student solution
+	# Reading animal characteristic in player solution
 	let (read_sex, read_legs, read_wings) = IExerciceSolution.get_animal_characteristics(contract_address = submited_exercise_address, token_id=token_id)
 	# Checking characteristics are correct
 	assert read_sex = expected_sex
 	assert read_legs = expected_legs
 	assert read_wings = expected_wings
 
-	# Checking if student has validated this exercise before
-	let (has_validated) = exercises_validation_storage.read(sender_address, 2)
+	# Checking if player has validated this exercise before
+	let (has_validated) = has_validated_exercise(sender_address, 2)
 	# This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
 	tempvar syscall_ptr = syscall_ptr
     tempvar pedersen_ptr = pedersen_ptr
     tempvar range_check_ptr = range_check_ptr
 
 	if has_validated == 0:
-		# Student has validated
-		exercises_validation_storage.write(sender_address, 2, 1)
+		# player has validated
+		validate_exercice(sender_address, 2)
 		# Sending points
 		distribute_points(sender_address, 2)
 	end
