@@ -49,7 +49,7 @@ Your objective is to gather as many ERC721-101 points as possible. Please note :
 ​
 Your points will get credited in Argent X; though this may take some time. If you want to monitor your points count in real time, you can also see your balance in voyager!
 ​
--   Go to the  [ERC20 counter](https://goerli.voyager.online/contract/0x0703cd133bfadfa9990b6e4200a9af3309c44876174b5dac5036a27a18ff6e19#readContract)  in voyager, in the "read contract" tab
+-   Go to the  [ERC20 counter](https://goerli.voyager.online/contract/0x02717bb3889b1ec2a68a56022cff3b15c6a7bdd461c5f20c78178b57e7988661#readContract)  in voyager, in the "read contract" tab
 -   Enter your address in decimal in the "balanceOf" function
 ​
 #### [](https://github.com/l-henri/starknet-cairo-101/blob/main/README.md#transaction-status)Transaction status
@@ -115,9 +115,9 @@ Not automated yet, but you can still have fun
 ## Exercises & Contract addresses 
 |Contract code|Contract on voyager|
 |---|---|
-|[Points counter ERC20](contracts/token/ERC20/TDERC20.cairo)|[0x01be1ef1c88ed2588c47d460ac9147a09b0cb47854075adb53105d8121bdb93a](https://goerli.voyager.online/contract/0x01be1ef1c88ed2588c47d460ac9147a09b0cb47854075adb53105d8121bdb93a)|
-|[Evaluator](contracts/Evaluator.cairo)|[0x0798c47c1bc91bc09d3b060e18cbc895405a75021494cc87d328aeacb71898d5](https://goerli.voyager.online/contract/0x0798c47c1bc91bc09d3b060e18cbc895405a75021494cc87d328aeacb71898d5)|
-|[Dummy token](contracts/token/ERC20/dummy_token.cairo)|[0x023a167923cc146b9871519ca2949d6c418584ce7fbb7132fa9c9e903c49fddd](https://goerli.voyager.online/contract/0x023a167923cc146b9871519ca2949d6c418584ce7fbb7132fa9c9e903c49fddd)|
+|[Points counter ERC20](contracts/token/ERC20/TDERC20.cairo)|[0x02717bb3889b1ec2a68a56022cff3b15c6a7bdd461c5f20c78178b57e7988661](https://goerli.voyager.online/contract/0x02717bb3889b1ec2a68a56022cff3b15c6a7bdd461c5f20c78178b57e7988661)|
+|[Evaluator](contracts/Evaluator.cairo)|[0x040f8555af087a40f16d1b3b9ebdf7065980cb9f0aa285f86ebae7263c60d015](https://goerli.voyager.online/contract/0x040f8555af087a40f16d1b3b9ebdf7065980cb9f0aa285f86ebae7263c60d015)|
+|[Dummy token](contracts/token/ERC20/dummy_token.cairo)|[0x02a25ea7fa8a014eb96487b54fbcf0cc7d538c7a3b98e10ff58b63ead319f6d1](https://goerli.voyager.online/contract/0x02a25ea7fa8a014eb96487b54fbcf0cc7d538c7a3b98e10ff58b63ead319f6d1)|
 
 
 ​
