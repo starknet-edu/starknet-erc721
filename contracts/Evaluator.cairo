@@ -14,6 +14,8 @@ from contracts.utils.ex00_base import (
     has_validated_exercise,
     validate_exercice
 )
+
+from contracts.utils.String import String_get, String_set
 from contracts.token.ERC721.IERC721 import IERC721
 from contracts.IExerciceSolution import IExerciceSolution
 from starkware.starknet.common.syscalls import (get_contract_address, get_caller_address)
@@ -58,6 +60,10 @@ end
 
 @storage_var
 func dummy_token_address_storage() -> (dummy_token_address_storage: felt):
+end
+
+@storage_var
+func dummy_ipfs_metadata_erc721_storage() -> (dummy_ipfs_metadata_erc721_storage: felt):
 end
 
 #
