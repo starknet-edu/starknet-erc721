@@ -1,9 +1,5 @@
 # ERC721 on StarkNet 
 
-PLAYERS BEWARE
-
-THIS TUTORIAL IS STILL UNDER DEVELOPMENT. YOU CAN START WORKING ON IT, BUT YOUR BALANCES MAY BE RESET IN THE COMING DAYS.
-
 ## Introduction
 Welcome! This is an automated workshop that will explain how to deploy an ERC721 token on StarkNet and customize it to perform specific functions.
 It is aimed at developers that:
