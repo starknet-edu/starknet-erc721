@@ -4,7 +4,7 @@
 %lang starknet
 %builtins pedersen range_check
 
-from starkware.cairo.common.cairo_builtins import HashBuiltin
+from starkware.cairo.common.cairo_builtins import HashBuiltin, BitwiseBuiltin
 from starkware.cairo.common.math import assert_not_zero
 
 from contracts.utils.ex00_base import (
@@ -17,6 +17,7 @@ from contracts.utils.ex00_base import (
 
 from contracts.utils.String import String_get, String_set
 from contracts.token.ERC721.IERC721 import IERC721
+from contracts.token.ERC721.IERC721_metadata import IERC721_metadata
 from contracts.IExerciceSolution import IExerciceSolution
 from starkware.starknet.common.syscalls import (get_contract_address, get_caller_address)
 from starkware.cairo.common.uint256 import (
@@ -63,7 +64,7 @@ func dummy_token_address_storage() -> (dummy_token_address_storage: felt):
 end
 
 @storage_var
-func dummy_ipfs_metadata_erc721_storage() -> (dummy_ipfs_metadata_erc721_storage: felt):
+func dummy_metadata_erc721_storage() -> (dummy_metadata_erc721_storage: felt):
 end
 
 #
@@ -402,6 +403,73 @@ func ex5b_register_breeder{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ran
 end
 
 @external
+func ex6_claim_metadata_token{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(token_id: Uint256):
+	# Allocating locals. Make your code easier to write and read by avoiding some revoked references
+	alloc_locals
+	# Retrieve dummy token address
+	let (dummy_metadata_erc721_address) = dummy_metadata_erc721_storage.read()
+	# Reading caller address
+	let (sender_address) = get_caller_address()
+	# Reading who owns token token_id 
+	let (token_owner) = IERC721.ownerOf(contract_address = dummy_metadata_erc721_address, token_id = token_id)
+	# Verifying that token 1 belongs to evaluator
+	assert sender_address = token_owner
+
+	# Checking if player has validated this exercise before
+	let (has_validated) = has_validated_exercise(sender_address, 6)
+	# This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
+
+	tempvar syscall_ptr = syscall_ptr
+    tempvar pedersen_ptr = pedersen_ptr
+    tempvar range_check_ptr = range_check_ptr
+
+	if has_validated == 0:
+		# player has validated
+		validate_exercice(sender_address, 6)
+		# Sending points
+		distribute_points(sender_address, 2)
+	end
+	return()
+end
+
+
+# Check that ERC721 has implemented metadata queries
+@external
+func ex7_add_metadata{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}():
+	alloc_locals
+	# Reading caller address
+	let (sender_address) = get_caller_address()
+	# Retrieve exercise address
+	let (submited_exercise_address) = player_exercise_solution_storage.read(sender_address)
+	# Get evaluator address
+	let (evaluator_address) = get_contract_address()
+	# Retrieve dummy token address
+	let (dummy_metadata_erc721_address) = dummy_metadata_erc721_storage.read()
+	# Reading metadata URI for token 1 on both contracts. For these to show up in Oasis, they should be equal 
+	let token_id = Uint256(0,1)
+	let (metadata_player_len, metadata_player) = IERC721_metadata.tokenURI(contract_address = submited_exercise_address, token_id = token_id)
+	let (metadata_dummy_len, metadata_dummy) = IERC721_metadata.tokenURI(contract_address = dummy_metadata_erc721_address, token_id = token_id)
+	# Verifying they are equal
+	assert metadata_dummy_len = metadata_player_len
+	ex7_check_arrays_are_equal(metadata_dummy_len, metadata_dummy, metadata_player)
+	# Checking if player has validated this exercise before
+	let (has_validated) = has_validated_exercise(sender_address, 7)
+	# This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
+	tempvar syscall_ptr = syscall_ptr
+    tempvar pedersen_ptr = pedersen_ptr
+    tempvar range_check_ptr = range_check_ptr
+
+	if has_validated == 0:
+		# player has validated
+		validate_exercice(sender_address, 7)
+		# Sending points
+		distribute_points(sender_address, 2)
+	end
+	return()
+end
+
+
+@external
 func submit_exercise{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(erc721_address: felt):
 	# Reading caller address
 	let (sender_address) = get_caller_address()
@@ -496,6 +564,15 @@ func ex2b_test_declare_animal_internal{syscall_ptr : felt*, pedersen_ptr : HashB
 		# Sending points
 		distribute_points(sender_address, 2)
 	end
+	return()
+end
+
+func ex7_check_arrays_are_equal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(arrays_len:felt, array_1: felt*, array_2: felt*):
+	if arrays_len == 0:
+        return ()
+    end
+    ex7_check_arrays_are_equal(arrays_len=arrays_len-1, array_1 = array_1+1, array_2 = array_2+1)
+    assert [array_1] = [array_2]
 	return()
 end
 #

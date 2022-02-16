@@ -2,9 +2,9 @@
 %builtins pedersen range_check ecdsa
 
 from starkware.cairo.common.cairo_builtins import HashBuiltin, SignatureBuiltin
-from starkware.cairo.common.uint256 import Uint256
-from starkware.starknet.common.syscalls import get_caller_address
-from starkware.cairo.common.math import assert_not_zero
+from starkware.cairo.common.uint256 import (
+    Uint256, uint256_add, uint256_sub, uint256_le, uint256_lt, uint256_check, uint256_eq
+)
 from contracts.token.ERC721.ERC721_base import (
     ERC721_name,
     ERC721_symbol,
@@ -19,15 +19,13 @@ from contracts.token.ERC721.ERC721_base import (
     ERC721_approve,
     ERC721_setApprovalForAll,
     ERC721_transferFrom,
-    ERC721_safeTransferFrom,
-    _is_approved_or_owner
+    ERC721_safeTransferFrom
 )
 
-from contracts.token.ERC721.ERC721_Metadata_ipfs_base import (
+from contracts.token.ERC721.ERC721_Metadata_base import (
     ERC721_Metadata_initializer,
     ERC721_Metadata_tokenURI,
     ERC721_Metadata_setBaseTokenURI,
-    ERC721_Metadata_setTokenURI
 )
 
 from contracts.token.ERC721.ERC165_base import (
@@ -51,17 +49,36 @@ func constructor{
         syscall_ptr : felt*,
         pedersen_ptr : HashBuiltin*,
         range_check_ptr
-    }(name: felt, symbol: felt, owner: felt, base_token_uri_len: felt, base_token_uri: felt*):
+    }(name: felt, symbol: felt, owner: felt, base_token_uri_len: felt, base_token_uri: felt*, token_uri_suffix: felt):
     ERC721_initializer(name, symbol)
     ERC721_Metadata_initializer()
     Ownable_initializer(owner)
-    ERC721_Metadata_setBaseTokenURI(base_token_uri_len, base_token_uri)
+    ERC721_Metadata_setBaseTokenURI(base_token_uri_len, base_token_uri, token_uri_suffix)
     return ()
+end
+
+#
+# Storage vars
+#
+
+@storage_var
+func next_token_id_storage() -> (next_token_id: Uint256):
 end
 
 #
 # Getters
 #
+
+@view
+func next_token_id{
+        syscall_ptr : felt*,
+        pedersen_ptr : HashBuiltin*,
+        range_check_ptr
+    }() -> (next_token_id: Uint256):
+    let (next_token_id) = next_token_id_storage.read()
+    return (next_token_id=next_token_id)
+end
+
 
 @view
 func getOwner{
@@ -204,30 +221,15 @@ func safeTransferFrom{
 end
 
 @external
-func setTokenBaseURI{
-        pedersen_ptr: HashBuiltin*,
-        syscall_ptr: felt*,
-        range_check_ptr
-    }(base_token_uri_len: felt, base_token_uri: felt*):
-    Ownable_only_owner()
-    ERC721_Metadata_setBaseTokenURI(base_token_uri_len, base_token_uri)
-    return ()
-end
-
-@external
 func setTokenURI{
         pedersen_ptr: HashBuiltin*,
         syscall_ptr: felt*,
         range_check_ptr
-    }(token_id: Uint256, token_uri_len: felt, token_uri: felt*):
-    alloc_locals
-    let (caller) = get_caller_address()
-    let (is_approved) = _is_approved_or_owner(caller, token_id)
-    assert_not_zero(caller * is_approved)
-    ERC721_Metadata_setTokenURI(token_id, token_uri_len, token_uri)
+    }(base_token_uri_len: felt, base_token_uri: felt*, token_uri_suffix: felt):
+    Ownable_only_owner()
+    ERC721_Metadata_setBaseTokenURI(base_token_uri_len, base_token_uri, token_uri_suffix)
     return ()
 end
-
 
 @external
 func mint{
@@ -235,20 +237,23 @@ func mint{
         syscall_ptr: felt*,
         range_check_ptr
     }(to: felt, token_id: Uint256):
-    # Ownable_only_owner()
+    Ownable_only_owner()
     ERC721_mint(to, token_id)
     return ()
 end
 
 @external
-func mint_with_metadata{
+func claim{
         pedersen_ptr: HashBuiltin*,
         syscall_ptr: felt*,
         range_check_ptr
-    }(to: felt, token_id: Uint256, token_uri_len: felt, token_uri: felt*):
-    Ownable_only_owner()
+    }(to: felt):
+    let (token_id) = next_token_id_storage.read()
     ERC721_mint(to, token_id)
-    ERC721_Metadata_setTokenURI(token_id, token_uri_len, token_uri)
+    let (token_id) = next_token_id_storage.read()
+    let one_as_uint = Uint256(1,0)
+    let next_token_id : Uint256 = uint256_add(one_as_uint, token_id)
+    next_token_id_storage.write(next_token_id)
     return ()
 end
 
