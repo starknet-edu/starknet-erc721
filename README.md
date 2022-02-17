@@ -66,10 +66,13 @@ You can (and should) check the status of your transaction with the following URL
 - Clone the repo on your machine
 - Set up the environment following [these instructions](https://starknet.io/docs/quickstart.html#quickstart)
 - Install [Nile](https://github.com/OpenZeppelin/nile).
+- Or using docker You can alse use docker: `alias nile='docker run --rm -v "$PWD":"$PWD" -w "$PWD" lucaslvy/nile:0.7.1'`
 - Test that you are able to compile the project
 ```
 nile compile
 ```
+- To convert strings to int `python str_to_int.py str1 str2 ...`
+- To convert hex to int `python hex_to_int.py hex1 hex2 ...`
 
 ## Points list
 Today we are creating an animal registry! Animals are bred by breeders. They can be born, die, reproduce, be sold. You will implement these features little by little.
@@ -102,22 +105,23 @@ Today we are creating an animal registry! Animals are bred by breeders. They can
 
 
 ### Minting NFTs with Metadata
-Not automated yet, but you can still have fun
-- Mint an NFT with metadata on contract 0x0447e9377de46a1b6d46ca00311f51c9613831a803dc8085e5b8e0f69db19a6d (through voyager, function mint_with_metadata)
-- You can use [these assets](assets/)
+- Mint an NFT with metadata on [this dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo) , usable [here](https://goerli.voyager.online/contract/0x02e24bd7683c01cb2e4e48148e254f2a0d44ee526cff3c703d6031a685f1700d)
 - Check it on [Oasis](https://testnet.playoasis.xyz/)
+- Claim points on `ex6_claim_metadata_token` (2 pts)
 - Create a new ERC721 contract that supports metadata. You can use [this contract](contracts/token/ERC721/ERC721_metadata.cairo) as a base
-- Each token should have an associated IPFS hash. So you'll need to modify the functions reading/writing/storing the URIs
 - The base token URI is the chosen IPFS gateway
 - You can upload your NFTs directly on [this website](https://www.pinata.cloud/)
 - Your tokens should be visible on [Oasis](https://testnet.playoasis.xyz/) once minted!
+- Claim points on `ex7_add_metadata` (2 pts)
 
 ## Exercises & Contract addresses 
 |Contract code|Contract on voyager|
 |---|---|
 |[Points counter ERC20](contracts/token/ERC20/TDERC20.cairo)|[0x0272abeb08a98ce2024b96dc522fdcf71e91bd333b228ad62ca664920881bc52](https://goerli.voyager.online/contract/0x0272abeb08a98ce2024b96dc522fdcf71e91bd333b228ad62ca664920881bc52)|
-|[Evaluator](contracts/Evaluator.cairo)|[0x06fc9fab4bf90473b2d3b847855e39a696c11fd8455bc59e344183a40c3a28df](https://goerli.voyager.online/contract/0x06fc9fab4bf90473b2d3b847855e39a696c11fd8455bc59e344183a40c3a28df)|
-|[Dummy token](contracts/token/ERC20/dummy_token.cairo)|[0x06a60bee530501ec2d6368d751cea17122ecbdf9cb8f1724a50f22cc8f73d7f5](https://goerli.voyager.online/contract/0x06a60bee530501ec2d6368d751cea17122ecbdf9cb8f1724a50f22cc8f73d7f5)|
+|[Evaluator](contracts/Evaluator.cairo)|[0x03b56add608787daa56932f92c6afbeb50efdd78d63610d9a904aae351b6de73](https://goerli.voyager.online/contract/0x03b56add608787daa56932f92c6afbeb50efdd78d63610d9a904aae351b6de73)|
+|[Dummy ERC20 token](contracts/token/ERC20/dummy_token.cairo)|[0x07ff0a898530b169c5fe6fed9b397a7bbd402973ce2f543965f99d6d4a4c17b8](https://goerli.voyager.online/contract/0x07ff0a898530b169c5fe6fed9b397a7bbd402973ce2f543965f99d6d4a4c17b8)|
+|[Dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo)|[0x02e24bd7683c01cb2e4e48148e254f2a0d44ee526cff3c703d6031a685f1700d](https://goerli.voyager.online/contract/0x02e24bd7683c01cb2e4e48148e254f2a0d44ee526cff3c703d6031a685f1700d)|
+
 
 
 ​

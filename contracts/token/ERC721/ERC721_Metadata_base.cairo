@@ -27,6 +27,11 @@ end
 func ERC721_base_token_uri_len() -> (res: felt):
 end
 
+@storage_var
+func ERC721_base_token_uri_suffix() -> (res: felt):
+end
+
+
 
 #
 # Constructor
@@ -58,11 +63,20 @@ func ERC721_Metadata_tokenURI{
     _ERC721_Metadata_baseTokenURI(base_token_uri_len, base_token_uri)
 
     let (token_id_ss_len, token_id_ss) = uint256_to_ss(token_id)
-    let (token_uri, token_uri_len) = concat_arr(
+    let (token_uri_temp, token_uri_len_temp) = concat_arr(
         base_token_uri_len,
         base_token_uri,
         token_id_ss_len,
         token_id_ss,
+    )
+    let (ERC721_base_token_uri_suffix_local) = ERC721_base_token_uri_suffix.read()
+    let (local suffix) = alloc()
+    [suffix] = ERC721_base_token_uri_suffix_local
+    let (token_uri, token_uri_len) = concat_arr(
+        token_uri_len_temp,
+        token_uri_temp,
+        1,
+        suffix,
     )
 
     return (token_uri_len=token_uri_len, token_uri=token_uri)
@@ -86,9 +100,10 @@ func ERC721_Metadata_setBaseTokenURI{
         syscall_ptr: felt*,
         pedersen_ptr: HashBuiltin*,
         range_check_ptr
-    }(token_uri_len: felt, token_uri: felt*):
+    }(token_uri_len: felt, token_uri: felt*, token_uri_suffix: felt):
     _ERC721_Metadata_setBaseTokenURI(token_uri_len, token_uri)
     ERC721_base_token_uri_len.write(token_uri_len)
+    ERC721_base_token_uri_suffix.write(token_uri_suffix)
     return ()
 end
 
