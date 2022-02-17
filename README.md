@@ -66,10 +66,13 @@ You can (and should) check the status of your transaction with the following URL
 - Clone the repo on your machine
 - Set up the environment following [these instructions](https://starknet.io/docs/quickstart.html#quickstart)
 - Install [Nile](https://github.com/OpenZeppelin/nile).
+- Or using docker You can alse use docker: `alias nile='docker run --rm -v "$PWD":"$PWD" -w "$PWD" lucaslvy/nile:0.7.1'`
 - Test that you are able to compile the project
 ```
 nile compile
 ```
+- To convert strings to int `python str_to_int.py str1 str2 ...`
+- To convert hex to int `python hex_to_int.py hex1 hex2 ...`
 
 ## Points list
 Today we are creating an animal registry! Animals are bred by breeders. They can be born, die, reproduce, be sold. You will implement these features little by little.
