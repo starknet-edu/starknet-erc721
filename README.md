@@ -102,15 +102,14 @@ Today we are creating an animal registry! Animals are bred by breeders. They can
 
 
 ### Minting NFTs with Metadata
-Not automated yet, but you can still have fun
-- Mint an NFT with metadata on contract 0x0447e9377de46a1b6d46ca00311f51c9613831a803dc8085e5b8e0f69db19a6d (through voyager, function mint_with_metadata)
-- You can use [these assets](assets/)
+- Mint an NFT with metadata on [this dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo) , usable [here](https://goerli.voyager.online/contract/0x02e24bd7683c01cb2e4e48148e254f2a0d44ee526cff3c703d6031a685f1700d)
 - Check it on [Oasis](https://testnet.playoasis.xyz/)
+- Claim points on `ex6_claim_metadata_token` (2 pts)
 - Create a new ERC721 contract that supports metadata. You can use [this contract](contracts/token/ERC721/ERC721_metadata.cairo) as a base
-- Each token should have an associated IPFS hash. So you'll need to modify the functions reading/writing/storing the URIs
 - The base token URI is the chosen IPFS gateway
 - You can upload your NFTs directly on [this website](https://www.pinata.cloud/)
 - Your tokens should be visible on [Oasis](https://testnet.playoasis.xyz/) once minted!
+- Claim points on `ex7_add_metadata` (2 pts)
 
 ## Exercises & Contract addresses 
 |Contract code|Contract on voyager|
