@@ -54,6 +54,8 @@ func constructor{
     ERC721_Metadata_initializer()
     Ownable_initializer(owner)
     ERC721_Metadata_setBaseTokenURI(base_token_uri_len, base_token_uri, token_uri_suffix)
+    let one_as_uint = Uint256(1,0)
+    next_token_id_storage.write(one_as_uint)
     return ()
 end
 
@@ -249,11 +251,10 @@ func claim{
         range_check_ptr
     }(to: felt):
     let (token_id) = next_token_id_storage.read()
-    ERC721_mint(to, token_id)
-    let (token_id) = next_token_id_storage.read()
     let one_as_uint = Uint256(1,0)
-    let next_token_id : Uint256 = uint256_add(one_as_uint, token_id)
+    let (next_token_id, _) = uint256_add(one_as_uint, token_id)
     next_token_id_storage.write(next_token_id)
+    ERC721_mint(to, token_id)
     return ()
 end
 

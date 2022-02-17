@@ -111,11 +111,13 @@ end
 @constructor
 func constructor{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
 	_tderc20_address : felt, 
-	_dummy_token_address: felt, 
         _players_registry: felt, 
-        _workshop_id: felt):
+        _workshop_id: felt,
+        dummy_metadata_erc721_address: felt,
+        	_dummy_token_address: felt):
     ex_initializer(_tderc20_address, _players_registry, _workshop_id)
     dummy_token_address_storage.write(_dummy_token_address)
+    dummy_metadata_erc721_storage.write(dummy_metadata_erc721_address)
     # Hard coded value for now
     max_rank_storage.write(100)
     return ()
@@ -145,7 +147,7 @@ func ex1_test_erc721{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
 	# Reading balance of evaluator in exercise
 	let (evaluator_init_balance) = IERC721.balanceOf(contract_address = submited_exercise_address, owner = evaluator_address)
 	# Reading balance of msg sender in exercise
-	let (sender_init_balance) = IERC721.balanceOf(contract_address = submited_exercise_address, owner = evaluator_address)
+	let (sender_init_balance) = IERC721.balanceOf(contract_address = submited_exercise_address, owner = sender_address)
 
 	# Instanciating a zero in uint format
 	let zero_as_uint256: Uint256 = Uint256(0,0)
@@ -156,7 +158,7 @@ func ex1_test_erc721{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
 	IERC721.transferFrom(contract_address = submited_exercise_address, _from=evaluator_address, to=sender_address, token_id = token_id)
 
 	# Reading balance of msg sender after transfer
-	let (sender_end_balance) = IERC721.balanceOf(contract_address = submited_exercise_address, owner = evaluator_address)
+	let (sender_end_balance) = IERC721.balanceOf(contract_address = submited_exercise_address, owner = sender_address)
 	# Reading balance of evaluator after transfer
 	let (evaluator_end_balance) = IERC721.balanceOf(contract_address = submited_exercise_address, owner = evaluator_address)
 	# Reading who owns token 1 of exercise
@@ -167,7 +169,7 @@ func ex1_test_erc721{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
 	let one_as_uint256: Uint256 = Uint256(1,0)
 	# Store expected balance in a variable, since I can't use everything on a single line
 	let evaluator_expected_balance : Uint256 = uint256_sub(evaluator_init_balance, one_as_uint256)
-	let sender_expected_balance : Uint256 = uint256_add(sender_init_balance, one_as_uint256)
+	let (sender_expected_balance, _) = uint256_add(sender_init_balance, one_as_uint256)
 	# Verifying that balances where updated correctly
 	let (is_sender_balance_equal_to_expected) = uint256_eq(sender_expected_balance, sender_end_balance)
 	assert is_sender_balance_equal_to_expected = 1

@@ -116,8 +116,10 @@ Not automated yet, but you can still have fun
 |Contract code|Contract on voyager|
 |---|---|
 |[Points counter ERC20](contracts/token/ERC20/TDERC20.cairo)|[0x0272abeb08a98ce2024b96dc522fdcf71e91bd333b228ad62ca664920881bc52](https://goerli.voyager.online/contract/0x0272abeb08a98ce2024b96dc522fdcf71e91bd333b228ad62ca664920881bc52)|
-|[Evaluator](contracts/Evaluator.cairo)|[0x06fc9fab4bf90473b2d3b847855e39a696c11fd8455bc59e344183a40c3a28df](https://goerli.voyager.online/contract/0x06fc9fab4bf90473b2d3b847855e39a696c11fd8455bc59e344183a40c3a28df)|
-|[Dummy token](contracts/token/ERC20/dummy_token.cairo)|[0x06a60bee530501ec2d6368d751cea17122ecbdf9cb8f1724a50f22cc8f73d7f5](https://goerli.voyager.online/contract/0x06a60bee530501ec2d6368d751cea17122ecbdf9cb8f1724a50f22cc8f73d7f5)|
+|[Evaluator](contracts/Evaluator.cairo)|[0x03b56add608787daa56932f92c6afbeb50efdd78d63610d9a904aae351b6de73](https://goerli.voyager.online/contract/0x03b56add608787daa56932f92c6afbeb50efdd78d63610d9a904aae351b6de73)|
+|[Dummy ERC20 token](contracts/token/ERC20/dummy_token.cairo)|[0x07ff0a898530b169c5fe6fed9b397a7bbd402973ce2f543965f99d6d4a4c17b8](https://goerli.voyager.online/contract/0x07ff0a898530b169c5fe6fed9b397a7bbd402973ce2f543965f99d6d4a4c17b8)|
+|[Dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo)|[0x02e24bd7683c01cb2e4e48148e254f2a0d44ee526cff3c703d6031a685f1700d](https://goerli.voyager.online/contract/0x02e24bd7683c01cb2e4e48148e254f2a0d44ee526cff3c703d6031a685f1700d)|
+
 
 
 ​
