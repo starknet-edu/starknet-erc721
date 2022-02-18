@@ -1,0 +1,17 @@
+name: Run Nile compilation
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Compile all the contracts
+        run: |
+          docker run --rm -v "$PWD":"$PWD" lucaslvy/nile:latest compile
