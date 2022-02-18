@@ -70,19 +70,18 @@ The TD has three components:
 
 To do this tutorial you will have to interact with the `Evaluator.cairo` contract. To do an exercise you will have to use the `submit_exercise` function to tell the evaluator the address of the evaluated contract. Once it's done you can call the evaluator for it to correct the desired exericse.
 For example to solve the first exercise the workflow would be the following:
+
 `deploy a smart contract that answers ex1` &rarr; `call submit_exercise on the evaluator providing your smart contract address` &rarr; `call ex1_test_erc721 on the evaluator contract`
 
 Your objective is to gather as many ERC721-101 points as possible. Please note :
 
 - The 'transfer' function of ERC721-101 has been disabled to encourage you to finish the tutorial with only one address
-- In order to receive points, you will have to reache the calls to the  `distribute_point` function.
+- In order to receive points, you will have to reach the calls to the  `distribute_point` function.
 - This repo contains an interface `IExerciceSolution.cairo`. Your ERC721 contract will have to conform to this interface in order to validate the exercise; that is, your contract needs to implement all the functions described in `IExerciceSolution.cairo`.
 - **We really recommend that your read the [`Evaluator.cairo`](contracts/Evaluator.cairo) contract in order to fully understand what's expected for each exercise**. A high level description of what is expected for each exercise is provided in this readme.
 - The Evaluator contract sometimes needs to make payments to buy your tokens. Make sure he has enough dummy tokens to do so! If not, you should get dummy tokens from the dummy tokens contract and send them to the evaluator
 
 ### Checking your progress
-
-​
 
 #### Counting your points
 
