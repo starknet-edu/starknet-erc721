@@ -1,4 +1,4 @@
-######### ERC 721 evaluator
+# ######## ERC 721 evaluator
 # Soundtrack https://www.youtube.com/watch?v=iuWa5wh8lG0
 
 %lang starknet
@@ -207,6 +207,11 @@ func ex2b_test_declare_animal_internal{
     let (expected_legs) = assigned_legs_number(caller_address)
     let (expected_wings) = assigned_wings_number(caller_address)
 
+    assert_token_ownership(
+        contract_address=submited_exercise_address,
+        token_id=token_id,
+        expected_owner=evaluator_address)
+
     # Reading animal characteristic in player solution
     let (read_sex, read_legs, read_wings) = IExerciceSolution.get_animal_characteristics(
         contract_address=submited_exercise_address, token_id=token_id)
@@ -233,7 +238,7 @@ end
 
 ###############
 ###############
-## EXTERNALS ##
+# # EXTERNALS ##
 ###############
 ###############
 
