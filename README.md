@@ -1,7 +1,23 @@
 # ERC721 on StarkNet
 
+## Introduction
+
+Welcome! This is an automated workshop that will explain how to deploy an ERC721 token on StarkNet and customize it to perform specific functions. The ERC721 standard is described [here](https://docs.openzeppelin.com/contracts/3.x/api/token/erc721).
+It is aimed at developers that:
+
+- Understand Cairo syntax
+- Understand the ERC721 token standard
+
+​
+This workshop is the second in a series that will cover broad smart contract concepts (writing and deploying ERC20/ERC721, bridging assets, L1 <-> L2 messaging...).
+You can find the first tutorial [here](https://github.com/l-henri/starknet-cairo-101)
+Interested in helping writing those? [Reach out](https://twitter.com/HenriLieutaud)!
+
+## Table of contents
+
 - [ERC721 on StarkNet](#erc721-on-starknet)
   - [Introduction](#introduction)
+  - [Table of contents](#table-of-contents)
     - [Disclaimer](#disclaimer)
     - [Providing feedback](#providing-feedback)
   - [How to work on this tutorial](#how-to-work-on-this-tutorial)
@@ -10,6 +26,9 @@
     - [Checking your progress](#checking-your-progress)
       - [Counting your points](#counting-your-points)
       - [Transaction status](#transaction-status)
+      - [Install nile](#install-nile)
+        - [With pip](#with-pip)
+        - [With docker](#with-docker)
     - [Getting to work](#getting-to-work)
   - [Contract addresses](#contract-addresses)
   - [Points list](#points-list)
@@ -24,18 +43,6 @@
     - [Minting NFTs with Metadata](#minting-nfts-with-metadata)
       - [Exercise 6](#exercise-6)
       - [Exercise 7](#exercise-7)
-
-## Introduction
-
-Welcome! This is an automated workshop that will explain how to deploy an ERC721 token on StarkNet and customize it to perform specific functions.
-It is aimed at developers that:
-
-- Understand Cairo syntax
-- Understand the ERC721 token standard
-
-​
-This workshop is the first in a series that will cover broad smart contract concepts (writing and deploying ERC20/ERC721, bridging assets, L1 <-> L2 messaging...).
-Interested in helping writing those? [Reach out](https://twitter.com/HenriLieutaud)!
 ​
 
 ### Disclaimer
@@ -107,26 +114,37 @@ You sent a transaction, and it is shown as "undetected" in voyager? This can mea
 You can (and should) check the status of your transaction with the following URL  [https://alpha4.starknet.io/feeder_gateway/get_transaction_receipt?transactionHash=](https://alpha4.starknet.io/feeder_gateway/get_transaction_receipt?transactionHash=)  , where you can append your transaction hash.
 ​
 
-### Getting to work
+#### Install nile
 
-- Clone the repo on your machine
+##### With pip
+
 - Set up the environment following [these instructions](https://starknet.io/docs/quickstart.html#quickstart)
 - Install [Nile](https://github.com/OpenZeppelin/nile).
-- You can alse use docker and create an alias to easily use nile:
+
+##### With docker
+
+- Linux and macos
 
 ```bash
 alias nile='docker run --rm -v "$PWD":"$PWD" -w "$PWD" lucaslvy/nile:0.7.1'
 ```
 
-- On widows you can use `docker run --rm -it -v ${pwd}:/work --workdir /work lucaslvy/nile:0.7.1`
+- Windows
+
+```bash
+docker run --rm -it -v ${pwd}:/work --workdir /work lucaslvy/nile:0.7.1
+```
+
+### Getting to work
+
+- Clone the repo on your machine
 - Test that you are able to compile the project
 
 ```bash
 nile compile
 ```
 
-- To convert strings to int `python str_to_int.py str1 str2 ...`
-- To convert hex to int `python hex_to_int.py hex1 hex2 ...`
+- To convert data to felt use the [`utils.py`](utils.py) script
 
 ## Contract addresses
 
