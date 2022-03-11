@@ -179,7 +179,7 @@ nile deploy ERC721 arg1 arg2 arg3 --network goerli
 
 - Call `ex2a_get_animal_rank()` to get assigned a random creature to create.
 - Read the expected characteristics of your animal from the Evaluator
-- Create the tools necessary to record animals characteristics in your contract and enable the evaluator contract to retrieve them trough `get_animal_characteristics` function on your contract ([check this](../starknet-erc721/contracts/IExerciceSolution.cairo))
+- Create the tools necessary to record animals characteristics in your contract and enable the evaluator contract to retrieve them trough `get_animal_characteristics` function on your contract ([check this](contracts/IExerciceSolution.cairo))
 - Mint the animal with the desired characteristics and give it to the evaluator
 - Call `ex2b_test_declare_animal()` to receive points (2 pts)
 
