@@ -125,8 +125,16 @@ You can (and should) check the status of your transaction with the following URL
 
 - Linux and macos
 
+for mac m1:
+
 ```bash
 alias nile='docker run --rm -v "$PWD":"$PWD" -w "$PWD" lucaslvy/nile:0.7.1'
+```
+
+for amd processors
+
+```bash
+alias nile='docker run --rm -v "$PWD":"$PWD" -w "$PWD" lucaslvy/nile:latest'
 ```
 
 - Windows
