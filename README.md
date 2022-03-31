@@ -128,19 +128,19 @@ You can (and should) check the status of your transaction with the following URL
 for mac m1:
 
 ```bash
-alias nile='docker run --rm -v "$PWD":"$PWD" -w "$PWD" lucaslvy/nile:0.7.1'
+alias nile='docker run --rm -v "$PWD":"$PWD" -w "$PWD" lucaslvy/nile:0.8.0-arm'
 ```
 
 for amd processors
 
 ```bash
-alias nile='docker run --rm -v "$PWD":"$PWD" -w "$PWD" lucaslvy/nile:latest'
+alias nile='docker run --rm -v "$PWD":"$PWD" -w "$PWD" lucaslvy/nile:0.8.0-x86'
 ```
 
 - Windows
 
 ```bash
-docker run --rm -it -v ${pwd}:/work --workdir /work lucaslvy/nile:0.7.1
+docker run --rm -it -v ${pwd}:/work --workdir /work lucaslvy/0.8.0-x86
 ```
 
 ### Getting to work
