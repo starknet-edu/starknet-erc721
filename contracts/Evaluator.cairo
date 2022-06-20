@@ -14,7 +14,6 @@ from contracts.utils.ex00_base import (
     validate_exercice,
 )
 
-from contracts.utils.String import String_get, String_set
 from contracts.token.ERC721.IERC721 import IERC721
 from contracts.token.ERC721.IERC721_metadata import IERC721_metadata
 from contracts.IExerciceSolution import IExerciceSolution
@@ -159,9 +158,11 @@ func ex1_test_erc721{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
     let (token_1_owner_init) = IERC721.ownerOf(
         contract_address=submited_exercise_address, token_id=token_id
     )
-    # Verifying that token 1 belongs to evaluator
-    assert evaluator_address = token_1_owner_init
 
+    with_attr error_message("Token 1 doesn't belong to the evaluator"):
+        # Verifying that token 1 belongs to evaluator
+        assert evaluator_address = token_1_owner_init
+    end
     # Reading balance of evaluator in exercise
     let (evaluator_init_balance) = IERC721.balanceOf(
         contract_address=submited_exercise_address, owner=evaluator_address
@@ -174,15 +175,19 @@ func ex1_test_erc721{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
     # Instanciating a zero in uint format
     let zero_as_uint256 : Uint256 = Uint256(0, 0)
     let (is_equal) = uint256_eq(evaluator_init_balance, zero_as_uint256)
-    assert is_equal = 0
+    with_attr error_message("Evaluator's balance is 0"):
+        assert is_equal = 0
+    end
 
     # Check that token 1 can be transferred back to msg.sender
-    IERC721.transferFrom(
-        contract_address=submited_exercise_address,
-        _from=evaluator_address,
-        to=sender_address,
-        token_id=token_id,
-    )
+    with_attr error_message("Can't transfer the token 1"):
+        IERC721.transferFrom(
+            contract_address=submited_exercise_address,
+            _from=evaluator_address,
+            to=sender_address,
+            token_id=token_id,
+        )
+    end
 
     # Reading balance of msg sender after transfer
     let (sender_end_balance) = IERC721.balanceOf(
@@ -197,7 +202,9 @@ func ex1_test_erc721{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
         contract_address=submited_exercise_address, token_id=token_id
     )
     # Verifying that token 1 belongs to sender
-    assert token_1_owner_end = sender_address
+    with_attr error_message("Token 1 doesn't belong to the sender"):
+        assert token_1_owner_end = sender_address
+    end
     # I need value 1 in the uint format to be able to substract it, and add it, to compare balances
     let one_as_uint256 : Uint256 = Uint256(1, 0)
     # Store expected balance in a variable, since I can't use everything on a single line
@@ -207,27 +214,30 @@ func ex1_test_erc721{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
     let (is_sender_balance_equal_to_expected) = uint256_eq(
         sender_expected_balance, sender_end_balance
     )
-    assert is_sender_balance_equal_to_expected = 1
+    with_attr error_message("Sender's balance wasn't updated"):
+        assert is_sender_balance_equal_to_expected = 1
+    end
+
     let (is_evaluator_balance_equal_to_expected) = uint256_eq(
         evaluator_expected_balance, evaluator_end_balance
     )
-    assert is_evaluator_balance_equal_to_expected = 1
+    with_attr error_message("Evaluator's balance wasn't updated"):
+        assert is_evaluator_balance_equal_to_expected = 1
+    end
 
     # Checking if player has validated this exercise before
     let (has_validated) = has_validated_exercise(sender_address, 1)
     # This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
-
-    tempvar syscall_ptr = syscall_ptr
-    tempvar pedersen_ptr = pedersen_ptr
-    tempvar range_check_ptr = range_check_ptr
 
     if has_validated == 0:
         # player has validated
         validate_exercice(sender_address, 1)
         # Sending points
         distribute_points(sender_address, 2)
+        return ()
+    else:
+        return ()
     end
-    return ()
 end
 
 # Call this function to get assigned a rank, and the associate characteristics expected from your animal
@@ -279,13 +289,15 @@ func ex3_declare_new_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ra
     let (expected_legs) = assigned_legs_number(sender_address)
     let (expected_wings) = assigned_wings_number(sender_address)
 
-    # Declaring a new animal with the desired parameters
-    let (created_token) = IExerciceSolution.declare_animal(
-        contract_address=submited_exercise_address,
-        sex=expected_sex,
-        legs=expected_legs,
-        wings=expected_wings,
-    )
+    with_attr error_message("Couldn't declare a new animal"):
+        # Declaring a new animal with the desired parameters
+        let (created_token) = IExerciceSolution.declare_animal(
+            contract_address=submited_exercise_address,
+            sex=expected_sex,
+            legs=expected_legs,
+            wings=expected_wings,
+        )
+    end
 
     # Checking that the animal was declared correctly. We basically reuse ex2 lol
     # If it wasn't done correctly, this should fail
@@ -295,18 +307,15 @@ func ex3_declare_new_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ra
     # Checking if player has validated this exercise before
     let (has_validated) = has_validated_exercise(sender_address, 3)
 
-    # This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
-    tempvar syscall_ptr = syscall_ptr
-    tempvar pedersen_ptr = pedersen_ptr
-    tempvar range_check_ptr = range_check_ptr
-
     if has_validated == 0:
         # player has validated
         validate_exercice(sender_address, 3)
         # Sending points
         distribute_points(sender_address, 2)
+        return ()
+    else:
+        return ()
     end
-    return ()
 end
 
 # Sometimes, animals die. Your contract should implement that.
@@ -325,14 +334,18 @@ func ex4_declare_dead_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, r
     )
 
     # Getting an animal id of Evaluator. tokenOfOwnerByIndex should return the list of NFTs owned by and address
-    let (token_id) = IExerciceSolution.token_of_owner_by_index(
-        contract_address=submited_exercise_address, account=evaluator_address, index=0
-    )
+    with_attr error_message("Can't get the token owner by the index"):
+        let (token_id) = IExerciceSolution.token_of_owner_by_index(
+            contract_address=submited_exercise_address, account=evaluator_address, index=0
+        )
+    end
 
-    # Declaring it as dead
-    IExerciceSolution.declare_dead_animal(
-        contract_address=submited_exercise_address, token_id=token_id
-    )
+    with_attr error_message("Can't declare a dead animal"):
+        # Declaring it as dead
+        IExerciceSolution.declare_dead_animal(
+            contract_address=submited_exercise_address, token_id=token_id
+        )
+    end
 
     # Checking end balance
     let (evaluator_end_balance) = IERC721.balanceOf(
@@ -346,34 +359,46 @@ func ex4_declare_dead_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, r
     let (is_evaluator_balance_equal_to_expected) = uint256_eq(
         evaluator_expected_balance, evaluator_end_balance
     )
-    assert is_evaluator_balance_equal_to_expected = 1
+    with_attr error_message(
+            "The dead animal shouldn't count in the evaluator's balance (he should be burnt)"):
+        assert is_evaluator_balance_equal_to_expected = 1
+    end
 
-    # Check that properties are deleted
-    # Reading animal characteristic in player solution
-    let (read_sex, read_legs, read_wings) = IExerciceSolution.get_animal_characteristics(
-        contract_address=submited_exercise_address, token_id=token_id
-    )
+    with_attr error_message("Couldn't get the animal's characteristics"):
+        # Check that properties are deleted
+        # Reading animal characteristic in player solution
+        let (read_sex, read_legs, read_wings) = IExerciceSolution.get_animal_characteristics(
+            contract_address=submited_exercise_address, token_id=token_id
+        )
+    end
+
     # Checking characteristics are correct
-    assert read_sex = 0
-    assert read_legs = 0
-    assert read_wings = 0
+    with_attr error_message("Dead animal's sex should be 0"):
+        assert read_sex = 0
+    end
+
+    with_attr error_message("Dead animal's legs should be 0"):
+        assert read_legs = 0
+    end
+
+    with_attr error_message("Dead animal's wings should be 0"):
+        assert read_wings = 0
+    end
     # TODO Testing killing another person's animal. The caller has to hold an animal
     # Requires try / catch, or something smarter. I'll think about it.
 
     # Checking if player has validated this exercise before
     let (has_validated) = has_validated_exercise(sender_address, 4)
-    # This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
-    tempvar syscall_ptr = syscall_ptr
-    tempvar pedersen_ptr = pedersen_ptr
-    tempvar range_check_ptr = range_check_ptr
 
     if has_validated == 0:
         # player has validated
         validate_exercice(sender_address, 4)
         # Sending points
         distribute_points(sender_address, 2)
+        return ()
+    else:
+        return ()
     end
-    return ()
 end
 
 # For ex5 you need ERC20 tokens. Go get them
@@ -392,22 +417,22 @@ func ex5a_i_have_dtk{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
     # Instanciating a zero in uint format
     let zero_as_uint256 : Uint256 = Uint256(0, 0)
     let (is_equal) = uint256_eq(dummy_token_init_balance, zero_as_uint256)
-    assert is_equal = 0
+    with_attr error_message("Caller should own some DTK"):
+        assert is_equal = 0
+    end
 
     # Checking if player has validated this exercise before
     let (has_validated) = has_validated_exercise(sender_address, 51)
-    # This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
-    tempvar syscall_ptr = syscall_ptr
-    tempvar pedersen_ptr = pedersen_ptr
-    tempvar range_check_ptr = range_check_ptr
 
     if has_validated == 0:
         # player has validated
         validate_exercice(sender_address, 51)
         # Sending points
         distribute_points(sender_address, 2)
+        return ()
+    else:
+        return ()
     end
-    return ()
 end
 
 # Allow breeder to pay for registration as a breeder
@@ -424,13 +449,18 @@ func ex5b_register_breeder{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ran
     let (is_evaluator_breeder_init) = IExerciceSolution.is_breeder(
         contract_address=submited_exercise_address, account=evaluator_address
     )
-    assert is_evaluator_breeder_init = 0
+    with_attr error_message("Evaluator shouldn't be a breeder for now"):
+        assert is_evaluator_breeder_init = 0
+    end
     # TODO test that evaluator can not yet declare an animal (requires try/catch)
 
     # Reading registration price. Registration is payable in dummy token
-    let (registration_price) = IExerciceSolution.registration_price(
-        contract_address=submited_exercise_address
-    )
+    with_attr error_message("Couldn't read the registration price"):
+        let (registration_price) = IExerciceSolution.registration_price(
+            contract_address=submited_exercise_address
+        )
+    end
+
     # Reading evaluator balance in dummy token
     let (dummy_token_address) = dummy_token_address_storage.read()
     let (dummy_token_init_balance) = IERC20.balanceOf(
@@ -444,13 +474,19 @@ func ex5b_register_breeder{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ran
     )
 
     # Require breeder permission.
-    IExerciceSolution.register_me_as_breeder(contract_address=submited_exercise_address)
+    with_attr error_message("Couldn't register the Evaluator as a breeder"):
+        IExerciceSolution.register_me_as_breeder(contract_address=submited_exercise_address)
+    end
 
-    # Check that I am indeed a breeder
-    let (is_evaluator_breeder_end) = IExerciceSolution.is_breeder(
-        contract_address=submited_exercise_address, account=evaluator_address
-    )
-    assert is_evaluator_breeder_end = 1
+    with_attr error_message("Couldn't check that the evaluator is a breeder"):
+        # Check that I am indeed a breeder
+        let (is_evaluator_breeder_end) = IExerciceSolution.is_breeder(
+            contract_address=submited_exercise_address, account=evaluator_address
+        )
+    end
+    with_attr error_message("Evaluator is not a breeder"):
+        assert is_evaluator_breeder_end = 1
+    end
 
     # Check that my balance has been updated
     let (dummy_token_end_balance) = IERC20.balanceOf(
@@ -464,22 +500,23 @@ func ex5b_register_breeder{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ran
     let (is_evaluator_balance_equal_to_expected) = uint256_eq(
         evaluator_expected_balance, dummy_token_end_balance
     )
-    assert is_evaluator_balance_equal_to_expected = 1
+    with_attr error_message(
+            "Actual registration cost is not the one returned by registration_price"):
+        assert is_evaluator_balance_equal_to_expected = 1
+    end
 
     # Checking if player has validated this exercise before
     let (has_validated) = has_validated_exercise(sender_address, 52)
-    # This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
-    tempvar syscall_ptr = syscall_ptr
-    tempvar pedersen_ptr = pedersen_ptr
-    tempvar range_check_ptr = range_check_ptr
 
     if has_validated == 0:
         # player has validated
         validate_exercice(sender_address, 52)
         # Sending points
         distribute_points(sender_address, 2)
+        return ()
+    else:
+        return ()
     end
-    return ()
 end
 
 @external
@@ -497,23 +534,22 @@ func ex6_claim_metadata_token{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, 
         contract_address=dummy_metadata_erc721_address, token_id=token_id
     )
     # Verifying that token 1 belongs to evaluator
-    assert sender_address = token_owner
+    with_attr error_message("Token 1 doesn't belong to the evaluator"):
+        assert sender_address = token_owner
+    end
 
     # Checking if player has validated this exercise before
     let (has_validated) = has_validated_exercise(sender_address, 6)
-    # This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
-
-    tempvar syscall_ptr = syscall_ptr
-    tempvar pedersen_ptr = pedersen_ptr
-    tempvar range_check_ptr = range_check_ptr
 
     if has_validated == 0:
         # player has validated
         validate_exercice(sender_address, 6)
         # Sending points
         distribute_points(sender_address, 2)
+        return ()
+    else:
+        return ()
     end
-    return ()
 end
 
 # Check that ERC721 has implemented metadata queries
@@ -529,30 +565,36 @@ func ex7_add_metadata{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_ch
     # Retrieve dummy token address
     let (dummy_metadata_erc721_address) = dummy_metadata_erc721_storage.read()
     # Reading metadata URI for token 1 on both contracts. For these to show up in Oasis, they should be equal
-    let token_id = Uint256(0, 1)
-    let (metadata_player_len, metadata_player) = IERC721_metadata.tokenURI(
-        contract_address=submited_exercise_address, token_id=token_id
-    )
+    let token_id = Uint256(1, 0)
+    with_attr error_message("Couldn't retrieve the metadata URI"):
+        let (metadata_player_len, metadata_player) = IERC721_metadata.tokenURI(
+            contract_address=submited_exercise_address, token_id=token_id
+        )
+    end
+
     let (metadata_dummy_len, metadata_dummy) = IERC721_metadata.tokenURI(
         contract_address=dummy_metadata_erc721_address, token_id=token_id
     )
-    # Verifying they are equal
-    assert metadata_dummy_len = metadata_player_len
-    ex7_check_arrays_are_equal(metadata_dummy_len, metadata_dummy, metadata_player)
+    with_attr error_message("Your token uri is not the same length as the dummy metadata"):
+        # Verifying they are equal
+        assert metadata_dummy_len = metadata_player_len
+    end
+
+    with_attr error_message("Your token uri is not the same as the dummy metadata"):
+        ex7_check_arrays_are_equal(metadata_dummy_len, metadata_dummy, metadata_player)
+    end
     # Checking if player has validated this exercise before
     let (has_validated) = has_validated_exercise(sender_address, 7)
-    # This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
-    tempvar syscall_ptr = syscall_ptr
-    tempvar pedersen_ptr = pedersen_ptr
-    tempvar range_check_ptr = range_check_ptr
 
     if has_validated == 0:
         # player has validated
         validate_exercice(sender_address, 7)
         # Sending points
         distribute_points(sender_address, 2)
+        return ()
+    else:
+        return ()
     end
-    return ()
 end
 
 @external
@@ -563,7 +605,9 @@ func submit_exercise{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
     let (sender_address) = get_caller_address()
     # Checking this contract was not used by another group before
     let (has_solution_been_submitted_before) = has_been_paired.read(erc721_address)
-    assert has_solution_been_submitted_before = 0
+    with_attr error_message("Solution already submited"):
+        assert has_solution_been_submitted_before = 0
+    end
 
     # Assigning passed ERC721 as player ERC721
     player_exercise_solution_storage.write(sender_address, erc721_address)
@@ -573,10 +617,6 @@ func submit_exercise{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
     let (has_validated) = has_validated_exercise(sender_address, 0)
     # This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
 
-    tempvar syscall_ptr = syscall_ptr
-    tempvar pedersen_ptr = pedersen_ptr
-    tempvar range_check_ptr = range_check_ptr
-
     if has_validated == 0:
         # player has validated
         validate_exercice(sender_address, 0)
@@ -585,9 +625,10 @@ func submit_exercise{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
         distribute_points(sender_address, 2)
         # Deploying contract points
         distribute_points(sender_address, 2)
+        return ()
+    else:
+        return ()
     end
-
-    return ()
 end
 
 #
@@ -633,32 +674,42 @@ func ex2b_test_declare_animal_internal{
     let (token_owner) = IERC721.ownerOf(
         contract_address=submited_exercise_address, token_id=token_id
     )
-    # Verifying that token 1 belongs to evaluator
-    assert evaluator_address = token_owner
 
-    # Reading animal characteristic in player solution
-    let (read_sex, read_legs, read_wings) = IExerciceSolution.get_animal_characteristics(
-        contract_address=submited_exercise_address, token_id=token_id
-    )
+    with_attr error_message("Token 1 doesn't belong to the evaluator"):
+        # Verifying that token 1 belongs to evaluator
+        assert evaluator_address = token_owner
+    end
+
+    with_attr error_message("Couldn't retrieve the animal's characteristics"):
+        # Reading animal characteristic in player solution
+        let (read_sex, read_legs, read_wings) = IExerciceSolution.get_animal_characteristics(
+            contract_address=submited_exercise_address, token_id=token_id
+        )
+    end
+
     # Checking characteristics are correct
-    assert read_sex = expected_sex
-    assert read_legs = expected_legs
-    assert read_wings = expected_wings
+    with_attr error_message("Wrong sex number"):
+        assert read_sex = expected_sex
+    end
+    with_attr error_message("Wrong legs number"):
+        assert read_legs = expected_legs
+    end
+    with_attr error_message("Wrong wings number"):
+        assert read_wings = expected_wings
+    end
 
     # Checking if player has validated this exercise before
     let (has_validated) = has_validated_exercise(sender_address, 2)
-    # This is necessary because of revoked references. Don't be scared, they won't stay around for too long...
-    tempvar syscall_ptr = syscall_ptr
-    tempvar pedersen_ptr = pedersen_ptr
-    tempvar range_check_ptr = range_check_ptr
 
     if has_validated == 0:
         # player has validated
         validate_exercice(sender_address, 2)
         # Sending points
         distribute_points(sender_address, 2)
+        return ()
+    else:
+        return ()
     end
-    return ()
 end
 
 func ex7_check_arrays_are_equal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
@@ -668,7 +719,9 @@ func ex7_check_arrays_are_equal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*
         return ()
     end
     ex7_check_arrays_are_equal(arrays_len=arrays_len - 1, array_1=array_1 + 1, array_2=array_2 + 1)
-    assert [array_1] = [array_2]
+    with_attr error_message("Arrays are not equal on cell {arrays_len}"):
+        assert [array_1] = [array_2]
+    end
     return ()
 end
 #
@@ -682,7 +735,9 @@ func set_random_values{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_c
 ):
     # Check if the random values were already initialized
     let (was_initialized_read) = was_initialized.read()
-    assert was_initialized_read = 0
+    with_attr error_message("Random values already initialized"):
+        assert was_initialized_read = 0
+    end
 
     # Check that we fill max_ranK_storage cells
     let (max_rank) = max_rank_storage.read()
@@ -698,8 +753,9 @@ end
 func finish_setup{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}():
     # Check if the random values were already initialized
     let (was_initialized_read) = was_initialized.read()
-    assert was_initialized_read = 0
-
+    with_attr error_message("Contract already initialized"):
+        assert was_initialized_read = 0
+    end
     # Mark that value store was initialized
     was_initialized.write(1)
     return ()
