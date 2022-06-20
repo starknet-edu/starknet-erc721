@@ -26,7 +26,7 @@ Interested in helping writing those? [Reach out](https://twitter.com/HenriLieuta
     - [Checking your progress](#checking-your-progress)
       - [Counting your points](#counting-your-points)
       - [Transaction status](#transaction-status)
-      - [Install nile](#install-nile)
+      - [Install cairo-lang](#install-cairo-lang)
         - [With pip](#with-pip)
         - [With docker](#with-docker)
     - [Getting to work](#getting-to-work)
@@ -114,12 +114,16 @@ You sent a transaction, and it is shown as "undetected" in voyager? This can mea
 You can (and should) check the status of your transaction with the following URL  [https://alpha4.starknet.io/feeder_gateway/get_transaction_receipt?transactionHash=](https://alpha4.starknet.io/feeder_gateway/get_transaction_receipt?transactionHash=)  , where you can append your transaction hash.
 ​
 
-#### Install nile
+#### Install cairo-lang
 
 ##### With pip
 
 - Set up the environment following [these instructions](https://starknet.io/docs/quickstart.html#quickstart)
-- Install [Nile](https://github.com/OpenZeppelin/nile).
+- Install [OpenZeppelin's cairo contracts](https://github.com/OpenZeppelin/cairo-contracts).
+
+```bash
+pip install openzeppelin-cairo-contracts
+```
 
 ##### With docker
 
@@ -128,19 +132,19 @@ You can (and should) check the status of your transaction with the following URL
 for mac m1:
 
 ```bash
-alias nile='docker run --rm -v "$PWD":"$PWD" -w "$PWD" lucaslvy/nile:0.8.0-arm'
+alias cairo='docker run --rm -v "$PWD":"$PWD" -w "$PWD" shardlabs/cairo-cli:latest-arm'
 ```
 
 for amd processors
 
 ```bash
-alias nile='docker run --rm -v "$PWD":"$PWD" -w "$PWD" lucaslvy/nile:0.8.0-x86'
+alias cairo='docker run --rm -v "$PWD":"$PWD" -w "$PWD" shardlabs/cairo-cli:latest'
 ```
 
 - Windows
 
 ```bash
-docker run --rm -it -v ${pwd}:/work --workdir /work lucaslvy/0.8.0-x86
+docker run --rm -it -v ${pwd}:/work --workdir /work shardlabs/cairo-cli:latest
 ```
 
 ### Getting to work
@@ -149,7 +153,7 @@ docker run --rm -it -v ${pwd}:/work --workdir /work lucaslvy/0.8.0-x86
 - Test that you are able to compile the project
 
 ```bash
-nile compile
+starknet-compile contracts/Evaluator.cairo
 ```
 
 - To convert data to felt use the [`utils.py`](utils.py) script
@@ -171,12 +175,12 @@ Today we are creating an animal registry! Animals are bred by breeders. They can
 
 #### Exercise 1
 
-- Create an ERC721 token contract. You can use [this implementation](contracts/token/ERC721/ERC721.cairo) as a base
+- Create an ERC721 token contract. You can use [this implementation](https://github.com/OpenZeppelin/cairo-contracts/blob/main/src/openzeppelin/token/erc721/ERC721_Mintable_Burnable.cairo) as a base
 - Deploy it to the testnet (check the constructor for the needed arguments. Also note that the arguments should be decimals.)
 
 ```bash
-nile compile contracts/token/ERC721/ERC721.cairo
-nile deploy ERC721 arg1 arg2 arg3 --network goerli 
+starknet-compile contracts/ERC721/ERC721.cairo --output artifacts/ERC721.json
+starknet deploy --contract ERC721 --inputs arg1 arg2 arg3 --network alpha-goerli 
 ```
 
 - Give token #1 to Evaluator contract
