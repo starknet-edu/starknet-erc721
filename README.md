@@ -228,6 +228,8 @@ starknet deploy --contract ERC721 --inputs arg1 arg2 arg3 --network alpha-goerli
 
 #### Exercise 7
 
+**Disclaimer** This exercise can't be solved due to a typo, this will soon be fixed
+
 - Create a new ERC721 contract that supports metadata. You can use [this contract](contracts/token/ERC721/ERC721_metadata.cairo) as a base
 - The base token URI is the chosen IPFS gateway
 - You can upload your NFTs directly on [this website](https://www.pinata.cloud/)
