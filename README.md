@@ -142,7 +142,7 @@ For example to solve the first exercise the workflow would be the following:
 - The Evaluator contract sometimes needs to make payments to buy your tokens. Make sure he has enough dummy tokens to do so! If not, you should get dummy tokens from the dummy tokens contract and send them to the evaluator
 
 
-### Contract addresses
+### Contracts code and addresses
 
 | Contract code                                                        | Contract on voyager                                                                                                                                                             |
 | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -150,14 +150,13 @@ For example to solve the first exercise the workflow would be the following:
 | [Evaluator](contracts/Evaluator.cairo)                               | [0x03b56add608787daa56932f92c6afbeb50efdd78d63610d9a904aae351b6de73](https://goerli.voyager.online/contract/0x03b56add608787daa56932f92c6afbeb50efdd78d63610d9a904aae351b6de73) |
 | [Dummy ERC20 token](contracts/token/ERC20/dummy_token.cairo)         | [0x07ff0a898530b169c5fe6fed9b397a7bbd402973ce2f543965f99d6d4a4c17b8](https://goerli.voyager.online/contract/0x07ff0a898530b169c5fe6fed9b397a7bbd402973ce2f543965f99d6d4a4c17b8) |
 | [Dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo) | [0x02e24bd7683c01cb2e4e48148e254f2a0d44ee526cff3c703d6031a685f1700d](https://goerli.voyager.online/contract/0x02e24bd7683c01cb2e4e48148e254f2a0d44ee526cff3c703d6031a685f1700d) |
-
-### Tasks list
+​
+​
+## Tasks list
 
 Today we are creating an animal registry! Animals are bred by breeders. They can be born, die, reproduce, be sold. You will implement these features little by little.
 
-***ERC721 basics***
-
-#### Exercise 1
+### Exercise 1 - Deploying an ERC721
 
 - Create an ERC721 token contract. You can use [this implementation](https://github.com/OpenZeppelin/cairo-contracts/blob/main/src/openzeppelin/token/erc721/ERC721_Mintable_Burnable.cairo) as a base
 - Deploy it to the testnet (check the constructor for the needed arguments. Also note that the arguments should be decimals.)
@@ -171,7 +170,7 @@ starknet deploy --contract ERC721 --inputs arg1 arg2 arg3 --network alpha-goerli
 - Call [`submit_exercise()`](contracts/Evaluator.cairo#L601) in the Evaluator to configure the contract you want evaluated (2 pts)
 - Call [`ex1_test_erc721()`](contracts/Evaluator.cairo#L146) in the evaluator to receive your points (2 pts)
 
-#### Exercise 2
+### Exercise 2 - Creating token attributes
 
 - Call [`ex2a_get_animal_rank()`](contracts/Evaluator.cairo#L245) to get assigned a random creature to create.
 - Read the expected characteristics of your animal from the Evaluator
@@ -180,23 +179,19 @@ starknet deploy --contract ERC721 --inputs arg1 arg2 arg3 --network alpha-goerli
 - Call [`submit_exercise()`](contracts/Evaluator.cairo#L601) in the Evaluator to configure the contract you want evaluated
 - Call [`ex2b_test_declare_animal()`](contracts/Evaluator.cairo#L258) to receive points (2 pts)
 
-***Minting and burning NFTs***
-
-#### Exercise 3
+### Exercise 3 - Minting NFTs
 
 - Create a function to allow breeders to mint new animals with the specified characteristics
 - Call [`submit_exercise()`](contracts/Evaluator.cairo#L601) in the Evaluator to configure the contract you want evaluated
 - Call [`ex3_declare_new_animal()`](contracts/Evaluator.cairo#L272) to get points (2 pts)
 
-#### Exercise 4
+### Exercise 4 - Burning NFTs
 
 - Create a function to allow breeders to declare dead animals (burn the NFT)
 - Call [`submit_exercise()`](contracts/Evaluator.cairo#L601) in the Evaluator to configure the contract you want evaluated
 - Call [`ex4_declare_dead_animal()`](contracts/Evaluator.cairo#L323) to get points (2 pts)
 
-***Adding permissions and payments***
-
-#### Exercise 5
+### Exercise 5 - Adding permissions and payments
 
 - Use [dummy token faucet](contracts/token/ERC20/dummy_token.cairo) to get dummy tokens
 - Use [`ex5a_i_have_dtk()`](contracts/Evaluator.cairo#L406) to show you managed to use the faucet (2 pts)
@@ -206,15 +201,13 @@ starknet deploy --contract ERC721 --inputs arg1 arg2 arg3 --network alpha-goerli
 - Call [`submit_exercise()`](contracts/Evaluator.cairo#L601) in the Evaluator to configure the contract you want evaluated
 - Call [`ex5b_register_breeder()`](contracts/Evaluator.cairo#L440) to prove your function works. If needed, send dummy tokens first to the evaluator (2pts)
 
-***Minting NFTs with Metadata***
-
-#### Exercise 6
+### Exercise 6 - Claiming an NFT
 
 - Mint a NFT with metadata on [this dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo) , usable [here](https://goerli.voyager.online/contract/0x02e24bd7683c01cb2e4e48148e254f2a0d44ee526cff3c703d6031a685f1700d)
 - Check it on [Oasis](https://testnet.playoasis.xyz/)
 - Claim points on [`ex6_claim_metadata_token`](contracts/Evaluator.cairo#L523) (2 pts)
 
-#### Exercise 7
+### Exercise 7 - Adding metadatas
 
 **Disclaimer** This exercise can't be solved due to a typo, this will soon be fixed
 
