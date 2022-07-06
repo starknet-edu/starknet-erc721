@@ -5,14 +5,8 @@ It is aimed at developers that:
 
 - Understand Cairo syntax
 - Understand the ERC721 token standard
-
-
-- [Introduction](#introduction)
-- [Getting ready to work](#getting-ready-to-work)
-- [Working on this tutorial](#working-on-this-tutorial)
-- [Tasks list](#tasks-list)
-- [Annex - useful tools](#annex---useful-tools)
-
+​
+​
 
 ## Introduction
 
