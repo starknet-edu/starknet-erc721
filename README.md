@@ -217,10 +217,20 @@ starknet deploy --contract ERC721 --inputs arg1 arg2 arg3 --network alpha-goerli
 - Claim points on [`ex7_add_metadata`]((contracts/Evaluator.cairo#L557) (2 pts)
 
 ​
-​
 
-### Useful tools
-- To convert data to felt use the [`utils.py`](utils.py) script
+### Annex - Useful tools
+#### Converting data to and from decimal
+To convert data to felt use the [`utils.py`](utils.py) script
+To open Python in interactive mode after running script
+
+  ```bash
+  python -i utils.py
+  ```
+
+  ```python
+  >>> str_to_felt('ERC20-101')
+  1278752977803006783537
+  ```
 
 
 #### Checking your progress & counting your points
