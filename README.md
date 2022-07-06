@@ -218,8 +218,8 @@ starknet deploy --contract ERC721 --inputs arg1 arg2 arg3 --network alpha-goerli
 
 ​
 
-### Annex - Useful tools
-#### Converting data to and from decimal
+## Annex - Useful tools
+### Converting data to and from decimal
 To convert data to felt use the [`utils.py`](utils.py) script
 To open Python in interactive mode after running script
 
@@ -233,7 +233,7 @@ To open Python in interactive mode after running script
   ```
 
 
-#### Checking your progress & counting your points
+### Checking your progress & counting your points
 
 ​
 Your points will get credited in your wallet; though this may take some time. If you want to monitor your points count in real time, you can also see your balance in voyager!
@@ -245,7 +245,7 @@ Your points will get credited in your wallet; though this may take some time. If
 You can also check your overall progress [here](https://starknet-tutorials.vercel.app)
 ​
 
-#### Transaction status
+### Transaction status
 
 ​
 You sent a transaction, and it is shown as "undetected" in voyager? This can mean two things:
