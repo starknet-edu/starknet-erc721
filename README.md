@@ -176,6 +176,7 @@ starknet deploy --contract ERC721 --inputs arg1 arg2 arg3 --network alpha-goerli
 - Call [`ex2a_get_animal_rank()`](contracts/Evaluator.cairo#L245) to get assigned a random creature to create.
 - Read the expected characteristics of your animal from the Evaluator
 - Create the tools necessary to record animals characteristics in your contract and enable the evaluator contract to retrieve them trough `get_animal_characteristics` function on your contract ([check this](contracts/IExerciceSolution.cairo))
+- Deploy your new contract
 - Mint the animal with the desired characteristics and give it to the evaluator
 - Call [`submit_exercise()`](contracts/Evaluator.cairo#L601) in the Evaluator to configure the contract you want evaluated
 - Call [`ex2b_test_declare_animal()`](contracts/Evaluator.cairo#L258) to receive points (2 pts)
@@ -183,12 +184,14 @@ starknet deploy --contract ERC721 --inputs arg1 arg2 arg3 --network alpha-goerli
 ### Exercise 3 - Minting NFTs
 
 - Create a function to allow breeders to mint new animals with the specified characteristics
+- Deploy your new contract
 - Call [`submit_exercise()`](contracts/Evaluator.cairo#L601) in the Evaluator to configure the contract you want evaluated
 - Call [`ex3_declare_new_animal()`](contracts/Evaluator.cairo#L272) to get points (2 pts)
 
 ### Exercise 4 - Burning NFTs
 
 - Create a function to allow breeders to declare dead animals (burn the NFT)
+- Deploy your new contract
 - Call [`submit_exercise()`](contracts/Evaluator.cairo#L601) in the Evaluator to configure the contract you want evaluated
 - Call [`ex4_declare_dead_animal()`](contracts/Evaluator.cairo#L323) to get points (2 pts)
 
@@ -199,6 +202,7 @@ starknet deploy --contract ERC721 --inputs arg1 arg2 arg3 --network alpha-goerli
 - Create a function to allow breeder registration.
 - This function should charge the registrant for a fee, paid in dummy tokens ([check `registration_price`](contracts/IExerciceSolution.cairo))
 - Add permissions. Only allow listed breeders should be able to create animals
+- Deploy your new contract
 - Call [`submit_exercise()`](contracts/Evaluator.cairo#L601) in the Evaluator to configure the contract you want evaluated
 - Call [`ex5b_register_breeder()`](contracts/Evaluator.cairo#L440) to prove your function works. If needed, send dummy tokens first to the evaluator (2pts)
 
@@ -216,6 +220,8 @@ starknet deploy --contract ERC721 --inputs arg1 arg2 arg3 --network alpha-goerli
 - The base token URI is the chosen IPFS gateway
 - You can upload your NFTs directly on [this website](https://www.pinata.cloud/)
 - Your tokens should be visible on [Oasis](https://testnet.playoasis.xyz/) once minted!
+- Deploy your new contract
+- Call [`submit_exercise()`](contracts/Evaluator.cairo#L601) in the Evaluator to configure the contract you want evaluated
 - Claim points on [`ex7_add_metadata`]((contracts/Evaluator.cairo#L557) (2 pts)
 
 ​
