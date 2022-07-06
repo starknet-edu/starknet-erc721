@@ -62,8 +62,8 @@ This project can be made better and will evolve as StarkNet matures. Your contri
 ​
 ​
 
-## Getting started
-### 1. Cloning the repo
+# Getting started
+## 1. Cloning the repo
 ```bash
 git clone https://github.com/starknet-edu/starknet-erc721
 cd starknet-erc721
@@ -72,7 +72,7 @@ cd starknet-erc721
 - To convert data to felt use the [`utils.py`](utils.py) script
 
 
-### 2. Setting up your environment
+## 2. Setting up your environment
 
 There are two ways to set up your environment on StarkNet: a local installation, or using a docker container
 
@@ -82,7 +82,7 @@ There are two ways to set up your environment on StarkNet: a local installation,
 For a production setup instructions we wrote [this article](https://medium.com/starknet-edu/the-ultimate-starknet-dev-environment-716724aef4a7).
 
 
-#### 2.A. Seting up a local python environment 
+### 2.A. Seting up a local python environment 
 
 - Set up the environment following [these instructions](https://starknet.io/docs/quickstart.html#quickstart)
 - Install [OpenZeppelin's cairo contracts](https://github.com/OpenZeppelin/cairo-contracts).
@@ -91,7 +91,7 @@ For a production setup instructions we wrote [this article](https://medium.com/s
 pip install openzeppelin-cairo-contracts
 ```
 
-#### 2.B.  Using a dockerized environment
+### 2.B.  Using a dockerized environment
 
 - Linux and macos
 
@@ -112,15 +112,15 @@ alias cairo='docker run --rm -v "$PWD":"$PWD" -w "$PWD" shardlabs/cairo-cli:late
 ```bash
 docker run --rm -it -v ${pwd}:/work --workdir /work shardlabs/cairo-cli:latest
 ```
-### 3. Test that you are able to compile the project
+## 3. Test that you are able to compile the project
 
 ```bash
 starknet-compile contracts/Evaluator.cairo
 ```
 ​
 ​
-## Working on the tutorial
-### Workflow
+# Working on the tutorial
+## Workflow
 
 To do this tutorial you will have to interact with the [`Evaluator.cairo`](contracts/Evaluator.cairo) contract. To validate an exercise you will have to 
 - Read the evaluator code to figure out what is expected of your contract
@@ -142,7 +142,7 @@ For example to solve the first exercise the workflow would be the following:
 - The Evaluator contract sometimes needs to make payments to buy your tokens. Make sure he has enough dummy tokens to do so! If not, you should get dummy tokens from the dummy tokens contract and send them to the evaluator
 
 
-### Contracts code and addresses
+## Contracts code and addresses
 
 | Contract code                                                        | Contract on voyager                                                                                                                                                             |
 | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -152,11 +152,11 @@ For example to solve the first exercise the workflow would be the following:
 | [Dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo) | [0x02e24bd7683c01cb2e4e48148e254f2a0d44ee526cff3c703d6031a685f1700d](https://goerli.voyager.online/contract/0x02e24bd7683c01cb2e4e48148e254f2a0d44ee526cff3c703d6031a685f1700d) |
 ​
 ​
-## Tasks list
+# Tasks list
 
 Today we are creating an animal registry! Animals are bred by breeders. They can be born, die, reproduce, be sold. You will implement these features little by little.
 
-### Exercise 1 - Deploying an ERC721
+## Exercise 1 - Deploying an ERC721
 
 - Create an ERC721 token contract. You can use [this implementation](https://github.com/OpenZeppelin/cairo-contracts/blob/main/src/openzeppelin/token/erc721/ERC721_Mintable_Burnable.cairo) as a base
 - Deploy it to the testnet (check the constructor for the needed arguments. Also note that the arguments should be decimals.)
@@ -170,7 +170,7 @@ starknet deploy --contract ERC721 --inputs arg1 arg2 arg3 --network alpha-goerli
 - Call [`submit_exercise()`](contracts/Evaluator.cairo#L601) in the Evaluator to configure the contract you want evaluated (2 pts)
 - Call [`ex1_test_erc721()`](contracts/Evaluator.cairo#L146) in the evaluator to receive your points (2 pts)
 
-### Exercise 2 - Creating token attributes
+## Exercise 2 - Creating token attributes
 
 - Call [`ex2a_get_animal_rank()`](contracts/Evaluator.cairo#L245) to get assigned a random creature to create.
 - Read the expected characteristics of your animal from the Evaluator
@@ -179,19 +179,19 @@ starknet deploy --contract ERC721 --inputs arg1 arg2 arg3 --network alpha-goerli
 - Call [`submit_exercise()`](contracts/Evaluator.cairo#L601) in the Evaluator to configure the contract you want evaluated
 - Call [`ex2b_test_declare_animal()`](contracts/Evaluator.cairo#L258) to receive points (2 pts)
 
-### Exercise 3 - Minting NFTs
+## Exercise 3 - Minting NFTs
 
 - Create a function to allow breeders to mint new animals with the specified characteristics
 - Call [`submit_exercise()`](contracts/Evaluator.cairo#L601) in the Evaluator to configure the contract you want evaluated
 - Call [`ex3_declare_new_animal()`](contracts/Evaluator.cairo#L272) to get points (2 pts)
 
-### Exercise 4 - Burning NFTs
+## Exercise 4 - Burning NFTs
 
 - Create a function to allow breeders to declare dead animals (burn the NFT)
 - Call [`submit_exercise()`](contracts/Evaluator.cairo#L601) in the Evaluator to configure the contract you want evaluated
 - Call [`ex4_declare_dead_animal()`](contracts/Evaluator.cairo#L323) to get points (2 pts)
 
-### Exercise 5 - Adding permissions and payments
+## Exercise 5 - Adding permissions and payments
 
 - Use [dummy token faucet](contracts/token/ERC20/dummy_token.cairo) to get dummy tokens
 - Use [`ex5a_i_have_dtk()`](contracts/Evaluator.cairo#L406) to show you managed to use the faucet (2 pts)
@@ -201,13 +201,13 @@ starknet deploy --contract ERC721 --inputs arg1 arg2 arg3 --network alpha-goerli
 - Call [`submit_exercise()`](contracts/Evaluator.cairo#L601) in the Evaluator to configure the contract you want evaluated
 - Call [`ex5b_register_breeder()`](contracts/Evaluator.cairo#L440) to prove your function works. If needed, send dummy tokens first to the evaluator (2pts)
 
-### Exercise 6 - Claiming an NFT
+## Exercise 6 - Claiming an NFT
 
 - Mint a NFT with metadata on [this dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo) , usable [here](https://goerli.voyager.online/contract/0x02e24bd7683c01cb2e4e48148e254f2a0d44ee526cff3c703d6031a685f1700d)
 - Check it on [Oasis](https://testnet.playoasis.xyz/)
 - Claim points on [`ex6_claim_metadata_token`](contracts/Evaluator.cairo#L523) (2 pts)
 
-### Exercise 7 - Adding metadatas
+## Exercise 7 - Adding metadatas
 
 **Disclaimer** This exercise can't be solved due to a typo, this will soon be fixed
 
@@ -215,14 +215,14 @@ starknet deploy --contract ERC721 --inputs arg1 arg2 arg3 --network alpha-goerli
 - The base token URI is the chosen IPFS gateway
 - You can upload your NFTs directly on [this website](https://www.pinata.cloud/)
 - Your tokens should be visible on [Oasis](https://testnet.playoasis.xyz/) once minted!
-- Claim points on [`ex7_add_metadata`]((contracts/Evaluator.cairo#L557)) (2 pts)
+- Claim points on [`ex7_add_metadata`]((contracts/Evaluator.cairo#L557) (2 pts)
 
 ​
 ​
 
-### Useful tools
+## Useful tools
 
-#### Checking your progress & counting your points
+### Checking your progress & counting your points
 
 ​
 Your points will get credited in your wallet; though this may take some time. If you want to monitor your points count in real time, you can also see your balance in voyager!
@@ -234,7 +234,7 @@ Your points will get credited in your wallet; though this may take some time. If
 You can also check your overall progress [here](https://starknet-tutorials.vercel.app)
 ​
 
-#### Transaction status
+### Transaction status
 
 ​
 You sent a transaction, and it is shown as "undetected" in voyager? This can mean two things:
