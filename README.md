@@ -63,16 +63,15 @@ This project can be made better and will evolve as StarkNet matures. Your contri
 ​
 
 # Getting started
-## 1. Cloning the repo
+## Step 1 - Clone the repo
 ```bash
 git clone https://github.com/starknet-edu/starknet-erc721
 cd starknet-erc721
 ```
 
-- To convert data to felt use the [`utils.py`](utils.py) script
 
 
-## 2. Setting up your environment
+## Step 2 - Set up your environment
 
 There are two ways to set up your environment on StarkNet: a local installation, or using a docker container
 
@@ -82,7 +81,7 @@ There are two ways to set up your environment on StarkNet: a local installation,
 For a production setup instructions we wrote [this article](https://medium.com/starknet-edu/the-ultimate-starknet-dev-environment-716724aef4a7).
 
 
-### 2.A. Seting up a local python environment 
+### Option A - Set up a local python environment 
 
 - Set up the environment following [these instructions](https://starknet.io/docs/quickstart.html#quickstart)
 - Install [OpenZeppelin's cairo contracts](https://github.com/OpenZeppelin/cairo-contracts).
@@ -91,7 +90,7 @@ For a production setup instructions we wrote [this article](https://medium.com/s
 pip install openzeppelin-cairo-contracts
 ```
 
-### 2.B.  Using a dockerized environment
+### Option B - Use a dockerized environment
 
 - Linux and macos
 
@@ -112,7 +111,7 @@ alias cairo='docker run --rm -v "$PWD":"$PWD" -w "$PWD" shardlabs/cairo-cli:late
 ```bash
 docker run --rm -it -v ${pwd}:/work --workdir /work shardlabs/cairo-cli:latest
 ```
-## 3. Test that you are able to compile the project
+## Step 3 -Test that you are able to compile the project
 
 ```bash
 starknet-compile contracts/Evaluator.cairo
@@ -221,6 +220,8 @@ starknet deploy --contract ERC721 --inputs arg1 arg2 arg3 --network alpha-goerli
 ​
 
 ## Useful tools
+- To convert data to felt use the [`utils.py`](utils.py) script
+
 
 ### Checking your progress & counting your points
 
