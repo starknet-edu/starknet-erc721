@@ -62,7 +62,8 @@ This project can be made better and will evolve as StarkNet matures. Your contri
 ​
 ​
 
-## Getting started
+# Working on the tutorial
+## Installation
 ### Step 1 - Clone the repo
 ```bash
 git clone https://github.com/starknet-edu/starknet-erc721
@@ -178,7 +179,7 @@ starknet deploy --contract ERC721 --inputs arg1 arg2 arg3 --network alpha-goerli
 - Call [`submit_exercise()`](contracts/Evaluator.cairo#L601) in the Evaluator to configure the contract you want evaluated
 - Call [`ex2b_test_declare_animal()`](contracts/Evaluator.cairo#L258) to receive points (2 pts)
 
-## Exercise 3 - Minting NFTs
+### Exercise 3 - Minting NFTs
 
 - Create a function to allow breeders to mint new animals with the specified characteristics
 - Call [`submit_exercise()`](contracts/Evaluator.cairo#L601) in the Evaluator to configure the contract you want evaluated
