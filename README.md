@@ -62,8 +62,7 @@ This project can be made better and will evolve as StarkNet matures. Your contri
 ​
 ​
 
-# Working on the tutorial
-## Installation
+## Getting ready to work
 ### Step 1 - Clone the repo
 ```bash
 git clone https://github.com/starknet-edu/starknet-erc721
