@@ -38,8 +38,8 @@ end
 #   str (felt*): The string itself (in char array format)
 #
 func String_get{
-        syscall_ptr : felt*, bitwise_ptr : BitwiseBuiltin*, pedersen_ptr : HashBuiltin*,
-        range_check_ptr}(str_id : felt) -> (str_len : felt, str : felt*):
+    syscall_ptr : felt*, bitwise_ptr : BitwiseBuiltin*, pedersen_ptr : HashBuiltin*, range_check_ptr
+}(str_id : felt) -> (str_len : felt, str : felt*):
     alloc_locals
     let (str) = alloc()
 
@@ -57,8 +57,8 @@ func String_get{
 end
 
 func _get_ss_loop{
-        syscall_ptr : felt*, bitwise_ptr : BitwiseBuiltin*, pedersen_ptr : HashBuiltin*,
-        range_check_ptr}(str_id : felt, ss_index : felt, ss_len : felt, str : felt*):
+    syscall_ptr : felt*, bitwise_ptr : BitwiseBuiltin*, pedersen_ptr : HashBuiltin*, range_check_ptr
+}(str_id : felt, ss_index : felt, ss_len : felt, str : felt*):
     let (ss_felt) = strings_str.read(str_id, ss_index)
     # Get and separate each character in the short string
     _get_ss_char_loop(ss_felt, ss_index, ss_len, str)
@@ -72,8 +72,8 @@ func _get_ss_loop{
 end
 
 func _get_ss_char_loop{
-        syscall_ptr : felt*, bitwise_ptr : BitwiseBuiltin*, pedersen_ptr : HashBuiltin*,
-        range_check_ptr}(ss_felt : felt, ss_position : felt, char_index : felt, str : felt*):
+    syscall_ptr : felt*, bitwise_ptr : BitwiseBuiltin*, pedersen_ptr : HashBuiltin*, range_check_ptr
+}(ss_felt : felt, ss_position : felt, char_index : felt, str : felt*):
     # Must be checked at beginning of function here for the case where str_len = x * SHORT_STRING_MAX_LEN
     if char_index == 0:
         return ()
@@ -97,7 +97,8 @@ end
 #   str (felt*): The string itself (in char array format)
 #
 func String_set{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
-        str_id : felt, str_len : felt, str : felt*):
+    str_id : felt, str_len : felt, str : felt*
+):
     alloc_locals
     with_attr error_message("String : exceeding max string length 2^15"):
         assert_le(str_len, STRING_MAX_LEN)
@@ -116,7 +117,8 @@ func String_set{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_pt
 end
 
 func _set_ss_loop{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
-        str_id : felt, ss_index : felt, ss_len : felt, str : felt*):
+    str_id : felt, ss_index : felt, ss_len : felt, str : felt*
+):
     # Accumulate all characters in a felt and write it
     _set_ss_char_loop(str_id, 0, ss_index, ss_len, ss_len, str)
 
@@ -129,8 +131,13 @@ func _set_ss_loop{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_
 end
 
 func _set_ss_char_loop{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
-        str_id : felt, ss_felt_acc : felt, ss_position : felt, ss_len : felt, char_index : felt,
-        str : felt*):
+    str_id : felt,
+    ss_felt_acc : felt,
+    ss_position : felt,
+    ss_len : felt,
+    char_index : felt,
+    str : felt*,
+):
     if char_index == 0:
         strings_str.write(str_id, ss_position, ss_felt_acc)
         return ()
@@ -149,7 +156,8 @@ end
 #   str_id (felt): The ID of the string to delete
 #
 func String_delete{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
-        str_id : felt):
+    str_id : felt
+):
     alloc_locals
     let (str_len) = strings_len.read(str_id)
 
@@ -165,7 +173,8 @@ func String_delete{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check
 end
 
 func _delete_loop{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
-        str_id : felt, ss_index : felt):
+    str_id : felt, ss_index : felt
+):
     strings_str.write(str_id, ss_index, 0)
 
     if ss_index == 0:
@@ -197,7 +206,8 @@ func String_felt_to_string{range_check_ptr}(elem : felt) -> (str_len : felt, str
 end
 
 func _felt_to_string_loop{range_check_ptr}(elem : felt, str_seed : felt*, index : felt) -> (
-        str_len : felt, str : felt*):
+    str_len : felt, str : felt*
+):
     alloc_locals
     with_attr error_message("String : exceeding max string length 2^15"):
         assert_le(index, STRING_MAX_LEN)
@@ -233,8 +243,8 @@ end
 #   str (felt*): The string itself (in char array format)
 #
 func String_path_join{range_check_ptr}(
-        base_len : felt, base : felt*, str_len : felt, str : felt*) -> (
-        res_len : felt, res : felt*):
+    base_len : felt, base : felt*, str_len : felt, str : felt*
+) -> (res_len : felt, res : felt*):
     if base[base_len - 1] == '/':
         return concat_arr(base_len, base, str_len, str)
     end
@@ -258,7 +268,8 @@ end
 #   str (felt*): The string itself (in char array format)
 #
 func String_append{range_check_ptr}(base_len : felt, base : felt*, str_len : felt, str : felt*) -> (
-        res_len : felt, res : felt*):
+    res_len : felt, res : felt*
+):
     return concat_arr(base_len, base, str_len, str)
 end
 
@@ -275,7 +286,8 @@ end
 #   char (felt): The last character
 #
 func String_extract_last_char{bitwise_ptr : BitwiseBuiltin*, range_check_ptr}(ss : felt) -> (
-        ss_rem : felt, char : felt):
+    ss_rem : felt, char : felt
+):
     with_attr error_message("String : exceeding max short string value 2^248 - 1"):
         # We should assert 248 bit here but for now it's "enough" for starters
         # assert_le is limited by RANGE_CHECK_BOUND
