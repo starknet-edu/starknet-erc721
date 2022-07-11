@@ -151,6 +151,8 @@ For example to solve the first exercise the workflow would be the following:
 | [Evaluator](contracts/Evaluator.cairo)                               | [0x03b56add608787daa56932f92c6afbeb50efdd78d63610d9a904aae351b6de73](https://goerli.voyager.online/contract/0x03b56add608787daa56932f92c6afbeb50efdd78d63610d9a904aae351b6de73) |
 | [Dummy ERC20 token](contracts/token/ERC20/dummy_token.cairo)         | [0x07ff0a898530b169c5fe6fed9b397a7bbd402973ce2f543965f99d6d4a4c17b8](https://goerli.voyager.online/contract/0x07ff0a898530b169c5fe6fed9b397a7bbd402973ce2f543965f99d6d4a4c17b8) |
 | [Dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo) | [0x02e24bd7683c01cb2e4e48148e254f2a0d44ee526cff3c703d6031a685f1700d](https://goerli.voyager.online/contract/0x02e24bd7683c01cb2e4e48148e254f2a0d44ee526cff3c703d6031a685f1700d) |
+
+
 ​
 ​
 ## Tasks list
