@@ -30,14 +30,14 @@ For each exercice, you will have to write a new version on your contract, deploy
 
 This workshop is the second in a series aimed at teaching how to build on StarkNet. Checkout out the following:
 
-|Topic|GitHub repo|
-|---|---|
-|Learn how to read Cairo code |[Cairo 101](https://github.com/starknet-edu/starknet-cairo-101)|
-|Deploy and customize an ERC721 NFT (you are here)|[StarkNet ERC721](https://github.com/starknet-edu/starknet-erc721)|
-|Deploy and customize an ERC20 token|[StarkNet ERC20](https://github.com/starknet-edu/starknet-erc20)|
-|Build a cross layer application|[StarkNet messaging bridge](https://github.com/starknet-edu/starknet-messaging-bridge)|
-|Debug your Cairo contracts easily|[StarkNet debug](https://github.com/starknet-edu/starknet-debug)|
-|Design your own account contract|[StarkNet account abstraction](https://github.com/starknet-edu/starknet-accounts)|
+| Topic                                             | GitHub repo                                                                            |
+| ------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| Learn how to read Cairo code                      | [Cairo 101](https://github.com/starknet-edu/starknet-cairo-101)                        |
+| Deploy and customize an ERC721 NFT (you are here) | [StarkNet ERC721](https://github.com/starknet-edu/starknet-erc721)                     |
+| Deploy and customize an ERC20 token               | [StarkNet ERC20](https://github.com/starknet-edu/starknet-erc20)                       |
+| Build a cross layer application                   | [StarkNet messaging bridge](https://github.com/starknet-edu/starknet-messaging-bridge) |
+| Debug your Cairo contracts easily                 | [StarkNet debug](https://github.com/starknet-edu/starknet-debug)                       |
+| Design your own account contract                  | [StarkNet account abstraction](https://github.com/starknet-edu/starknet-accounts)      |
 
 ### Providing feedback & getting help
 
@@ -53,7 +53,6 @@ Do you have a question? Join our [Discord server](https://discord.gg/5QetpWWPE5)
 ​
 Are you interested in following online workshops about learning how to dev on StarkNet? [Subscribe here](http://eepurl.com/hFnpQ5)
 
-
 ### Contributing
 
 This project can be made better and will evolve as StarkNet matures. Your contributions are welcome! Here are things that you can do to help:
@@ -67,13 +66,13 @@ This project can be made better and will evolve as StarkNet matures. Your contri
 ​
 
 ## Getting ready to work
+
 ### Step 1 - Clone the repo
+
 ```bash
 git clone https://github.com/starknet-edu/starknet-erc721
 cd starknet-erc721
 ```
-
-
 
 ### Step 2 - Set up your environment
 
@@ -84,8 +83,7 @@ There are two ways to set up your environment on StarkNet: a local installation,
 
 For a production setup instructions we wrote [this article](https://medium.com/starknet-edu/the-ultimate-starknet-dev-environment-716724aef4a7).
 
-
-#### Option A - Set up a local python environment 
+#### Option A - Set up a local python environment
 
 - Set up the environment following [these instructions](https://starknet.io/docs/quickstart.html#quickstart)
 - Install [OpenZeppelin's cairo contracts](https://github.com/OpenZeppelin/cairo-contracts).
@@ -115,17 +113,22 @@ alias cairo='docker run --rm -v "$PWD":"$PWD" -w "$PWD" shardlabs/cairo-cli:late
 ```bash
 docker run --rm -it -v ${pwd}:/work --workdir /work shardlabs/cairo-cli:latest
 ```
+
 ### Step 3 -Test that you are able to compile the project
 
 ```bash
 starknet-compile contracts/Evaluator.cairo
 ```
+
 ​
 ​
+
 ## Working on the tutorial
+
 ### Workflow
 
-To do this tutorial you will have to interact with the [`Evaluator.cairo`](contracts/Evaluator.cairo) contract. To validate an exercise you will have to 
+To do this tutorial you will have to interact with the [`Evaluator.cairo`](contracts/Evaluator.cairo) contract. To validate an exercise you will have to
+
 - Read the evaluator code to figure out what is expected of your contract
 - Customize your contract's code
 - Deploy it to StarkNet's testnet. This is done using the CLI.
@@ -144,19 +147,18 @@ For example to solve the first exercise the workflow would be the following:
 - **We really recommend that your read the [`Evaluator.cairo`](contracts/Evaluator.cairo) contract in order to fully understand what's expected for each exercise**. A high level description of what is expected for each exercise is provided in this readme.
 - The Evaluator contract sometimes needs to make payments to buy your tokens. Make sure he has enough dummy tokens to do so! If not, you should get dummy tokens from the dummy tokens contract and send them to the evaluator
 
-
 ### Contracts code and addresses
 
-| Contract code                                                        | Contract on voyager                                                                                                                                                             |
-| -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Contract code                                                        | Contract on voyager                                                                                                                                                           |
+| -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Points counter ERC20](contracts/token/ERC20/TDERC20.cairo)          | [0x555d6b21fe6222250f83a491c5fca96d5eb9f98166b41e3f5b66ae1ab709a71](https://goerli.voyager.online/contract/0x555d6b21fe6222250f83a491c5fca96d5eb9f98166b41e3f5b66ae1ab709a71) |
 | [Evaluator](contracts/Evaluator.cairo)                               | [0x4be820949abaa49aed57dda04149958475a56004dc49a7f076f1d32d88495c7](https://goerli.voyager.online/contract/0x4be820949abaa49aed57dda04149958475a56004dc49a7f076f1d32d88495c7) |
 | [Dummy ERC20 token](contracts/token/ERC20/dummy_token.cairo)         | [0x1c23d84fd1d445f90e15cc4ad0ef1d3805e10e98f2df40ad82f76bd8cc12c84](https://goerli.voyager.online/contract/0x1c23d84fd1d445f90e15cc4ad0ef1d3805e10e98f2df40ad82f76bd8cc12c84) |
-| [Dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo) | [0x3ec25fcfa7d0d0405da478105c8588bf9ca86cf3ea894feca7b72b3a5227c6](https://goerli.voyager.online/contract/0x3ec25fcfa7d0d0405da478105c8588bf9ca86cf3ea894feca7b72b3a5227c6) |
-
+| [Dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo) | [0x3ec25fcfa7d0d0405da478105c8588bf9ca86cf3ea894feca7b72b3a5227c6](https://goerli.voyager.online/contract/0x3ec25fcfa7d0d0405da478105c8588bf9ca86cf3ea894feca7b72b3a5227c6)   |
 
 ​
 ​
+
 ## Tasks list
 
 Today we are creating an animal registry! Animals are bred by breeders. They can be born, die, reproduce, be sold. You will implement these features little by little.
@@ -231,7 +233,9 @@ starknet deploy --contract artifacts/ERC721.json --inputs arg1 arg2 arg3 --netwo
 ​
 
 ## Annex - Useful tools
+
 ### Converting data to and from decimal
+
 To convert data to felt use the [`utils.py`](utils.py) script
 To open Python in interactive mode after running script
 
@@ -243,7 +247,6 @@ To open Python in interactive mode after running script
   >>> str_to_felt('ERC20-101')
   1278752977803006783537
   ```
-
 
 ### Checking your progress & counting your points
 
