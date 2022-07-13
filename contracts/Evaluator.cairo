@@ -533,8 +533,10 @@ func ex6_claim_metadata_token{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, 
     let (token_owner) = IERC721.ownerOf(
         contract_address=dummy_metadata_erc721_address, token_id=token_id
     )
+    let token_id_low = token_id.low
+    let token_id_high = token_id.high
     # Verifying that token 1 belongs to evaluator
-    with_attr error_message("Token 1 doesn't belong to the evaluator"):
+    with_attr error_message("Token {token_id_low}, {token_id_high} doesn't belong to you"):
         assert sender_address = token_owner
     end
 
