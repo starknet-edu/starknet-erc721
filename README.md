@@ -151,10 +151,10 @@ For example to solve the first exercise the workflow would be the following:
 
 | Contract code                                                        | Contract on voyager                                                                                                                                                           |
 | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Points counter ERC20](contracts/token/ERC20/TDERC20.cairo)          | [0x555d6b21fe6222250f83a491c5fca96d5eb9f98166b41e3f5b66ae1ab709a71](https://goerli.voyager.online/contract/0x555d6b21fe6222250f83a491c5fca96d5eb9f98166b41e3f5b66ae1ab709a71) |
-| [Evaluator](contracts/Evaluator.cairo)                               | [0x4be820949abaa49aed57dda04149958475a56004dc49a7f076f1d32d88495c7](https://goerli.voyager.online/contract/0x4be820949abaa49aed57dda04149958475a56004dc49a7f076f1d32d88495c7) |
-| [Dummy ERC20 token](contracts/token/ERC20/dummy_token.cairo)         | [0x1c23d84fd1d445f90e15cc4ad0ef1d3805e10e98f2df40ad82f76bd8cc12c84](https://goerli.voyager.online/contract/0x1c23d84fd1d445f90e15cc4ad0ef1d3805e10e98f2df40ad82f76bd8cc12c84) |
-| [Dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo) | [0x3ec25fcfa7d0d0405da478105c8588bf9ca86cf3ea894feca7b72b3a5227c6](https://goerli.voyager.online/contract/0x3ec25fcfa7d0d0405da478105c8588bf9ca86cf3ea894feca7b72b3a5227c6)   |
+| [Points counter ERC20](contracts/token/ERC20/TDERC20.cairo)          | [0xa0b943234522049dcdbd36cf9d5e12a46be405d6b8757df2329e6536b40707](https://goerli.voyager.online/contract/0xa0b943234522049dcdbd36cf9d5e12a46be405d6b8757df2329e6536b40707) |
+| [Evaluator](contracts/Evaluator.cairo)                               | [0x2004d22f8e1ee0ee93c27cfb377e09341ea3cc4231987c24e89442fa27e4a6c](https://goerli.voyager.online/contract/0x2004d22f8e1ee0ee93c27cfb377e09341ea3cc4231987c24e89442fa27e4a6c) |
+| [Dummy ERC20 token](contracts/token/ERC20/dummy_token.cairo)         | [0x25dd23fa28df0658219131c6fdefe5bd3b26456935bff9872a82aaa482ceaea](https://goerli.voyager.online/contract/0x25dd23fa28df0658219131c6fdefe5bd3b26456935bff9872a82aaa482ceaea) |
+| [Dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo) | [0x77d0d70903799276c6abb9569745355c2060e534860c22ac5f6499e79d06f26](https://goerli.voyager.online/contract/0x77d0d70903799276c6abb9569745355c2060e534860c22ac5f6499e79d06f26)   |
 
 ​
 ​
@@ -214,7 +214,7 @@ starknet deploy --contract artifacts/ERC721.json --inputs arg1 arg2 arg3 --netwo
 
 ### Exercise 6 - Claiming an NFT
 
-- Mint a NFT with metadata on [this dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo) , usable [here](https://goerli.voyager.online/contract/0x3ec25fcfa7d0d0405da478105c8588bf9ca86cf3ea894feca7b72b3a5227c6)
+- Mint a NFT with metadata on [this dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo) , usable [here](https://goerli.voyager.online/contract/0x77d0d70903799276c6abb9569745355c2060e534860c22ac5f6499e79d06f26)
 - Check it on [Oasis](https://testnet.playoasis.xyz/)
 - Claim points on [`ex6_claim_metadata_token`](contracts/Evaluator.cairo#L523) (2 pts)
 
@@ -254,7 +254,7 @@ To open Python in interactive mode after running script
 Your points will get credited in your wallet; though this may take some time. If you want to monitor your points count in real time, you can also see your balance in voyager!
 ​
 
-- Go to the  [ERC20 counter](https://goerli.voyager.online/contract/0x555d6b21fe6222250f83a491c5fca96d5eb9f98166b41e3f5b66ae1ab709a71#readContract)  in voyager, in the "read contract" tab
+- Go to the  [ERC20 counter](https://goerli.voyager.online/contract/0xa0b943234522049dcdbd36cf9d5e12a46be405d6b8757df2329e6536b40707#readContract)  in voyager, in the "read contract" tab
 - Enter your address in decimal in the "balanceOf" function
 
 You can also check your overall progress [here](https://starknet-tutorials.vercel.app)
