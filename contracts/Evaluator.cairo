@@ -11,12 +11,12 @@ from contracts.utils.ex00_base import (
     distribute_points,
     ex_initializer,
     has_validated_exercise,
-    validate_exercice,
+    validate_exercise,
 )
 
 from contracts.token.ERC721.IERC721 import IERC721
 from contracts.token.ERC721.IERC721_metadata import IERC721_metadata
-from contracts.IExerciceSolution import IExerciceSolution
+from contracts.IExerciseSolution import IExerciseSolution
 from starkware.starknet.common.syscalls import get_contract_address, get_caller_address
 from starkware.cairo.common.uint256 import (
     Uint256,
@@ -231,7 +231,7 @@ func ex1_test_erc721{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
 
     if has_validated == 0:
         # player has validated
-        validate_exercice(sender_address, 1)
+        validate_exercise(sender_address, 1)
         # Sending points
         distribute_points(sender_address, 2)
         return ()
@@ -291,7 +291,7 @@ func ex3_declare_new_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ra
 
     with_attr error_message("Couldn't declare a new animal"):
         # Declaring a new animal with the desired parameters
-        let (created_token) = IExerciceSolution.declare_animal(
+        let (created_token) = IExerciseSolution.declare_animal(
             contract_address=submited_exercise_address,
             sex=expected_sex,
             legs=expected_legs,
@@ -309,7 +309,7 @@ func ex3_declare_new_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ra
 
     if has_validated == 0:
         # player has validated
-        validate_exercice(sender_address, 3)
+        validate_exercise(sender_address, 3)
         # Sending points
         distribute_points(sender_address, 2)
         return ()
@@ -335,14 +335,14 @@ func ex4_declare_dead_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, r
 
     # Getting an animal id of Evaluator. tokenOfOwnerByIndex should return the list of NFTs owned by and address
     with_attr error_message("Can't get the token owner by the index"):
-        let (token_id) = IExerciceSolution.token_of_owner_by_index(
+        let (token_id) = IExerciseSolution.token_of_owner_by_index(
             contract_address=submited_exercise_address, account=evaluator_address, index=0
         )
     end
 
     with_attr error_message("Can't declare a dead animal"):
         # Declaring it as dead
-        IExerciceSolution.declare_dead_animal(
+        IExerciseSolution.declare_dead_animal(
             contract_address=submited_exercise_address, token_id=token_id
         )
     end
@@ -367,7 +367,7 @@ func ex4_declare_dead_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, r
     with_attr error_message("Couldn't get the animal's characteristics"):
         # Check that properties are deleted
         # Reading animal characteristic in player solution
-        let (read_sex, read_legs, read_wings) = IExerciceSolution.get_animal_characteristics(
+        let (read_sex, read_legs, read_wings) = IExerciseSolution.get_animal_characteristics(
             contract_address=submited_exercise_address, token_id=token_id
         )
     end
@@ -392,7 +392,7 @@ func ex4_declare_dead_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, r
 
     if has_validated == 0:
         # player has validated
-        validate_exercice(sender_address, 4)
+        validate_exercise(sender_address, 4)
         # Sending points
         distribute_points(sender_address, 2)
         return ()
@@ -426,7 +426,7 @@ func ex5a_i_have_dtk{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
 
     if has_validated == 0:
         # player has validated
-        validate_exercice(sender_address, 51)
+        validate_exercise(sender_address, 51)
         # Sending points
         distribute_points(sender_address, 2)
         return ()
@@ -446,7 +446,7 @@ func ex5b_register_breeder{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ran
     # Get evaluator address
     let (evaluator_address) = get_contract_address()
     # Is evaluator currently a breeder?
-    let (is_evaluator_breeder_init) = IExerciceSolution.is_breeder(
+    let (is_evaluator_breeder_init) = IExerciseSolution.is_breeder(
         contract_address=submited_exercise_address, account=evaluator_address
     )
     with_attr error_message("Evaluator shouldn't be a breeder for now"):
@@ -456,7 +456,7 @@ func ex5b_register_breeder{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ran
 
     # Reading registration price. Registration is payable in dummy token
     with_attr error_message("Couldn't read the registration price"):
-        let (registration_price) = IExerciceSolution.registration_price(
+        let (registration_price) = IExerciseSolution.registration_price(
             contract_address=submited_exercise_address
         )
     end
@@ -466,7 +466,7 @@ func ex5b_register_breeder{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ran
     let (dummy_token_init_balance) = IERC20.balanceOf(
         contract_address=dummy_token_address, account=evaluator_address
     )
-    # Approve the exercice for spending my dummy tokens
+    # Approve the exercise for spending my dummy tokens
     IERC20.approve(
         contract_address=dummy_token_address,
         spender=submited_exercise_address,
@@ -475,12 +475,12 @@ func ex5b_register_breeder{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ran
 
     # Require breeder permission.
     with_attr error_message("Couldn't register the Evaluator as a breeder"):
-        IExerciceSolution.register_me_as_breeder(contract_address=submited_exercise_address)
+        IExerciseSolution.register_me_as_breeder(contract_address=submited_exercise_address)
     end
 
     with_attr error_message("Couldn't check that the evaluator is a breeder"):
         # Check that I am indeed a breeder
-        let (is_evaluator_breeder_end) = IExerciceSolution.is_breeder(
+        let (is_evaluator_breeder_end) = IExerciseSolution.is_breeder(
             contract_address=submited_exercise_address, account=evaluator_address
         )
     end
@@ -510,7 +510,7 @@ func ex5b_register_breeder{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, ran
 
     if has_validated == 0:
         # player has validated
-        validate_exercice(sender_address, 52)
+        validate_exercise(sender_address, 52)
         # Sending points
         distribute_points(sender_address, 2)
         return ()
@@ -545,7 +545,7 @@ func ex6_claim_metadata_token{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, 
 
     if has_validated == 0:
         # player has validated
-        validate_exercice(sender_address, 6)
+        validate_exercise(sender_address, 6)
         # Sending points
         distribute_points(sender_address, 2)
         return ()
@@ -590,7 +590,7 @@ func ex7_add_metadata{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_ch
 
     if has_validated == 0:
         # player has validated
-        validate_exercice(sender_address, 7)
+        validate_exercise(sender_address, 7)
         # Sending points
         distribute_points(sender_address, 2)
         return ()
@@ -621,7 +621,7 @@ func submit_exercise{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
 
     if has_validated == 0:
         # player has validated
-        validate_exercice(sender_address, 0)
+        validate_exercise(sender_address, 0)
         # Sending points
         
         # Deploying contract points
@@ -683,7 +683,7 @@ func ex2b_test_declare_animal_internal{
 
     with_attr error_message("Couldn't retrieve the animal's characteristics"):
         # Reading animal characteristic in player solution
-        let (read_sex, read_legs, read_wings) = IExerciceSolution.get_animal_characteristics(
+        let (read_sex, read_legs, read_wings) = IExerciseSolution.get_animal_characteristics(
             contract_address=submited_exercise_address, token_id=token_id
         )
     end
@@ -704,7 +704,7 @@ func ex2b_test_declare_animal_internal{
 
     if has_validated == 0:
         # player has validated
-        validate_exercice(sender_address, 2)
+        validate_exercise(sender_address, 2)
         # Sending points
         distribute_points(sender_address, 2)
         return ()
@@ -727,7 +727,7 @@ func ex7_check_arrays_are_equal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*
 end
 #
 # External functions - Administration
-# Only admins can call these. You don't need to understand them to finish the exercice.
+# Only admins can call these. You don't need to understand them to finish the exercise.
 #
 
 @external
