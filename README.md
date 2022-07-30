@@ -22,9 +22,9 @@ StarkNet is still in Alpha. This means that development is ongoing, and the pain
 
 The goal of this tutorial is for you to customize and deploy an ERC721 contract on StarkNet. Your progress will be check by an [evaluator contract](contracts/Evaluator.cairo), deployed on StarkNet, which will grant you points in the form of [ERC20 tokens](contracts/token/ERC20/TDERC20.cairo).
 
-Each exercice will require you to add functionnality to your ERC721 token.
+Each exercise will require you to add functionnality to your ERC721 token.
 
-For each exercice, you will have to write a new version on your contract, deploy it, and submit it to the evaluator for correction.
+For each exercise, you will have to write a new version on your contract, deploy it, and submit it to the evaluator for correction.
 
 ### Where am I?
 
@@ -143,7 +143,7 @@ For example to solve the first exercise the workflow would be the following:
 
 - The 'transfer' function of ERC721-101 has been disabled to encourage you to finish the tutorial with only one address
 - In order to receive points, the evaluator has to reach the calls to the  `distribute_point` function.
-- This repo contains an interface `IExerciceSolution.cairo`. Your ERC721 contract will have to conform to this interface in order to validate some exercises; that is, your contract needs to implement all the functions described in `IExerciceSolution.cairo`.
+- This repo contains an interface `IExerciseSolution.cairo`. Your ERC721 contract will have to conform to this interface in order to validate some exercises; that is, your contract needs to implement all the functions described in `IExerciseSolution.cairo`.
 - **We really recommend that your read the [`Evaluator.cairo`](contracts/Evaluator.cairo) contract in order to fully understand what's expected for each exercise**. A high level description of what is expected for each exercise is provided in this readme.
 - The Evaluator contract sometimes needs to make payments to buy your tokens. Make sure he has enough dummy tokens to do so! If not, you should get dummy tokens from the dummy tokens contract and send them to the evaluator
 
@@ -181,7 +181,7 @@ starknet deploy --contract artifacts/ERC721.json --inputs arg1 arg2 arg3 --netwo
 
 - Call [`ex2a_get_animal_rank()`](contracts/Evaluator.cairo#L245) to get assigned a random creature to create.
 - Read the expected characteristics of your animal from the Evaluator
-- Create the tools necessary to record animals characteristics in your contract and enable the evaluator contract to retrieve them trough `get_animal_characteristics` function on your contract ([check this](contracts/IExerciceSolution.cairo))
+- Create the tools necessary to record animals characteristics in your contract and enable the evaluator contract to retrieve them trough `get_animal_characteristics` function on your contract ([check this](contracts/IExerciseSolution.cairo))
 - Deploy your new contract
 - Mint the animal with the desired characteristics and give it to the evaluator
 - Call [`submit_exercise()`](contracts/Evaluator.cairo#L601) in the Evaluator to configure the contract you want evaluated
@@ -206,7 +206,7 @@ starknet deploy --contract artifacts/ERC721.json --inputs arg1 arg2 arg3 --netwo
 - Use [dummy token faucet](contracts/token/ERC20/dummy_token.cairo) to get dummy tokens
 - Use [`ex5a_i_have_dtk()`](contracts/Evaluator.cairo#L406) to show you managed to use the faucet (2 pts)
 - Create a function to allow breeder registration.
-- This function should charge the registrant for a fee, paid in dummy tokens ([check `registration_price`](contracts/IExerciceSolution.cairo))
+- This function should charge the registrant for a fee, paid in dummy tokens ([check `registration_price`](contracts/IExerciseSolution.cairo))
 - Add permissions. Only allow listed breeders should be able to create animals
 - Deploy your new contract
 - Call [`submit_exercise()`](contracts/Evaluator.cairo#L601) in the Evaluator to configure the contract you want evaluated
