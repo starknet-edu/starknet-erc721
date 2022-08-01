@@ -623,7 +623,9 @@ func submit_exercise{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_che
         # player has validated
         validate_exercise(sender_address, 0)
         # Sending points
-        
+
+        # Setup everything
+        distribute_points(sender_address, 2)
         # Deploying contract points
         distribute_points(sender_address, 2)
         return ()
