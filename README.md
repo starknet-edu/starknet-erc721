@@ -152,9 +152,9 @@ For example to solve the first exercise the workflow would be the following:
 | Contract code                                                        | Contract on voyager                                                                                                                                                           |
 | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Points counter ERC20](contracts/token/ERC20/TDERC20.cairo)          | [0xa0b943234522049dcdbd36cf9d5e12a46be405d6b8757df2329e6536b40707](https://goerli.voyager.online/contract/0xa0b943234522049dcdbd36cf9d5e12a46be405d6b8757df2329e6536b40707) |
-| [Evaluator](contracts/Evaluator.cairo)                               | [0x93a24e9a11d677ac6840f13a69a011498336bc28d1b3a6f7b6f18e296721e1](https://goerli.voyager.online/contract/0x93a24e9a11d677ac6840f13a69a011498336bc28d1b3a6f7b6f18e296721e1) |
-| [Dummy ERC20 token](contracts/token/ERC20/dummy_token.cairo)         | [0x25dd23fa28df0658219131c6fdefe5bd3b26456935bff9872a82aaa482ceaea](https://goerli.voyager.online/contract/0x25dd23fa28df0658219131c6fdefe5bd3b26456935bff9872a82aaa482ceaea) |
-| [Dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo) | [0x77d0d70903799276c6abb9569745355c2060e534860c22ac5f6499e79d06f26](https://goerli.voyager.online/contract/0x77d0d70903799276c6abb9569745355c2060e534860c22ac5f6499e79d06f26)   |
+| [Evaluator](contracts/Evaluator.cairo)                               | [0x6d2c2a6948a67b445ef16ea726ebac9b4535259b1f5d763b6985230c258c67](https://goerli.voyager.online/contract/0x6d2c2a6948a67b445ef16ea726ebac9b4535259b1f5d763b6985230c258c67) |
+| [Dummy ERC20 token](contracts/token/ERC20/dummy_token.cairo)         | [0x52ec5de9a76623f18e38c400f763013ff0b3ff8491431d7dc0391b3478bf1f3](https://goerli.voyager.online/contract/0x52ec5de9a76623f18e38c400f763013ff0b3ff8491431d7dc0391b3478bf1f3) |
+| [Dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo) | [0x4fc25c4aca3a8126f9b386f8908ffb7518bc6fefaa5c542cd538655827f8a21](https://goerli.voyager.online/contract/0x4fc25c4aca3a8126f9b386f8908ffb7518bc6fefaa5c542cd538655827f8a21)   |
 
 ​
 ​
@@ -214,7 +214,7 @@ starknet deploy --contract artifacts/ERC721.json --inputs arg1 arg2 arg3 --netwo
 
 ### Exercise 6 - Claiming an NFT
 
-- Mint a NFT with metadata on [this dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo) , usable [here](https://goerli.voyager.online/contract/0x77d0d70903799276c6abb9569745355c2060e534860c22ac5f6499e79d06f26)
+- Mint a NFT with metadata on [this dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo) , usable [here](https://goerli.voyager.online/contract/0x4fc25c4aca3a8126f9b386f8908ffb7518bc6fefaa5c542cd538655827f8a21)
 - Check it on [Oasis](https://testnet.playoasis.xyz/)
 - Claim points on [`ex6_claim_metadata_token`](contracts/Evaluator.cairo#L523) (2 pts)
 
