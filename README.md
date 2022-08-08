@@ -13,7 +13,7 @@ It is aimed at developers that:
 ### Disclaimer
 
 ​
-Don't expect any kind of benefit from using this, other than learning a bunch of cool stuff about StarkNet, the first general purpose validity rollup on the Ethereum Mainnnet.
+Don't expect any kind of benefit from using this, other than learning a bunch of cool stuff about StarkNet, the first general purpose validity rollup on the Ethereum Mainnet.
 ​
 StarkNet is still in Alpha. This means that development is ongoing, and the paint is not dry everywhere. Things will get better, and in the meanwhile, we make things work with a bit of duct tape here and there!
 ​
@@ -22,7 +22,7 @@ StarkNet is still in Alpha. This means that development is ongoing, and the pain
 
 The goal of this tutorial is for you to customize and deploy an ERC721 contract on StarkNet. Your progress will be check by an [evaluator contract](contracts/Evaluator.cairo), deployed on StarkNet, which will grant you points in the form of [ERC20 tokens](contracts/token/ERC20/TDERC20.cairo).
 
-Each exercise will require you to add functionnality to your ERC721 token.
+Each exercise will require you to add functionality to your ERC721 token.
 
 For each exercise, you will have to write a new version on your contract, deploy it, and submit it to the evaluator for correction.
 
@@ -78,7 +78,7 @@ cd starknet-erc721
 There are two ways to set up your environment on StarkNet: a local installation, or using a docker container
 
 - For Mac and Linux users, we recommend either
-- For windows users we recommand docker
+- For windows users we recommend docker
 
 For a production setup instructions we wrote [this article](https://medium.com/starknet-edu/the-ultimate-starknet-dev-environment-716724aef4a7).
 
@@ -217,7 +217,7 @@ starknet deploy --contract artifacts/ERC721.json --inputs arg1 arg2 arg3 --netwo
 - Check it on [Oasis](https://testnet.playoasis.xyz/)
 - Claim points on [`ex6_claim_metadata_token`](contracts/Evaluator.cairo#L523) (2 pts)
 
-### Exercise 7 - Adding metadatas
+### Exercise 7 - Adding metadata
 
 **Disclaimer** This exercise can't be solved due to a typo, this will soon be fixed
 
