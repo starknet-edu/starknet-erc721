@@ -151,7 +151,7 @@ For example to solve the first exercise the workflow would be the following:
 | Contract code                                                        | Contract on voyager                                                                                                                                                           |
 | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Points counter ERC20](contracts/token/ERC20/TDERC20.cairo)          | [0xa0b943234522049dcdbd36cf9d5e12a46be405d6b8757df2329e6536b40707](https://goerli.voyager.online/contract/0xa0b943234522049dcdbd36cf9d5e12a46be405d6b8757df2329e6536b40707) |
-| [Evaluator](contracts/Evaluator.cairo)                               | [0x6d2c2a6948a67b445ef16ea726ebac9b4535259b1f5d763b6985230c258c67](https://goerli.voyager.online/contract/0x6d2c2a6948a67b445ef16ea726ebac9b4535259b1f5d763b6985230c258c67) |
+| [Evaluator](contracts/Evaluator.cairo)                               | [0x2d15a378e131b0a9dc323d0eae882bfe8ecc59de0eb206266ca236f823e0a15](https://goerli.voyager.online/contract/0x2d15a378e131b0a9dc323d0eae882bfe8ecc59de0eb206266ca236f823e0a15) |
 | [Dummy ERC20 token](contracts/token/ERC20/dummy_token.cairo)         | [0x52ec5de9a76623f18e38c400f763013ff0b3ff8491431d7dc0391b3478bf1f3](https://goerli.voyager.online/contract/0x52ec5de9a76623f18e38c400f763013ff0b3ff8491431d7dc0391b3478bf1f3) |
 | [Dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo) | [0x4fc25c4aca3a8126f9b386f8908ffb7518bc6fefaa5c542cd538655827f8a21](https://goerli.voyager.online/contract/0x4fc25c4aca3a8126f9b386f8908ffb7518bc6fefaa5c542cd538655827f8a21)   |
 
@@ -218,8 +218,6 @@ starknet deploy --contract artifacts/ERC721.json --inputs arg1 arg2 arg3 --netwo
 - Claim points on [`ex6_claim_metadata_token`](contracts/Evaluator.cairo#L523) (2 pts)
 
 ### Exercise 7 - Adding metadata
-
-**Disclaimer** This exercise can't be solved due to a typo, this will soon be fixed
 
 - Create a new ERC721 contract that supports metadata. You can use [this contract](contracts/token/ERC721/ERC721_metadata.cairo) as a base
 - The base token URI is the chosen IPFS gateway
