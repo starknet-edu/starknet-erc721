@@ -164,7 +164,7 @@ Today we are creating an animal registry! Animals are bred by breeders. They can
 
 ### Exercise 1 - Deploying an ERC721
 
-- Create an ERC721 token contract. You can use [this implementation](https://github.com/OpenZeppelin/cairo-contracts/blob/main/src/openzeppelin/token/erc721/ERC721_Mintable_Burnable.cairo) as a base
+- Create an ERC721 token contract. You can use [this implementation](https://github.com/OpenZeppelin/cairo-contracts/blob/v0.2.1/src/openzeppelin/token/erc721/ERC721_Mintable_Burnable.cairo) as a base
 - Deploy it to the testnet (check the constructor for the needed arguments. Also note that the arguments should be decimals.)
 
 ```bash
@@ -214,7 +214,7 @@ starknet deploy --contract artifacts/ERC721.json --inputs arg1 arg2 arg3 --netwo
 ### Exercise 6 - Claiming an NFT
 
 - Mint a NFT with metadata on [this dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo) , usable [here](https://goerli.voyager.online/contract/0x4fc25c4aca3a8126f9b386f8908ffb7518bc6fefaa5c542cd538655827f8a21)
-- Check it on [Oasis](https://testnet.playoasis.xyz/)
+- Check it on [Aspect](https://testnet.aspect.co/)
 - Claim points on [`ex6_claim_metadata_token`](contracts/Evaluator.cairo#L523) (2 pts)
 
 ### Exercise 7 - Adding metadata
@@ -224,10 +224,10 @@ starknet deploy --contract artifacts/ERC721.json --inputs arg1 arg2 arg3 --netwo
 - Create a new ERC721 contract that supports metadata. You can use [this contract](contracts/token/ERC721/ERC721_metadata.cairo) as a base
 - The base token URI is the chosen IPFS gateway
 - You can upload your NFTs directly on [this website](https://www.pinata.cloud/)
-- Your tokens should be visible on [Oasis](https://testnet.playoasis.xyz/) once minted!
+- Your tokens should be visible on [Aspect](https://testnet.aspect.co/) once minted!
 - Deploy your new contract
 - Call [`submit_exercise()`](contracts/Evaluator.cairo#L601) in the Evaluator to configure the contract you want evaluated
-- Claim points on [`ex7_add_metadata`]((contracts/Evaluator.cairo#L557) (2 pts)
+- Claim points on [`ex7_add_metadata`](contracts/Evaluator.cairo#L557) (2 pts)
 
 ​
 
