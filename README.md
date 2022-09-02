@@ -13,7 +13,7 @@ It is aimed at developers that:
 ### Disclaimer
 
 ​
-Don't expect any kind of benefit from using this, other than learning a bunch of cool stuff about StarkNet, the first general purpose validity rollup on the Ethereum Mainnnet.
+Don't expect any kind of benefit from using this, other than learning a bunch of cool stuff about StarkNet, the first general purpose validity rollup on the Ethereum Mainnet.
 ​
 StarkNet is still in Alpha. This means that development is ongoing, and the paint is not dry everywhere. Things will get better, and in the meanwhile, we make things work with a bit of duct tape here and there!
 ​
@@ -22,7 +22,7 @@ StarkNet is still in Alpha. This means that development is ongoing, and the pain
 
 The goal of this tutorial is for you to customize and deploy an ERC721 contract on StarkNet. Your progress will be check by an [evaluator contract](contracts/Evaluator.cairo), deployed on StarkNet, which will grant you points in the form of [ERC20 tokens](contracts/token/ERC20/TDERC20.cairo).
 
-Each exercise will require you to add functionnality to your ERC721 token.
+Each exercise will require you to add functionality to your ERC721 token.
 
 For each exercise, you will have to write a new version on your contract, deploy it, and submit it to the evaluator for correction.
 
@@ -49,7 +49,7 @@ Once you are done working on this tutorial, your feedback would be greatly appre
 And if you struggle to move forward, do let us know! This workshop is meant to be as accessible as possible; we want to know if it's not the case.
 
 ​
-Do you have a question? Join our [Discord server](https://discord.gg/starknet), register, and join channel #tutorials-support
+Do you have a question? Join our [Discord server](https://discord.gg/QypNMzkHbc), register, and join channel #tutorials-support
 ​
 Are you interested in following online workshops about learning how to dev on StarkNet? [Subscribe here](http://eepurl.com/hFnpQ5)
 
@@ -62,7 +62,6 @@ This project can be made better and will evolve as StarkNet matures. Your contri
 - Add an explanation in the comments of the exercise if you feel it needs more explanation
 - Add exercises showcasing your favorite Cairo feature
 
-​
 ​
 
 ## Getting ready to work
@@ -79,7 +78,7 @@ cd starknet-erc721
 There are two ways to set up your environment on StarkNet: a local installation, or using a docker container
 
 - For Mac and Linux users, we recommend either
-- For windows users we recommand docker
+- For windows users we recommend docker
 
 For a production setup instructions we wrote [this article](https://medium.com/starknet-edu/the-ultimate-starknet-dev-environment-716724aef4a7).
 
@@ -152,9 +151,9 @@ For example to solve the first exercise the workflow would be the following:
 | Contract code                                                        | Contract on voyager                                                                                                                                                           |
 | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Points counter ERC20](contracts/token/ERC20/TDERC20.cairo)          | [0xa0b943234522049dcdbd36cf9d5e12a46be405d6b8757df2329e6536b40707](https://goerli.voyager.online/contract/0xa0b943234522049dcdbd36cf9d5e12a46be405d6b8757df2329e6536b40707) |
-| [Evaluator](contracts/Evaluator.cairo)                               | [0x93a24e9a11d677ac6840f13a69a011498336bc28d1b3a6f7b6f18e296721e1](https://goerli.voyager.online/contract/0x93a24e9a11d677ac6840f13a69a011498336bc28d1b3a6f7b6f18e296721e1) |
-| [Dummy ERC20 token](contracts/token/ERC20/dummy_token.cairo)         | [0x25dd23fa28df0658219131c6fdefe5bd3b26456935bff9872a82aaa482ceaea](https://goerli.voyager.online/contract/0x25dd23fa28df0658219131c6fdefe5bd3b26456935bff9872a82aaa482ceaea) |
-| [Dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo) | [0x77d0d70903799276c6abb9569745355c2060e534860c22ac5f6499e79d06f26](https://goerli.voyager.online/contract/0x77d0d70903799276c6abb9569745355c2060e534860c22ac5f6499e79d06f26)   |
+| [Evaluator](contracts/Evaluator.cairo)                               | [0x2d15a378e131b0a9dc323d0eae882bfe8ecc59de0eb206266ca236f823e0a15](https://goerli.voyager.online/contract/0x2d15a378e131b0a9dc323d0eae882bfe8ecc59de0eb206266ca236f823e0a15) |
+| [Dummy ERC20 token](contracts/token/ERC20/dummy_token.cairo)         | [0x52ec5de9a76623f18e38c400f763013ff0b3ff8491431d7dc0391b3478bf1f3](https://goerli.voyager.online/contract/0x52ec5de9a76623f18e38c400f763013ff0b3ff8491431d7dc0391b3478bf1f3) |
+| [Dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo) | [0x4fc25c4aca3a8126f9b386f8908ffb7518bc6fefaa5c542cd538655827f8a21](https://goerli.voyager.online/contract/0x4fc25c4aca3a8126f9b386f8908ffb7518bc6fefaa5c542cd538655827f8a21)   |
 
 ​
 ​
@@ -165,7 +164,7 @@ Today we are creating an animal registry! Animals are bred by breeders. They can
 
 ### Exercise 1 - Deploying an ERC721
 
-- Create an ERC721 token contract. You can use [this implementation](https://github.com/OpenZeppelin/cairo-contracts/blob/main/src/openzeppelin/token/erc721/ERC721_Mintable_Burnable.cairo) as a base
+- Create an ERC721 token contract. You can use [this implementation](https://github.com/OpenZeppelin/cairo-contracts/blob/v0.2.1/src/openzeppelin/token/erc721/ERC721_Mintable_Burnable.cairo) as a base
 - Deploy it to the testnet (check the constructor for the needed arguments. Also note that the arguments should be decimals.)
 
 ```bash
@@ -174,7 +173,7 @@ starknet deploy --contract artifacts/ERC721.json --inputs arg1 arg2 arg3 --netwo
 ```
 
 - Give token #1 to Evaluator contract
-- Call [`submit_exercise()`](contracts/Evaluator.cairo#L601) in the Evaluator to configure the contract you want evaluated (2 pts)
+- Call [`submit_exercise()`](contracts/Evaluator.cairo#L601) in the Evaluator to configure the contract you want evaluated (4 pts)
 - Call [`ex1_test_erc721()`](contracts/Evaluator.cairo#L146) in the evaluator to receive your points (2 pts)
 
 ### Exercise 2 - Creating token attributes
@@ -214,21 +213,19 @@ starknet deploy --contract artifacts/ERC721.json --inputs arg1 arg2 arg3 --netwo
 
 ### Exercise 6 - Claiming an NFT
 
-- Mint a NFT with metadata on [this dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo) , usable [here](https://goerli.voyager.online/contract/0x77d0d70903799276c6abb9569745355c2060e534860c22ac5f6499e79d06f26)
-- Check it on [Oasis](https://testnet.playoasis.xyz/)
+- Mint a NFT with metadata on [this dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo) , usable [here](https://goerli.voyager.online/contract/0x4fc25c4aca3a8126f9b386f8908ffb7518bc6fefaa5c542cd538655827f8a21)
+- Check it on [Aspect](https://testnet.aspect.co/)
 - Claim points on [`ex6_claim_metadata_token`](contracts/Evaluator.cairo#L523) (2 pts)
 
-### Exercise 7 - Adding metadatas
-
-**Disclaimer** This exercise can't be solved due to a typo, this will soon be fixed
+### Exercise 7 - Adding metadata
 
 - Create a new ERC721 contract that supports metadata. You can use [this contract](contracts/token/ERC721/ERC721_metadata.cairo) as a base
 - The base token URI is the chosen IPFS gateway
 - You can upload your NFTs directly on [this website](https://www.pinata.cloud/)
-- Your tokens should be visible on [Oasis](https://testnet.playoasis.xyz/) once minted!
+- Your tokens should be visible on [Aspect](https://testnet.aspect.co/) once minted!
 - Deploy your new contract
 - Call [`submit_exercise()`](contracts/Evaluator.cairo#L601) in the Evaluator to configure the contract you want evaluated
-- Claim points on [`ex7_add_metadata`]((contracts/Evaluator.cairo#L557) (2 pts)
+- Claim points on [`ex7_add_metadata`](contracts/Evaluator.cairo#L557) (2 pts)
 
 ​
 
