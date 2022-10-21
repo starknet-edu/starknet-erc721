@@ -6,7 +6,7 @@ from starkware.cairo.common.uint256 import Uint256
 
 from openzeppelin.token.erc721.library import ERC721
 
-from openzeppelin.introspection.ERC165 import ERC165
+from openzeppelin.introspection.ERC165.library import ERC165
 
 from contracts.utils.ShortString import uint256_to_ss
 from contracts.utils.Array import concat_arr
