@@ -168,7 +168,7 @@ Today we are creating an animal registry! Animals are bred by breeders. They can
 - Deploy it to the testnet (check the constructor for the needed arguments. Also note that the arguments should be decimals.)
 
 ```bash
-starknet-compile contracts/ERC721/ERC721.cairo --output artifacts/ERC721.json
+starknet-compile contracts/token/ERC721/ERC721.cairo --output artifacts/ERC721.json
 starknet deploy --contract artifacts/ERC721.json --inputs arg1 arg2 arg3 --network alpha-goerli 
 ```
 
