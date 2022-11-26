@@ -169,7 +169,8 @@ Today we are creating an animal registry! Animals are bred by breeders. They can
 
 ```bash
 starknet-compile contracts/ERC721/ERC721.cairo --output artifacts/ERC721.json
-starknet deploy --contract artifacts/ERC721.json --inputs arg1 arg2 arg3 --network alpha-goerli 
+starknet declare --contract artifacts/ERC721.json
+starknet deploy --class_hash CLASS_HASH_VALUE --inputs arg1 arg2 arg3 --network alpha-goerli 
 ```
 
 - Give token #1 to Evaluator contract
