@@ -1,0 +1,35 @@
+{
+  "name": "starknet-erc20",
+  "version": "1.0.0",
+  "description": "Welcome! This is an automated workshop that will explain how to deploy an ERC20 token on StarkNet and customize it to perform specific functions. The ERC20 standard is described [here](https://docs.openzeppelin.com/contracts/3.x/api/token/erc20) It is aimed at developers that:",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3",
+    "starknet": "^4.13.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "./compile.sh",
+    "deploy:tuto": "npx ts-node deploy/deployFullTutorial.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/starknet-edu/starknet-erc20.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/starknet-edu/starknet-erc20/issues"
+  },
+  "homepage": "https://github.com/starknet-edu/starknet-erc20#readme",
+  "dependencies": {
+    "@types/node": "^18.11.9",
+    "fs": "0.0.1-security"
+  }
+}

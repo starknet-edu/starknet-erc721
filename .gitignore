@@ -12,6 +12,8 @@ __pycache__/
 *.env
 *.accounts.json
 
+node_modules/
+
 # Distribution / packaging
 .Python
 build/
