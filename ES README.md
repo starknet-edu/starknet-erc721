@@ -25,15 +25,15 @@ Para cada ejercicio, deberá escribir una nueva versión en su contrato, impleme
 
 Este taller es el segundo de una serie destinada a enseñar cómo construir en StarkNet. Echa un vistazo a lo siguiente:
 ​
+| Tema                                           | GitHub repo                                                                            |
+| ---------------------------------------------- | -------------------------------------------------------------------------------------- |
+| Aprenda a leer el código de El Cairo           | [Cairo 101](https://github.com/starknet-edu/starknet-cairo-101)                        |
+| Implemente y personalice un ERC721 NFT (aquí)  | [StarkNet ERC721](https://github.com/starknet-edu/starknet-erc721)                     |
+| Implemente y personalice un token ERC20        | [StarkNet ERC20](https://github.com/starknet-edu/starknet-erc20)                       |
+| Cree una app de capa cruzada                   | [StarkNet messaging bridge](https://github.com/starknet-edu/starknet-messaging-bridge) |
+| Depure sus contratos de El Cairo fácilmente    | [StarkNet debug](https://github.com/starknet-edu/starknet-debug)                       |
+| Diseña tu propio contrato de cuenta            | [StarkNet account abstraction](https://github.com/starknet-edu/starknet-accounts)      |
 
-| Topic                                             | GitHub repo                                                                            |
-| ------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| Learn how to read Cairo code                      | [Cairo 101](https://github.com/starknet-edu/starknet-cairo-101)                        |
-| Deploy and customize an ERC721 NFT (you are here) | [StarkNet ERC721](https://github.com/starknet-edu/starknet-erc721)                     |
-| Deploy and customize an ERC20 token               | [StarkNet ERC20](https://github.com/starknet-edu/starknet-erc20)                       |
-| Build a cross layer application                   | [StarkNet messaging bridge](https://github.com/starknet-edu/starknet-messaging-bridge) |
-| Debug your Cairo contracts easily                 | [StarkNet debug](https://github.com/starknet-edu/starknet-debug)                       |
-| Design your own account contract                  | [StarkNet account abstraction](https://github.com/starknet-edu/starknet-accounts)      |
 
 ### Proporcionar comentarios y obtener ayuda 
 
