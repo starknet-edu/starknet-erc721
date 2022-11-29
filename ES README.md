@@ -1,4 +1,4 @@
-# Tutorial Nadai ERC721 on StarkNet
+# Tutorial ERC721 on StarkNet
 
 ¡Bienvenidos! Este es un taller automatizado que explicará cómo implementar un token ERC721 en StarkNet y personalizarlo para realizar funciones específicas. El estándar ERC721 se describe [aquí](https://docs.openzeppelin.com/contracts/3.x/api/token/erc721). Está dirigido a desarrolladores que: 
 
