@@ -164,7 +164,7 @@ Today we are creating an animal registry! Animals are bred by breeders. They can
 
 ### Exercise 1 - Deploying an ERC721
 
-- Create an ERC721 token contract. You can use [this implementation](https://github.com/OpenZeppelin/cairo-contracts/blob/v0.2.1/src/openzeppelin/token/erc721/ERC721_Mintable_Burnable.cairo) as a base
+- Create an ERC721 token contract. You can use [this implementation](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.5.0/src/openzeppelin/token/erc721/presets/ERC721MintableBurnable.cairo) as a base
 - Deploy it to the testnet (check the constructor for the needed arguments. Also note that the arguments should be decimals.)
 
 ```bash
