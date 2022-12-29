@@ -5,14 +5,10 @@ It is aimed at developers that:
 
 - Understand Cairo syntax
 - Understand the ERC721 token standard
-​
-​
 
 ## Introduction
 
 ### Disclaimer
-
-​
 Don't expect any kind of benefit from using this, other than learning a bunch of cool stuff about StarkNet, the first general purpose validity rollup on the Ethereum Mainnet.
 ​
 StarkNet is still in Alpha. This means that development is ongoing, and the paint is not dry everywhere. Things will get better, and in the meanwhile, we make things work with a bit of duct tape here and there!
@@ -119,9 +115,6 @@ docker run --rm -it -v ${pwd}:/work --workdir /work shardlabs/cairo-cli:latest
 starknet-compile contracts/Evaluator.cairo
 ```
 
-​
-​
-
 ## Working on the tutorial
 
 ### Workflow
@@ -146,7 +139,7 @@ For example to solve the first exercise the workflow would be the following:
 - **We really recommend that your read the [`Evaluator.cairo`](contracts/Evaluator.cairo) contract in order to fully understand what's expected for each exercise**. A high level description of what is expected for each exercise is provided in this readme.
 - The Evaluator contract sometimes needs to make payments to buy your tokens. Make sure he has enough dummy tokens to do so! If not, you should get dummy tokens from the dummy tokens contract and send them to the evaluator
 
-### Contracts code and addresses
+### Contracts code and addresses on alpha-goerli Testnet
 
 | Contract code                                                        | Contract on voyager                                                                                                                                                           |
 | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -155,7 +148,7 @@ For example to solve the first exercise the workflow would be the following:
 | [Dummy ERC20 token](contracts/token/ERC20/dummy_token.cairo)         | [0x52ec5de9a76623f18e38c400f763013ff0b3ff8491431d7dc0391b3478bf1f3](https://goerli.voyager.online/contract/0x52ec5de9a76623f18e38c400f763013ff0b3ff8491431d7dc0391b3478bf1f3) |
 | [Dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo) | [0x4fc25c4aca3a8126f9b386f8908ffb7518bc6fefaa5c542cd538655827f8a21](https://goerli.voyager.online/contract/0x4fc25c4aca3a8126f9b386f8908ffb7518bc6fefaa5c542cd538655827f8a21)   |
 
-​
+#### Contracts code and addresses on [alpha-goerli Testnet2]()
 ​
 
 ## Tasks list
@@ -169,7 +162,7 @@ Today we are creating an animal registry! Animals are bred by breeders. They can
 
 ```bash
 starknet-compile contracts/ERC721/ERC721.cairo --output artifacts/ERC721.json
-starknet deploy --contract artifacts/ERC721.json --inputs arg1 arg2 arg3 --network alpha-goerli 
+starknet deploy --contract artifacts/ERC721.json --inputs arg1 arg2 arg3 --network alpha-goerli
 ```
 
 - Give token #1 to Evaluator contract
@@ -267,6 +260,4 @@ You sent a transaction, and it is shown as "undetected" in voyager? This can mea
 - Your transaction was invalid, and will NOT be included in a block (there is no such thing as a failed transaction in StarkNet).
 ​
 You can (and should) check the status of your transaction with the following URL  [https://alpha4.starknet.io/feeder_gateway/get_transaction_receipt?transactionHash=](https://alpha4.starknet.io/feeder_gateway/get_transaction_receipt?transactionHash=)  , where you can append your transaction hash.
-​
-
 ​

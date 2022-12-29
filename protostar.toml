@@ -1,0 +1,39 @@
+[project]
+protostar-version = "0.9.0"
+lib-path = "lib"
+
+[contracts]
+UDC = ["contracts/UniversalDeployer.cairo"]
+TDERC20 = ["contracts/token/ERC20/TDERC20.cairo"]
+Evaluator = ["contracts/Evaluator.cairo"]
+dummy_token = ["contracts/token/ERC20/dummy_token.cairo"]
+TDERC721_metadata = ["contracts/token/ERC721/TDERC721_metadata.cairo"]
+players_registry = ["contracts/utils/players_registry.cairo"]
+EX01 = ['contracts/exercise/ex01.cairo']
+
+[format]
+target = ["src", "tests"]
+ignore-broken = true
+
+[profile.devnet.project]
+gateway-url = "http://127.0.0.1:5050/"
+chain-id = 1536727068981429685321
+
+[profile.testnet.project]
+network="testnet"
+
+[profile.testnet2.project]
+gateway-url = "https://alpha4-2.starknet.io"
+chain-id = 393402129659245999442226
+
+["profile.devnet.protostar.deploy"]
+gateway-url="http://127.0.0.1:5050/"
+
+["profile.testnet.protostar.deploy"]
+network="testnet"
+
+["profile.testnet2.protostar.deploy"]
+gateway-url = "https://alpha4-2.starknet.io"
+
+["profile.mainnet.protostar.deploy"]
+network="mainnet"
