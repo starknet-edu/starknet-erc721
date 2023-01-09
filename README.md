@@ -171,8 +171,8 @@ Today we are creating an animal registry! Animals are bred by breeders. They can
 
 ```bash
 protostar build
-protostar -p devnet declare ./build/ERC721.json --account-address acct_addr --private-key-path ./.pkey --max-fee auto
-protostar -p devnet deploy class_hash --account-address acct_addr --private-key-path ./.pkey --max-fee auto -i arg1 arg2 arg3 --network alpha-goerli
+protostar declare ./build/ERC721.json --account-address acct_addr --private-key-path ./.pkey --max-fee auto --network alpha-goerli
+protostar deploy class_hash --account-address acct_addr --private-key-path ./.pkey --max-fee auto -i arg1 arg2 arg3 --network alpha-goerli
 ```
 
 - Give token #1 to Evaluator contract
