@@ -112,8 +112,10 @@ docker run --rm -it -v ${pwd}:/work --workdir /work shardlabs/cairo-cli:latest
 ### Step 3 -Test that you are able to compile the project
 
 ```bash
-starknet-compile contracts/Evaluator.cairo
+protostar build
 ```
+
+For more detailed deploy scripts please refer to `deploy folder`
 
 ## Working on the tutorial
 
@@ -148,7 +150,14 @@ For example to solve the first exercise the workflow would be the following:
 | [Dummy ERC20 token](contracts/token/ERC20/dummy_token.cairo)         | [0x52ec5de9a76623f18e38c400f763013ff0b3ff8491431d7dc0391b3478bf1f3](https://goerli.voyager.online/contract/0x52ec5de9a76623f18e38c400f763013ff0b3ff8491431d7dc0391b3478bf1f3) |
 | [Dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo) | [0x4fc25c4aca3a8126f9b386f8908ffb7518bc6fefaa5c542cd538655827f8a21](https://goerli.voyager.online/contract/0x4fc25c4aca3a8126f9b386f8908ffb7518bc6fefaa5c542cd538655827f8a21)   |
 
-#### Contracts code and addresses on [alpha-goerli Testnet2]()
+#### Contracts code and addresses on alpha-goerli Testnet2
+
+| Contract code                                                        | Contract on starkscan                                                                                                                                                           |
+| -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Points counter ERC20](contracts/token/ERC20/TDERC20.cairo)          | [0x0062469b090d7e3c0d27619803b3d1058c91af0301af73a553156e8c889e2d24](https://testnet-2.starkscan.co/contract/0x0062469b090d7e3c0d27619803b3d1058c91af0301af73a553156e8c889e2d24) |
+| [Evaluator](contracts/Evaluator.cairo)                               | [0x0764d432fbae633bdc4c565662600b8dee2acdf0b7c7656ef430cbbd580b0fb9](https://testnet-2.starkscan.co/contract/0x0764d432fbae633bdc4c565662600b8dee2acdf0b7c7656ef430cbbd580b0fb9) |
+| [Dummy ERC20 token](contracts/token/ERC20/dummy_token.cairo)         | [0x012e62244d2557718dd5df6e44bd1fc319169d2e076727b9d7e99226e73f0f5f](https://testnet-2.starkscan.co/contract/0x012e62244d2557718dd5df6e44bd1fc319169d2e076727b9d7e99226e73f0f5f) |
+| [Dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo) | [0x0431f41533315ce4993e925ae22a3faee35679e30b8ce8dcb3914718da91f3e6](https://testnet-2.starkscan.co/contract/0x0431f41533315ce4993e925ae22a3faee35679e30b8ce8dcb3914718da91f3e6)   |
 ​
 
 ## Tasks list
@@ -161,8 +170,9 @@ Today we are creating an animal registry! Animals are bred by breeders. They can
 - Deploy it to the testnet (check the constructor for the needed arguments. Also note that the arguments should be decimals.)
 
 ```bash
-starknet-compile contracts/ERC721/ERC721.cairo --output artifacts/ERC721.json
-starknet deploy --contract artifacts/ERC721.json --inputs arg1 arg2 arg3 --network alpha-goerli
+protostar build
+protostar -p devnet declare ./build/ERC721.json --account-address acct_addr --private-key-path ./.pkey --max-fee auto
+protostar -p devnet deploy class_hash --account-address acct_addr --private-key-path ./.pkey --max-fee auto -i arg1 arg2 arg3 --network alpha-goerli
 ```
 
 - Give token #1 to Evaluator contract
