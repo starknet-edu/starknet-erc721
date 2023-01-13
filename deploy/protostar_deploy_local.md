@@ -12,13 +12,6 @@ protostar build --cairo-path ./lib/cairo_contracts/src
 touch .pkey_local
 ```
 
-## Deploy UDC
-```
-protostar -p devnet declare ./build/UDC.json --account-address 0x4edae16ce9ba4eecc9eb642633e997d2d39f68e0c87d6d3019086411342721c --private-key-path ./.pkey_local --max-fee auto
-
-protostar -p devnet deploy 0x02e67f5335ecf2e29435dbb0db9cea38b69bcffe1aee65a2ccaa9ef1414a9873 --account-address 0x4edae16ce9ba4eecc9eb642633e997d2d39f68e0c87d6d3019086411342721c --private-key-path ./.pkey_local --max-fee auto
-```
-
 ## Deploy TDERC20
 ```
 protostar -p devnet declare ./build/TDERC20.json --account-address 0x4edae16ce9ba4eecc9eb642633e997d2d39f68e0c87d6d3019086411342721c --private-key-path ./.pkey_local --max-fee auto

@@ -58,64 +58,26 @@ This project can be made better and will evolve as StarkNet matures. Your contri
 - Add an explanation in the comments of the exercise if you feel it needs more explanation
 - Add exercises showcasing your favorite Cairo feature
 
-​
+## Reusing this project
+- Clone the repo on your machine.
 
-## Getting ready to work
-
-### Step 1 - Clone the repo
-
-```bash
+```
 git clone https://github.com/starknet-edu/starknet-erc721
 cd starknet-erc721
 ```
 
-### Step 2 - Set up your environment
+- Set up the starknet environment following [these instructions](https://starknet.io/docs/quickstart.html#quickstart).
+- Set up your local starknet-devnet [official doc](https://shard-labs.github.io/starknet-devnet/)
+- Set up protostar build tool [official doc](https://docs.swmansion.com/protostar/)
+- Or use the best practise to setup the local dev env [github](https://github.com/starknet-edu/setup-starknet-dev-env/)
+- Test that you can compile the project.
 
-There are two ways to set up your environment on StarkNet: a local installation, or using a docker container
-
-- For Mac and Linux users, we recommend either
-- For windows users we recommend docker
-
-For a production setup instructions we wrote [this article](https://medium.com/starknet-edu/the-ultimate-starknet-dev-environment-716724aef4a7).
-
-#### Option A - Set up a local python environment
-
-- Set up the environment following [these instructions](https://starknet.io/docs/quickstart.html#quickstart)
-- Install [OpenZeppelin's cairo contracts](https://github.com/OpenZeppelin/cairo-contracts).
-
-```bash
-pip install openzeppelin-cairo-contracts
+```
+protostar install OpenZeppelin/cairo-contracts@v0.5.1
+protostar build --cairo-path ./lib/cairo_contracts/src
 ```
 
-#### Option B - Use a dockerized environment
-
-- Linux and macos
-
-for mac m1:
-
-```bash
-alias cairo='docker run --rm -v "$PWD":"$PWD" -w "$PWD" shardlabs/cairo-cli:latest-arm'
-```
-
-for amd processors
-
-```bash
-alias cairo='docker run --rm -v "$PWD":"$PWD" -w "$PWD" shardlabs/cairo-cli:latest'
-```
-
-- Windows
-
-```bash
-docker run --rm -it -v ${pwd}:/work --workdir /work shardlabs/cairo-cli:latest
-```
-
-### Step 3 -Test that you are able to compile the project
-
-```bash
-protostar build
-```
-
-For more detailed deploy scripts please refer to `deploy folder`
+- For more detailed deploy scripts please refer to `deploy folder`
 
 ## Working on the tutorial
 

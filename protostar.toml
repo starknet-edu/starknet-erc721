@@ -3,13 +3,11 @@ protostar-version = "0.9.0"
 lib-path = "lib"
 
 [contracts]
-UDC = ["contracts/UniversalDeployer.cairo"]
 TDERC20 = ["contracts/token/ERC20/TDERC20.cairo"]
 Evaluator = ["contracts/Evaluator.cairo"]
 dummy_token = ["contracts/token/ERC20/dummy_token.cairo"]
 TDERC721_metadata = ["contracts/token/ERC721/TDERC721_metadata.cairo"]
 players_registry = ["contracts/utils/players_registry.cairo"]
-EX01 = ['contracts/exercise/ex01.cairo']
 
 [format]
 target = ["src", "tests"]
