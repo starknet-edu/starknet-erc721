@@ -7,4 +7,3 @@ for i in range(1,101):
 	with open("assets/%s.json" % i, 'w') as outfile:
 		outfile.write(json.dumps(myJson))
 	# json.dumps("assets/%s.json\÷\//\" % i, myJson)
-	

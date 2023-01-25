@@ -140,3 +140,5 @@ Makefile
 .pkey*
 .gitmodules
 lib/*
+lib
+.gitmodules
