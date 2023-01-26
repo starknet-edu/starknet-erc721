@@ -16,6 +16,11 @@ def run_command(cmd):
   out = subprocess.check_output(cmd.split(" "))
   return out.decode("utf-8")
 
+def install():
+  print("Installing OpenZeppelin/cairo-contracts...")
+  run_command("protostar install OpenZeppelin/cairo-contracts@v0.6.0")
+  return
+
 # Build
 def build(cairo_path):
   print("BUILDing...")
@@ -113,34 +118,30 @@ def deploy_evaluator():
   return
 
 # Evaluator set_random_values
-def evaluator_set_random_values():
+def evaluator_set_random_values(list_length, list, column):
   contract = "Evaluator"
-  print("Invoke set_random_values on " + contract)
-  out = run_command(f"protostar -p {network} invoke --contract-address {evaluator_addr} --function set_random_values --account-address {account_addr} --inputs 100 2 7 4 8 7 6 1 7 6 5 4 8 8 5 6 3 8 2 8 6 5 7 3 1 8 6 7 3 6 8 1 7 3 8 2 3 4 5 2 5 7 3 3 4 4 4 5 8 1 7 1 5 7 1 3 2 5 7 8 8 7 1 8 4 1 6 2 1 6 6 4 7 2 1 2 3 5 1 3 8 6 5 5 2 7 8 4 6 4 5 4 6 1 6 4 5 3 5 8 3 0 --private-key-path ./{pkey} --max-fee auto --json")
-
-  out = run_command(f"protostar -p {network} invoke --contract-address {evaluator_addr} --function set_random_values --account-address {account_addr} --inputs 100 1 1 2 1 1 1 2 2 2 2 1 2 2 2 2 1 2 1 1 1 1 2 2 2 2 2 2 2 2 1 2 1 1 2 1 2 2 1 2 1 1 1 2 2 2 2 2 1 1 2 2 2 2 2 2 1 2 1 1 1 1 2 1 2 2 1 2 1 2 2 2 2 2 1 2 2 2 2 1 1 1 2 1 2 2 1 1 2 1 2 2 1 2 2 1 1 1 2 2 2 1 --private-key-path ./{pkey} --max-fee auto --json")
-
-  out = run_command(f"protostar -p {network} invoke --contract-address {evaluator_addr} --function set_random_values --account-address {account_addr} --inputs 100 4 2 4 2 2 1 2 4 3 4 4 2 3 1 1 3 4 4 1 1 4 4 2 1 1 2 1 4 3 1 2 3 3 1 4 2 4 3 4 2 4 3 3 3 4 3 1 4 2 3 3 2 1 2 3 2 3 2 2 3 3 3 1 3 3 4 3 4 4 4 3 4 4 4 1 4 4 1 3 1 1 3 2 3 2 2 4 2 3 1 3 1 1 2 2 2 2 4 4 2 2 --private-key-path ./{pkey} --max-fee auto --json")
-
+  print("Invoke set_random_values on " + contract + " for column " + str(column))
+  list_string = ' '.join(str(e) for e in list)
+  run_command(f"protostar -p {network} invoke --contract-address {evaluator_addr} --function set_random_values --account-address {account_addr} --inputs {list_length} {list_string} {column} --private-key-path ./{pkey} --max-fee auto --json")
   return
 
 # Evaluator finish setup
 def evaluator_finish_setup():
   contract = "Evaluator"
   print("Invoke finish setup on " + contract)
-  out = run_command(f"protostar -p {network} invoke --contract-address {evaluator_addr} --function finish_setup --account-address {account_addr} --private-key-path ./{pkey} --max-fee auto --json")
+  run_command(f"protostar -p {network} invoke --contract-address {evaluator_addr} --function finish_setup --account-address {account_addr} --private-key-path ./{pkey} --max-fee auto --json")
   return
 
 # Set Evaluator as admin in ERC20
 def set_evaluator_admin():
   print("set admin and teacher for Evaluator")
-  out = run_command(f"protostar -p {network} invoke --contract-address {tderc20_addr} --function set_teacher --account-address {account_addr} --inputs {evaluator_addr} 1 --max-fee auto --private-key-path ./{pkey} --json")
-
-  out = run_command(f"protostar -p {network} invoke --contract-address {player_registry_addr} --function set_exercise_or_admin --account-address {account_addr} --inputs {evaluator_addr} 1 --max-fee auto --private-key-path ./{pkey} --json")
+  run_command(f"protostar -p {network} invoke --contract-address {tderc20_addr} --function set_teacher --account-address {account_addr} --inputs {evaluator_addr} 1 --max-fee auto --private-key-path ./{pkey} --json")
+  run_command(f"protostar -p {network} invoke --contract-address {player_registry_addr} --function set_exercise_or_admin --account-address {account_addr} --inputs {evaluator_addr} 1 --max-fee auto --private-key-path ./{pkey} --json")
 
   return
 
 def deploy_all():
+  install()
   build('./lib/cairo_contracts/src')
   # test()
   deploy_TDERC20("ERC721-101", "ERC721-101")
@@ -148,7 +149,9 @@ def deploy_all():
   deploy_dummy_token("DummyToken", "DTK")
   deploy_erc721("TDERC721", "TDERC721", ['https://gateway.pinata.cloud/ip', 'fs/QmWUB2TAYFrj1Uhvrgo69NDsycXf', 'bfznNURj1zVbzNTVZv/'], '.json')
   deploy_evaluator()
-  evaluator_set_random_values()
+  evaluator_set_random_values(100, [2,7,4,8,7,6,1,7,6,5,4,8,8,5,6,3,8,2,8,6,5,7,3,1,8,6,7,3,6,8,1,7,3,8,2,3,4,5,2,5,7,3,3,4,4,4,5,8,1,7,1,5,7,1,3,2,5,7,8,8,7,1,8,4,1,6,2,1,6,6,4,7,2,1,2,3,5,1,3,8,6,5,5,2,7,8,4,6,4,5,4,6,1,6,4,5,3,5,8,3], 0)
+  evaluator_set_random_values(100, [1,1,2,1,1,1,2,2,2,2,1,2,2,2,2,1,2,1,1,1,1,2,2,2,2,2,2,2,2,1,2,1,1,2,1,2,2,1,2,1,1,1,2,2,2,2,2,1,1,2,2,2,2,2,2,1,2,1,1,1,1,2,1,2,2,1,2,1,2,2,2,2,2,1,2,2,2,2,1,1,1,2,1,2,2,1,1,2,1,2,2,1,2,2,1,1,1,2,2,2],1)
+  evaluator_set_random_values(100, [4,2,4,2,2,1,2,4,3,4,4,2,3,1,1,3,4,4,1,1,4,4,2,1,1,2,1,4,3,1,2,3,3,1,4,2,4,3,4,2,4,3,3,3,4,3,1,4,2,3,3,2,1,2,3,2,3,2,2,3,3,3,1,3,3,4,3,4,4,4,3,4,4,4,1,4,4,1,3,1,1,3,2,3,2,2,4,2,3,1,3,1,1,2,2,2,2,4,4,2],2)
   evaluator_finish_setup()
   set_evaluator_admin()
 

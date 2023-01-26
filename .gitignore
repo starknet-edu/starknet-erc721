@@ -138,7 +138,4 @@ goerli.deployments.txt
 Makefile
 
 .pkey*
-.gitmodules
 lib/*
-lib
-.gitmodules
