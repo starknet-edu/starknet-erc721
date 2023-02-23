@@ -58,7 +58,7 @@ This project can be made better and will evolve as StarkNet matures. Your contri
 - Add an explanation in the comments of the exercise if you feel it needs more explanation
 - Add exercises showcasing your favorite Cairo feature
 
-## Reusing this project
+## Get ready to work
 - Clone the repo on your machine.
 
 ```
@@ -67,8 +67,8 @@ cd starknet-erc721
 ```
 
 - Set up the starknet environment following [these instructions](https://starknet.io/docs/quickstart.html#quickstart).
-- Set up your local starknet-devnet [official doc](https://shard-labs.github.io/starknet-devnet/)
-- Set up protostar build tool [official doc](https://docs.swmansion.com/protostar/)
+- Set up your local starknet-devnet (similar to Ganache in Ethereum L1) ([official doc](https://shard-labs.github.io/starknet-devnet/))
+- Set up the Protostar smart contract development toolchain ([official doc](https://docs.swmansion.com/protostar/))
 - Or use the best practise to setup the local dev env [github](https://github.com/starknet-edu/setup-starknet-dev-env/)
 - Test that you can compile the project.
 
@@ -77,7 +77,13 @@ protostar install OpenZeppelin/cairo-contracts@v0.5.1
 protostar build --cairo-path ./lib/cairo_contracts/src
 ```
 
-- For more detailed deploy scripts please refer to `deploy folder`
+- Run `starknet-devnet -seed 1234` on your local machine
+- Make sure you create '.pkey' file and put your account private key into it
+- In `deploy_starknet.py` script, there is a `settings` section. You can customize it at your preferences, such as your account, your deployment network of choice etc.
+- Deploy everything using one script `deploy_starknet.py` to your local `starknet-devnet`
+```
+  python3 deploy_starknet.py
+```
 
 ## Working on the tutorial
 

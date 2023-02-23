@@ -1,17 +1,17 @@
 import subprocess, json
 from utils import str_to_felt, felt_to_str
 
-# essential settings
+# Settings
 network = "testnet2"
-account_addr = "0x0059afd418b4f3c3f18d05ca3ac333d382b3269537204acd314d6e269dad9e19"
-salt = 5658
+account_addr = "0x33507ff2edf12c12c73d0b6d1d90de9fac12a355de1097ab305249612451919"
+salt = 1234
 tderc20_addr = "0x"
 player_registry_addr = "0x"
 dummytoken_addr = "0x"
 tderc721_metadata_addr = "0x"
 evaluator_addr = "0x"
-pkey = ".pkey_testnet2"
-max_fee = "9999999"
+pkey = ".pkey"
+max_fee = "auto"
 
 def run_command(cmd):
   out = subprocess.check_output(cmd.split(" "))
@@ -140,9 +140,20 @@ def set_evaluator_admin():
   run_command(f"protostar -p {network} invoke --contract-address {player_registry_addr} --function set_exercise_or_admin --account-address {account_addr} --inputs {evaluator_addr} 1 --max-fee {max_fee} --private-key-path ./{pkey} --wait-for-acceptance --json")
   return
 
+def print_all_contracts():
+  print(f"Yo starknet fans, all contracts deployed successfully on {network}!")
+  print("=================================================================================")
+  print("tderc20_addr: ", tderc20_addr)
+  print("player_registry_addr: ", player_registry_addr)
+  print("dummytoken_addr: ", dummytoken_addr)
+  print("tderc721_metadata_addr: ", tderc721_metadata_addr)
+  print("evaluator_addr: ", evaluator_addr)
+  print("=================================================================================")
+  return
+
 def deploy_all():
   # install()
-  # build('./lib/cairo_contracts/src')
+  build('./lib/cairo_contracts/src')
   # test()
   deploy_TDERC20("ERC721-101", "ERC721-101")
   deploy_players_registry()
@@ -154,11 +165,6 @@ def deploy_all():
   evaluator_set_random_values(100, [4,2,4,2,2,1,2,4,3,4,4,2,3,1,1,3,4,4,1,1,4,4,2,1,1,2,1,4,3,1,2,3,3,1,4,2,4,3,4,2,4,3,3,3,4,3,1,4,2,3,3,2,1,2,3,2,3,2,2,3,3,3,1,3,3,4,3,4,4,4,3,4,4,4,1,4,4,1,3,1,1,3,2,3,2,2,4,2,3,1,3,1,1,2,2,2,2,4,4,2],2)
   evaluator_finish_setup()
   set_evaluator_admin()
-
-  print("tderc20_addr: ", tderc20_addr)
-  print("player_registry_addr: ", tderc20_addr)
-  print("dummytoken_addr: ", dummytoken_addr)
-  print("tderc721_metadata_addr: ", tderc721_metadata_addr)
-  print("evaluator_addr: ", evaluator_addr)
+  print_all_contracts()
 
 deploy_all()
