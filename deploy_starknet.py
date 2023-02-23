@@ -2,7 +2,7 @@ import subprocess, json
 from utils import str_to_felt, felt_to_str
 
 # Settings
-network = "testnet2"
+network = "devnet"
 account_addr = "0x33507ff2edf12c12c73d0b6d1d90de9fac12a355de1097ab305249612451919"
 salt = 1234
 tderc20_addr = "0x"
