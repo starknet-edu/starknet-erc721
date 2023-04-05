@@ -7,9 +7,9 @@
 
 ## Introducción
 
-### Disclaimer
+### Atención
 
-No espere ningún tipo de beneficio al usar esto, aparte de aprender un montón de cosas interesantes sobre StarkNet, el primer paquete acumulativo de validez de propósito general en Ethereum Mainnet. 
+No espere ningún tipo de beneficio al usar esto, aparte de aprender un montón de cosas interesantes sobre StarkNet, el primer Validity Rollup de propósito general en Ethereum Mainnet. 
 
 StarkNet todavía está en Alfa. Esto significa que el desarrollo está en curso y que la pintura no está seca en todas partes. Las cosas mejorarán y, mientras tanto, ¡hacemos que las cosas funcionen con un poco de cinta adhesiva aquí y allá! 
 
@@ -25,14 +25,14 @@ Para cada ejercicio, deberá escribir una nueva versión en su contrato, impleme
 
 Este taller es el segundo de una serie destinada a enseñar cómo construir en StarkNet. Echa un vistazo a lo siguiente:
 ​
-| Tema                                           | GitHub repo                                                                            |
-| ---------------------------------------------- | -------------------------------------------------------------------------------------- |
-| Aprenda a leer el código de El Cairo           | [Cairo 101](https://github.com/starknet-edu/starknet-cairo-101)                        |
-| Implemente y personalice un ERC721 NFT (aquí)  | [StarkNet ERC721](https://github.com/starknet-edu/starknet-erc721)                     |
-| Implemente y personalice un token ERC20        | [StarkNet ERC20](https://github.com/starknet-edu/starknet-erc20)                       |
-| Cree una app de capa cruzada                   | [StarkNet messaging bridge](https://github.com/starknet-edu/starknet-messaging-bridge) |
-| Depure sus contratos de El Cairo fácilmente    | [StarkNet debug](https://github.com/starknet-edu/starknet-debug)                       |
-| Diseña tu propio contrato de cuenta            | [StarkNet account abstraction](https://github.com/starknet-edu/starknet-accounts)      |
+| Tema                                              | GitHub repo                                                                            |
+| ----------------------------------------------    | -------------------------------------------------------------------------------------- |
+| Aprenda a leer el código escrito en Cairo         | [Cairo 101](https://github.com/starknet-edu/starknet-cairo-101)                        |
+| Implemente y personalice un ERC721 NFT (aquí)     | [StarkNet ERC721](https://github.com/starknet-edu/starknet-erc721)                     |
+| Implemente y personalice un token ERC20           | [StarkNet ERC20](https://github.com/starknet-edu/starknet-erc20)                       |
+| Cree una app multi capa                           | [StarkNet messaging bridge](https://github.com/starknet-edu/starknet-messaging-bridge) |
+| Depure fácilmentes sus contratos escritor en Cairo| [StarkNet debug](https://github.com/starknet-edu/starknet-debug)                       |
+| Diseña tu propio contrato de cuenta               | [StarkNet account abstraction](https://github.com/starknet-edu/starknet-accounts)      |
 
 
 ### Proporcionar comentarios y obtener ayuda 
@@ -52,7 +52,7 @@ Este proyecto se puede mejorar y evolucionará a medida que StarkNet madure. ¡S
 - Crea una sucursal con una traducción a tu idioma .
 - Corrija los errores si encuentra algunos. 
 - Agregue una explicación en los comentarios del ejercicio si cree que necesita más explicación.
-- Agregue ejercicios que muestren su característica favorita de El Cairo​.
+- Agregue ejercicios que muestren su característica favorita de Cairo​.
 
 
 ## Preparándose para trabajar 
@@ -163,52 +163,52 @@ starknet-compile contracts/ERC721/ERC721.cairo --output artifacts/ERC721.json
 starknet deploy --contract artifacts/ERC721.json --inputs arg1 arg2 arg3 --network alpha-goerli 
 ```
 
-- Entrega el token n.° 1 al contrato del evaluador 
-- Llame a [`submit_exercise()`](contracts/Evaluator.cairo#L601) en el Evaluador para configurar el contrato que desea evaluar (4 pts) 
-- Llame a [`ex1_test_erc721()`](contracts/Evaluator.cairo#L146) en el evaluador para recibir sus puntos (2 pts)
+- Entrega el token n.° 1 al contrato del evaluador. 
+- Llame a [`submit_exercise()`](contracts/Evaluator.cairo#L601) en el Evaluador para configurar el contrato que desea evaluar. (4 pts) 
+- Llame a [`ex1_test_erc721()`](contracts/Evaluator.cairo#L146) en el evaluador para recibir sus puntos. (2 pts)
 
 --------------
 
 ### Ejercicio 2: Creación de atributos de token 
 
 - Llame a [`ex2a_get_animal_rank()`](contracts/Evaluator.cairo#L245) para que le asignen una criatura aleatoria para crear. 
-- Lea las características esperadas de su animal del Evaluador 
+- Lea las características esperadas de su animal del Evaluador. 
 - Cree las herramientas necesarias para registrar las características de los animales en su contrato y permita que el contrato del evaluador las recupere a través de la función `get_animal_characteristics` en su contrato [marque esto](contracts/IExerciseSolution.cairo)
-- Implementa tu nuevo contrato 
-- Acuñar el animal con las características deseadas y entregarlo al evaluador 
-- Llame [`submit_exercise()`](contracts/Evaluator.cairo#L601) en el Evaluador para configurar el contrato que desea evaluar 
-- Llame a [`ex2b_test_declare_animal()`](contracts/Evaluator.cairo#L258) para recibir puntos (2 pts)
+- Implementa tu nuevo contrato. 
+- Cree el animal con las características deseadas y entregarlo al evaluador.
+- Llame [`submit_exercise()`](contracts/Evaluator.cairo#L601) en el Evaluador para configurar el contrato que desea evaluar.
+- Llame a [`ex2b_test_declare_animal()`](contracts/Evaluator.cairo#L258) para recibir puntos. (2 pts)
 
 -------------
 
-### Ejercicio 3: Acuñación de NFT 
+### Ejercicio 3: Creación de NFT 
 
-- Crear una función para permitir a los criadores acuñar nuevos animales con las características especificadas 
-- Implementa tu nuevo contrato 
-- Llame a [`submit_exercise()`](contracts/Evaluator.cairo#L601) en el Evaluador para configurar el contrato que desea evaluar 
-- Llame a [`ex3_declare_new_animal()`](contracts/Evaluator.cairo#L272) para obtener puntos (2 puntos)
+- Crear una función para permitir a los criadores crear nuevos animales con las características especificadas. 
+- Implementa tu nuevo contrato. 
+- Llame a [`submit_exercise()`](contracts/Evaluator.cairo#L601) en el Evaluador para configurar el contrato que desea evaluar. 
+- Llame a [`ex3_declare_new_animal()`](contracts/Evaluator.cairo#L272) para obtener puntos. (2 puntos)
 
 -------------
 
 ### Ejercicio 4 - Quema de NFT 
 
-- Cree una función para permitir que los criadores declaren animales muertos (quemar el NFT)
-- Implementa tu nuevo contrato 
-- Llame a [`submit_exercise()`](contracts/Evaluator.cairo#L601) en el Evaluador para configurar el contrato que desea evaluar 
-- Llame a [`ex4_declare_dead_animal()`](contracts/Evaluator.cairo#L323) para obtener puntos (2 puntos) 
+- Cree una función para permitir que los criadores declaren animales muertos (quemar el NFT).
+- Implementa tu nuevo contrato. 
+- Llame a [`submit_exercise()`](contracts/Evaluator.cairo#L601) en el Evaluador para configurar el contrato que desea evaluar. 
+- Llame a [`ex4_declare_dead_animal()`](contracts/Evaluator.cairo#L323) para obtener puntos. (2 puntos) 
 
 -----------
 
 ### Ejercicio 5 - Adición de permisos y pagos 
 
-- Use el [dummy token faucet](contracts/token/ERC20/dummy_token.cairo) ficticias para obtener dummy token. 
-- Usa [`ex5a_i_have_dtk()`](contracts/Evaluator.cairo#L406) para mostrar que lograste usar el grifo (2 pts) 
+- Use el [dummy token faucet](contracts/token/ERC20/dummy_token.cairo) para obtener dummy token. 
+- Usa [`ex5a_i_have_dtk()`](contracts/Evaluator.cairo#L406) para mostrar que lograste usar el faucet. (2 pts) 
 - Cree una función para permitir el registro de criadores. 
-- Esta función debería cobrarle al registrante una tarifa, pagada en tokens ficticios ([consulte `registration_price`](contracts/IExerciseSolution.cairo)) 
+- Esta función debería cobrarle al registrante una tarifa, pagada en tokens faucet. ([consulte `registration_price`](contracts/IExerciseSolution.cairo)) 
 - Agregar permisos. Solo permitir que los criadores listados puedan crear animales. 
-- Implementa tu nuevo contrato 
-- Llame a [`submit_exercise()`](contracts/Evaluator.cairo#L601) en el Evaluador para configurar el contrato que desea evaluar 
-- Llame a [`ex5b_register_breeder()`](contracts/Evaluator.cairo#L440) para probar que su función funciona. Si es necesario, envíe tokens ficticios primero al evaluador (2 puntos)
+- Implementa tu nuevo contrato. 
+- Llame a [`submit_exercise()`](contracts/Evaluator.cairo#L601) en el Evaluador para configurar el contrato que desea evaluar. 
+- Llame a [`ex5b_register_breeder()`](contracts/Evaluator.cairo#L440) para probar que su función funciona. Si es necesario, envíe tokens faucet primero al Evaluador. (2 puntos)
 
 ---------------------
 
@@ -222,12 +222,12 @@ starknet deploy --contract artifacts/ERC721.json --inputs arg1 arg2 arg3 --netwo
 
 ### Ejercicio 7 - Adición de metadatos 
 
-- Cree un nuevo contrato ERC721 que admita metadatos. Puedes usar [este contrato](contracts/token/ERC721/ERC721_metadata.cairo) como base 
+- Cree un nuevo contrato ERC721 que admita metadatos. Puedes usar como base [este contrato](contracts/token/ERC721/ERC721_metadata.cairo) 
 - El URI del token base es la puerta de enlace IPFS elegida.
 - Puede cargar sus NFT directamente en [este website](https://www.pinata.cloud/)
-- ¡Tus tokens deberían ser visibles en [Aspect](https://testnet.aspect.co/) una vez acuñados! 
-- Implementa tu nuevo contrato 
-- Llame a [`submit_exercise()`](contracts/Evaluator.cairo#L601) en el Evaluador para configurar el contrato que desea evaluar 
+- ¡Tus tokens deberían ser visibles en [Aspect](https://testnet.aspect.co/) una vez creados! 
+- Implementa tu nuevo contrato.
+- Llame a [`submit_exercise()`](contracts/Evaluator.cairo#L601) en el Evaluador para configurar el contrato que desea evaluar. 
 - Reclamar puntos en [`ex7_add_metadata`](contracts/Evaluator.cairo#L557) (2 puntos)
 
 ------------------
@@ -236,7 +236,7 @@ starknet deploy --contract artifacts/ERC721.json --inputs arg1 arg2 arg3 --netwo
 
 ### Conversión de datos a y desde decimal 
 
-Para convertir datos en fieltro, use el script [`utils.py`](utils.py).
+Para convertir datos en felt, use el script [`utils.py`](utils.py).
 Para abrir Python en modo interactivo después de ejecutar el script.
 
 ```bash
