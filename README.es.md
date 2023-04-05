@@ -23,7 +23,7 @@ Para cada ejercicio, deberá escribir una nueva versión en su contrato, impleme
 
 ### ¿Dónde estoy? 
 
-Este taller es el segundo de una serie destinada a enseñar cómo construir en StarkNet. Echa un vistazo a lo siguiente:
+Este taller es el segundo de una serie destinada a enseñar cómo construir en Starknet. Echa un vistazo a lo siguiente:
 ​
 | Tema                                              | GitHub repo                                                                            |
 | ----------------------------------------------    | -------------------------------------------------------------------------------------- |
