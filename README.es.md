@@ -216,7 +216,7 @@ starknet deploy --contract artifacts/ERC721.json --inputs arg1 arg2 arg3 --netwo
 
 - Cree un NFT con metadatos en [este dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo), utilizable [aquí](https://goerli.voyager.online/contract/0x4fc25c4aca3a8126f9b386f8908ffb7518bc6fefaa5c542cd538655827f8a21).
 - Compruébalo en [Aspect](https://testnet.aspect.co/).
-- Reclamar puntos en `ex6_claim_metadata_token`](contracts/Evaluator.cairo#L523). (2 puntos) 
+- Reclamar puntos en [`ex6_claim_metadata_token`](contracts/Evaluator.cairo#L523). (2 puntos) 
 
 ------------------
 
