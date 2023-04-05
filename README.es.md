@@ -28,11 +28,11 @@ Este taller es el segundo de una serie destinada a enseñar cómo construir en S
 | Tema                                              | GitHub repo                                                                            |
 | ----------------------------------------------    | -------------------------------------------------------------------------------------- |
 | Aprenda a leer el código escrito en Cairo         | [Cairo 101](https://github.com/starknet-edu/starknet-cairo-101)                        |
-| Implemente y personalice un ERC721 NFT (aquí)     | [StarkNet ERC721](https://github.com/starknet-edu/starknet-erc721)                     |
-| Implemente y personalice un token ERC20           | [StarkNet ERC20](https://github.com/starknet-edu/starknet-erc20)                       |
-| Cree una app multi capa                           | [StarkNet messaging bridge](https://github.com/starknet-edu/starknet-messaging-bridge) |
-| Depure fácilmentes sus contratos escritor en Cairo| [StarkNet debug](https://github.com/starknet-edu/starknet-debug)                       |
-| Diseña tu propio contrato de cuenta               | [StarkNet account abstraction](https://github.com/starknet-edu/starknet-accounts)      |
+| Implemente y personalice un ERC721 NFT (aquí)     | [Starknet ERC721](https://github.com/starknet-edu/starknet-erc721)                     |
+| Implemente y personalice un token ERC20           | [Starknet ERC20](https://github.com/starknet-edu/starknet-erc20)                       |
+| Cree una app multi capa                           | [Starknet messaging bridge](https://github.com/starknet-edu/starknet-messaging-bridge) |
+| Depure fácilmentes sus contratos escritos en Cairo| [Starknet debug](https://github.com/starknet-edu/starknet-debug)                       |
+| Diseña tu propio contrato de cuenta               | [Starknet account abstraction](https://github.com/starknet-edu/starknet-accounts)      |
 
 
 ### Proporcionar comentarios y obtener ayuda 
