@@ -47,7 +47,7 @@ Y si tiene dificultades para seguir adelante, ¡háganoslo saber! Este taller es
 
 ### Contribuyendo 
 
-Este proyecto se puede mejorar y evolucionará a medida que StarkNet madure. ¡Sus contribuciones son bienvenidas! Aquí hay cosas que puede hacer para ayudar: 
+Este proyecto se puede mejorar y evolucionará a medida que Starknet madure. ¡Sus contribuciones son bienvenidas! Aquí hay cosas que puede hacer para ayudar: 
 
 - Crea una sucursal con una traducción a tu idioma.
 - Corrija los errores si encuentra algunos. 
