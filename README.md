@@ -84,7 +84,7 @@ For a production setup instructions we wrote [this article](https://medium.com/s
 
 #### Option A - Set up a local python environment
 
-- Set up the environment following [these instructions](https://starknet.io/docs/quickstart.html#quickstart)
+- Set up the environment following [these instructions](https://docs.starknet.io/documentation/getting_started/setting_up_the_environment/)
 - Install [OpenZeppelin's cairo contracts](https://github.com/OpenZeppelin/cairo-contracts).
 
 ```bash
