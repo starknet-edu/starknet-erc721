@@ -1,6 +1,6 @@
-# Tutorial ERC721 on StarkNet
+# Tutorial ERC721 on Starknet
 
-¡Bienvenidos! Este es un taller automatizado que explicará cómo implementar un token ERC721 en StarkNet y personalizarlo para realizar funciones específicas. El estándar ERC721 se describe [aquí](https://docs.openzeppelin.com/contracts/3.x/api/token/erc721). Está dirigido a desarrolladores que: 
+¡Bienvenidos! Este es un taller automatizado que explicará cómo implementar un token ERC721 en Starknet y personalizarlo para realizar funciones específicas. El estándar ERC721 se describe [aquí](https://docs.openzeppelin.com/contracts/3.x/api/token/erc721). Está dirigido a desarrolladores que: 
 
 - Comprender la sintaxis de Cairo 
 - Comprender el estándar de token ERC721 .
@@ -9,13 +9,13 @@
 
 ### Atención
 
-No espere ningún tipo de beneficio al usar esto, aparte de aprender un montón de cosas interesantes sobre StarkNet, el primer Validity Rollup de propósito general en Ethereum Mainnet. 
+No espere ningún tipo de beneficio al usar esto, aparte de aprender un montón de cosas interesantes sobre Starknet, el primer Validity Rollup de propósito general en Ethereum Mainnet. 
 
-StarkNet todavía está en Alfa. Esto significa que el desarrollo está en curso y que la pintura no está seca en todas partes. Las cosas mejorarán y, mientras tanto, ¡hacemos que las cosas funcionen con un poco de cinta adhesiva aquí y allá! 
+Starknet todavía está en Alfa. Esto significa que el desarrollo está en curso y que la pintura no está seca en todas partes. Las cosas mejorarán y, mientras tanto, ¡hacemos que las cosas funcionen con un poco de cinta adhesiva aquí y allá! 
 
 ### ¿Cómo funciona?
 
-El objetivo de este tutorial es personalizar e implementar un contrato ERC721 en StarkNet. Su progreso será verificado por un contrato de [evaluator contract](contracts/Evaluator.cairo), implementado en StarkNet, que le otorgará puntos en forma de [ERC20 tokens](contracts/token/ERC20/TDERC20.cairo).
+El objetivo de este tutorial es personalizar e implementar un contrato ERC721 en Starknet. Su progreso será verificado por un contrato de [evaluator contract](contracts/Evaluator.cairo), implementado en Starknet, que le otorgará puntos en forma de [ERC20 tokens](contracts/token/ERC20/TDERC20.cairo).
 
 Cada ejercicio requerirá que agregue funcionalidad a su token ERC721. 
 
@@ -43,7 +43,7 @@ Complete [este formulario](https://forms.reform.app/starkware/untitled-form-4/ka
 
 Y si tiene dificultades para seguir adelante, ¡háganoslo saber! Este taller está destinado a ser lo más accesible posible; queremos saber si no es el caso. 
 
-¿Tienes alguna pregunta? Únase a nuestro servidor [Discord server](https://starknet.io/discord), regístrese y únase al canal #tutorials-support. ¿Está interesado en seguir talleres en línea sobre cómo aprender a desarrollar en StarkNet? [Subscríbete aquí](http://eepurl.com/hFnpQ5)
+¿Tienes alguna pregunta? Únase a nuestro servidor [Discord server](https://starknet.io/discord), regístrese y únase al canal #tutorials-support. ¿Está interesado en seguir talleres en línea sobre cómo aprender a desarrollar en Starknet? [Subscríbete aquí](http://eepurl.com/hFnpQ5)
 
 ### Contribuyendo 
 
@@ -120,7 +120,7 @@ Para hacer este tutorial tendrás que interactuar con el contrato [`Evaluator.ca
 
 - Leer el código del evaluador para averiguar qué se espera de su contrato 
 - Personaliza el código de tu contrato 
-- Despliéguelo en la red de prueba de StarkNet. Esto se hace usando la CLI. 
+- Despliéguelo en la red de prueba de Starknet. Esto se hace usando la CLI. 
 - Registre su ejercicio para corrección, usando la función de `submit_exercise` en el evaluador. Esto se hace usando Voyager. 
 - Llame a la función correspondiente en el contrato del evaluador para corregir su ejercicio y recibir sus puntos. Esto se hace usando Voyager. 
 
@@ -165,7 +165,7 @@ starknet deploy --contract artifacts/ERC721.json --inputs arg1 arg2 arg3 --netwo
 
 - Entrega el token n.° 1 al contrato del evaluador. 
 - Llame a [`submit_exercise()`](contracts/Evaluator.cairo#L601) en el Evaluador para configurar el contrato que desea evaluar. (4 pts) 
-- Llame a [`ex1_test_erc721()`](contracts/Evaluator.cairo#L146) en el evaluador para recibir sus puntos. (2 pts)
+- Llame a [`ex1_test_erc721()`](contracts/Evaluator.cairo#L146) en el Evaluador para recibir sus puntos. (2 pts)
 
 --------------
 
@@ -173,9 +173,9 @@ starknet deploy --contract artifacts/ERC721.json --inputs arg1 arg2 arg3 --netwo
 
 - Llame a [`ex2a_get_animal_rank()`](contracts/Evaluator.cairo#L245) para que le asignen una criatura aleatoria para crear. 
 - Lea las características esperadas de su animal del Evaluador. 
-- Cree las herramientas necesarias para registrar las características de los animales en su contrato y permita que el contrato del evaluador las recupere a través de la función `get_animal_characteristics` en su contrato [marque esto](contracts/IExerciseSolution.cairo)
+- Cree las herramientas necesarias para registrar las características de los animales en su contrato y permita que el contrato del Evaluador las recupere a través de la función `get_animal_characteristics` en su contrato [marque esto](contracts/IExerciseSolution.cairo)
 - Implementa tu nuevo contrato. 
-- Cree el animal con las características deseadas y entregarlo al evaluador.
+- Cree el animal con las características deseadas y entregarlo al Evaluador.
 - Llame [`submit_exercise()`](contracts/Evaluator.cairo#L601) en el Evaluador para configurar el contrato que desea evaluar.
 - Llame a [`ex2b_test_declare_animal()`](contracts/Evaluator.cairo#L258) para recibir puntos. (2 pts)
 
@@ -214,7 +214,7 @@ starknet deploy --contract artifacts/ERC721.json --inputs arg1 arg2 arg3 --netwo
 
 ### Ejercicio 6 - Reclamación de un NFT
 
-- Mint un NFT con metadatos en [este dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo), utilizable [aquí](https://goerli.voyager.online/contract/0x4fc25c4aca3a8126f9b386f8908ffb7518bc6fefaa5c542cd538655827f8a21).
+- Cree un NFT con metadatos en [este dummy ERC721 token](contracts/token/ERC721/TDERC721_metadata.cairo), utilizable [aquí](https://goerli.voyager.online/contract/0x4fc25c4aca3a8126f9b386f8908ffb7518bc6fefaa5c542cd538655827f8a21).
 - Compruébalo en [Aspect](https://testnet.aspect.co/).
 - Reclamar puntos en `ex6_claim_metadata_token`](contracts/Evaluator.cairo#L523). (2 puntos) 
 
@@ -273,4 +273,4 @@ También puede consultar su progreso general [aquí](https://starknet-tutorials.
 ¿Envió una transacción y se muestra como "no detectada" en voyager? Esto puede significar dos cosas: 
 
 - Su transacción está pendiente y se incluirá en un bloque en breve. Entonces será visible en Voyager. 
-- Su transacción no fue válida y NO se incluirá en un bloque (no existe una transacción fallida en StarkNet). Puede (y debe) verificar el estado de su transacción con la siguiente URL [https://alpha4.starknet.io/feeder_gateway/get_transaction_receipt?transactionHash=](https://alpha4.starknet.io/feeder_gateway/get_transaction_receipt?transactionHash=), donde puede agregar el hash de su transacción.​
+- Su transacción no fue válida y NO se incluirá en un bloque (no existe una transacción fallida en Starknet). Puede (y debe) verificar el estado de su transacción con la siguiente URL [https://alpha4.starknet.io/feeder_gateway/get_transaction_receipt?transactionHash=](https://alpha4.starknet.io/feeder_gateway/get_transaction_receipt?transactionHash=), donde puede agregar el hash de su transacción.​
