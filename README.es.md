@@ -49,7 +49,7 @@ Y si tiene dificultades para seguir adelante, ¡háganoslo saber! Este taller es
 
 Este proyecto se puede mejorar y evolucionará a medida que StarkNet madure. ¡Sus contribuciones son bienvenidas! Aquí hay cosas que puede hacer para ayudar: 
 
-- Crea una sucursal con una traducción a tu idioma .
+- Crea una sucursal con una traducción a tu idioma.
 - Corrija los errores si encuentra algunos. 
 - Agregue una explicación en los comentarios del ejercicio si cree que necesita más explicación.
 - Agregue ejercicios que muestren su característica favorita de Cairo​.
@@ -68,7 +68,7 @@ cd starknet-erc721
 
 ### Paso 2: Configure su entorno 
 
-Hay dos formas de configurar su entorno en StarkNet: Una instalación local o usando un contenedor docker.
+Hay dos formas de configurar su entorno en Starknet: Una instalación local o usando un contenedor docker.
 
 - Para usuarios de Mac y Linux, recomendamos either
 - Para usuarios de Windows recomendamos docker 
@@ -118,8 +118,8 @@ starknet-compile contracts/Evaluator.cairo
 
 Para hacer este tutorial tendrás que interactuar con el contrato [`Evaluator.cairo`](contracts/Evaluator.cairo). Para validar un ejercicio tendrás que:
 
-- Leer el código del evaluador para averiguar qué se espera de su contrato 
-- Personaliza el código de tu contrato 
+- Leer el código del evaluador para averiguar qué se espera de su contrato.
+- Personaliza el código de tu contrato.
 - Despliéguelo en la red de prueba de Starknet. Esto se hace usando la CLI. 
 - Registre su ejercicio para corrección, usando la función de `submit_exercise` en el evaluador. Esto se hace usando Voyager. 
 - Llame a la función correspondiente en el contrato del evaluador para corregir su ejercicio y recibir sus puntos. Esto se hace usando Voyager. 
@@ -136,7 +136,7 @@ Por ejemplo para resolver el primer ejercicio el flujo de trabajo sería el sigu
 
 - **Realmente recomendamos que lea el contrato de [`Evaluator.cairo`](contracts/Evaluator.cairo) para comprender completamente lo que se espera de cada ejercicio**. En este archivo Léame se proporciona una descripción de alto nivel de lo que se espera de cada ejercicio. 
 
-- El contrato de Evaluador a veces necesita realizar pagos para comprar sus tokens. ¡Asegúrate de que tenga suficientes fichas ficticias para hacerlo! De lo contrario, debe obtener tokens ficticios del contrato de tokens ficticios y enviarlos al evaluador.
+- El contrato de Evaluador a veces necesita realizar pagos para comprar sus tokens. ¡Asegúrate de que tenga suficientes toknes faucet para hacerlo! De lo contrario, debe obtener tokens faucet del contrato de tokens faucet y enviarlos al evaluador.
 
 ### Direcciones y contratos oficiales
 
