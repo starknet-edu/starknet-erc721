@@ -131,7 +131,7 @@ Por ejemplo para resolver el primer ejercicio el flujo de trabajo sería el sigu
 
 **Su objetivo es reunir tantos puntos ERC721-101 como sea posible.** Tenga en cuenta : 
 
-- La función de 'transferencia' de ERC721-101 ha sido deshabilitada para alentarlo a terminar el tutorial con una sola dirección Para recibir puntos, el evaluador debe alcanzar las llamadas a la función distribuir_punto. 
+- La función de 'transferencia' de ERC721-101 ha sido deshabilitada para alentarlo a terminar el tutorial con una sola dirección. Para recibir puntos, el evaluador debe alcanzar las llamadas a la función distribuir_punto. 
 - Este repositorio contiene una interfaz `IExerciseSolution.cairo`. Su contrato ERC721 deberá ajustarse a esta interfaz para validar algunos ejercicios; es decir, su contrato debe implementar todas las funciones descritas en `IExerciseSolution.cairo`.
 
 - **Realmente recomendamos que lea el contrato de [`Evaluator.cairo`](contracts/Evaluator.cairo) para comprender completamente lo que se espera de cada ejercicio**. En este archivo Léame se proporciona una descripción de alto nivel de lo que se espera de cada ejercicio. 
