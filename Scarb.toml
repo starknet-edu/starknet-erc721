@@ -1,0 +1,8 @@
+[package]
+name = "starknet_erc721"
+version = "0.1.0"
+description = "Workshop to learn the basics of ERC721."
+homepage = "https://github.com/starknet-edu/starknet-erc721"
+
+
+[[target.starknet-contract]]
