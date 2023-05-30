@@ -127,16 +127,16 @@ mod Evaluator{
         let sender_address = get_caller_address();
 
         // Retrieve the evaluator address
-        let contract_address = get_contract_address();
+        let _contract_address = get_contract_address();
 
         // minting token_id
-        IERC721Dispatcher{contract_address: submitted_exercise_address}.mint(contract_address, token_id);
+        IERC721Dispatcher{contract_address: submitted_exercise_address}.mint(_contract_address, token_id);
 
         // Retrieve the owner of token_id
         let check_owner_of = IERC721Dispatcher{contract_address: submitted_exercise_address}.owner_of(token_id);
 
         // Checking if owner of the token_id is the evaluator
-        assert(check_owner_of == contract_address, 'NOT_THE_OWNER');
+        assert(check_owner_of == _contract_address, 'NOT_THE_OWNER');
 
         // Checking if the user has validated the exercise before
         validate_exercise(sender_address);
@@ -154,16 +154,16 @@ mod Evaluator{
         let sender_address = get_caller_address();
 
         // Get the evaluator address
-        let contract_address = get_contract_address();
+        let _contract_address = get_contract_address();
 
         // Retrieve balance before burn
-        let balance_c1 = IERC721Dispatcher{contract_address: submitted_exercise_address}.balance_of(contract_address);
+        let balance_c1 = IERC721Dispatcher{contract_address: submitted_exercise_address}.balance_of(_contract_address);
 
         // check if burn method works
         IERC721Dispatcher{contract_address: submitted_exercise_address}.burn(token_id);
 
         // Retrieve balance after burn
-        let balance_c2 = IERC721Dispatcher{contract_address: submitted_exercise_address}.balance_of(contract_address);
+        let balance_c2 = IERC721Dispatcher{contract_address: submitted_exercise_address}.balance_of(_contract_address);
 
         // Checking if owner of the token_id is the evaluator
         assert(balance_c2 == balance_c1 - u256_from_felt252(1), 'BALANCE_INCORRECT');
@@ -176,7 +176,56 @@ mod Evaluator{
     }
 
     #[external]
-    fn ex_04_erc721_transfer(token_id: u256){
+    fn ex_04_erc721_approve(token_id: u256){
+        // Run the verification steps before continuing
+        let submitted_exercise_address:ContractAddress = verify();
+
+        // Retrieve caller address
+        let sender_address = get_caller_address();
+
+        // call the approve function
+        IERC721Dispatcher{contract_address: submitted_exercise_address}.approve(sender_address, token_id);
+
+        // retrieving result
+        let approved_address = IERC721Dispatcher{contract_address: submitted_exercise_address}.get_approved(token_id);
+
+        // checking if approve function is correctly executed
+        assert(approved_address == sender_address, 'ADDRESS_NOT_APPROVED');
+        
+        // Checking if the user has validated the exercise before
+        validate_exercise(sender_address);
+        // Sending points to the address specified as parameter
+        distribute_points(sender_address, 2_u128);
+
+    }
+
+    #[external]
+    fn ex_05_erc721_approve_for_all(){
+        // Run the verification steps before continuing
+        let submitted_exercise_address:ContractAddress = verify();
+
+        // Retrieve caller address
+        let sender_address = get_caller_address();
+
+        // Get the evaluator address
+        let _contract_address = get_contract_address();
+
+        // call the approve for all function
+        IERC721Dispatcher{contract_address: submitted_exercise_address}.set_approval_for_all(sender_address, true);
+
+        // retrieving result
+        let is_approved = IERC721Dispatcher{contract_address: submitted_exercise_address}.is_approved_for_all(_contract_address, sender_address);
+
+        assert(check_boolean(is_approved) == check_boolean(true), 'NOT_APPROVED_FOR_ALL');
+        
+        // Checking if the user has validated the exercise before
+        validate_exercise(sender_address);
+        // Sending points to the address specified as parameter
+        distribute_points(sender_address, 2_u128);     
+    }
+
+    #[external]
+    fn ex_06_erc721_transfer(token_id: u256){
 
         // Run the verification steps before continuing
         let submitted_exercise_address:ContractAddress = verify();
@@ -185,7 +234,7 @@ mod Evaluator{
         let sender_address = get_caller_address();
 
         // Get the evaluator address
-        let contract_address = get_contract_address();
+        let _contract_address = get_contract_address();
 
         // Retrieve balance and owner before transfer
         let balance_c1 = IERC721Dispatcher{contract_address: submitted_exercise_address}.balance_of(sender_address);
@@ -195,7 +244,7 @@ mod Evaluator{
         IERC721Dispatcher{contract_address: submitted_exercise_address}.approve(sender_address, token_id);
 
         // approve for transfer
-        IERC721Dispatcher{contract_address: submitted_exercise_address}.transfer_from(contract_address, sender_address, token_id);
+        IERC721Dispatcher{contract_address: submitted_exercise_address}.transfer_from(_contract_address, sender_address, token_id);
 
         // Retrieve balance and owner after transfer
         let balance_c2 = IERC721Dispatcher{contract_address: submitted_exercise_address}.balance_of(sender_address);
