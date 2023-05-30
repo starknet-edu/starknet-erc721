@@ -29,6 +29,7 @@ mod Evaluator{
     use starknet_erc721::utils::ex00_base::Ex00Base::ex_initializer;
     use starknet_erc721::utils::ex00_base::Ex00Base::update_class_hash_by_admin;
     use starknet_erc721::utils::helper;
+    use starknet_erc721::utils::helper::check_boolean;
     use starknet_erc721::ERC721::IERC721::IERC721Dispatcher;
     use starknet_erc721::ERC721::IERC721::IERC721DispatcherTrait;
 
@@ -218,7 +219,7 @@ mod Evaluator{
         let sender_address = get_caller_address();
 
         // Check if exercise has been submited before.
-        assert(has_been_paired::read(exercise_address) != true, 'SOLUTION_SUBMITED_ALREADY');
+        assert(check_boolean(has_been_paired::read(exercise_address)) != check_boolean(true), 'SOLUTION_SUBMITED_ALREADY');
 
         // Store exercise address
         player_exercise_solution_storage::write(sender_address, exercise_address);
@@ -251,11 +252,12 @@ mod Evaluator{
     fn update_class_hash(class_hash: felt252) {
         update_class_hash_by_admin(class_hash);
     }
+
     #[external]
     fn set_random_names(values: Array::<felt252>) {
         // Check if the random values were already initialized
         let was_initialized_read = was_initialized::read(0_u8);
-        assert(was_initialized_read != true, 'NOT_INITIALISED');
+        assert(check_boolean(was_initialized_read) != check_boolean(true), 'NOT_INITIALISED');
 
         let mut idx: u128 = 0_u128;
         set_a_random_name(idx, values);
@@ -268,7 +270,7 @@ mod Evaluator{
     fn set_random_symbols(values: Array::<felt252>) {
         // Check if the random values were already initialized
         let was_initialized_read = was_initialized::read(1_u8);
-        assert(was_initialized_read != true, 'NOT_INITIALISED');
+        assert(check_boolean(was_initialized_read) != check_boolean(true), 'NOT_INITIALISED');
 
         let mut idx: u128 = 0_u128;
         set_a_random_symbol(idx, values);

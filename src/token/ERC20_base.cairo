@@ -11,7 +11,7 @@ mod ERC20Base {
     use zeroable::Zeroable;
     use starknet::contract_address_const;
     use starknet::ContractAddress;
-    use starknet::ContractAddressZeroable;
+    use starknet::contract_address::ContractAddressZeroable;
     use traits::Into;
     use traits::TryInto;
     use array::ArrayTrait;

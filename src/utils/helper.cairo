@@ -34,3 +34,13 @@ fn get_token_in_decimals(decimals: u8) -> u128 {
     DECIMALS_6
   }
 }
+
+// Checking boolean assertions 
+#[inline(always)]
+fn check_boolean(value: bool) -> u8 {
+    if value {
+        1_u8
+    } else {
+        0_u8
+    }
+}
