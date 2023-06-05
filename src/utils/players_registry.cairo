@@ -26,7 +26,6 @@ mod PlayersRegistry {
     use starknet_erc721::token::ITDERC20::ITDERC20DispatcherTrait;
     use starknet_erc721::token::ITDERC20::ITDERC20Dispatcher;
     use starknet_erc721::utils::helper;
-    use starknet_erc721::utils::helper::check_boolean;
 
     ////////////////////////////////
     // STORAGE
@@ -126,7 +125,7 @@ mod PlayersRegistry {
             (account, workshop, exercise)
         );
 
-        assert(check_boolean(is_validated) == check_boolean(false), 'USER_VALIDATED');
+        assert(!is_validated, 'USER_VALIDATED');
 
         // Marking the exercise as completed
         has_validated_exercise_storage::write((account, workshop, exercise), true);
@@ -154,7 +153,7 @@ mod PlayersRegistry {
     fn only_exercise_or_admin() {
         let caller: ContractAddress = get_caller_address();
         let permission: bool = exercises_and_admins_accounts::read(caller);
-        assert (check_boolean(permission) == check_boolean(true), 'You dont have permission.');
+        assert (permission, 'You dont have permission.');
     }
 
 

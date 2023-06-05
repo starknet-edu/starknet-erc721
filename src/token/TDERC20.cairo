@@ -36,7 +36,6 @@ mod TDERC20 {
     use starknet_erc721::token::ERC20_base::ERC20Base::ERC20_transfer;
     use starknet_erc721::token::ERC20_base::ERC20Base::ERC20_transferFrom;
     use starknet_erc721::utils::helper;
-    use starknet_erc721::utils::helper::check_boolean;
 
     struct Storage {
         is_transferable_storage: bool,
@@ -191,12 +190,12 @@ mod TDERC20 {
     fn only_teacher_or_exercise() {
         let caller = get_caller_address();
         let permission = teachers_and_exercises_accounts::read(caller);
-        assert(check_boolean(permission) == check_boolean(true), 'NO_PERMISSION');
+        assert(permission, 'NO_PERMISSION');
     }
 
     fn _is_transferable() {
         let permission = is_transferable_storage::read();
-        assert(check_boolean(permission) == check_boolean(true), 'NOT_TRANSFERABLE');
+        assert(permission, 'NOT_TRANSFERABLE');
     }
     #[external]
     fn update_class_hash_by_admin(class_hash_in_felt: felt252) {

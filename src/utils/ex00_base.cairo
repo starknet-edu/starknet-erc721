@@ -26,7 +26,6 @@ mod Ex00Base {
     use starknet_erc721::utils::Iplayers_registry::Iplayers_registryDispatcher;
     use starknet_erc721::token::ITDERC20::ITDERC20DispatcherTrait;
     use starknet_erc721::token::ITDERC20::ITDERC20Dispatcher;
-    use starknet_erc721::utils::helper::check_boolean;
 
     const Decimals: u128 = 1000000000000000000_u128;
 
@@ -99,17 +98,17 @@ mod Ex00Base {
             .distribute_points(to, points_to_credit);
     }
 
-    fn validate_exercise(account: ContractAddress) {
+    fn validate_exercise(account: ContractAddress, exercise_id: u128) {
         // reading player registry
         let players_registry = players_registry_storage::read();
         let workshop_id = workshop_id_storage::read();
-        let exercise_id = exercise_id_storage::read();
+        // let exercise_id = exercise_id_storage::read();
 
         let has_current_user_validated_exercise =
             Iplayers_registryDispatcher{contract_address: players_registry}
             .has_validated_exercise(account, workshop_id, exercise_id);
 
-        assert(check_boolean(has_current_user_validated_exercise) == check_boolean(false), 'Exercise previously validated');
+        assert(!has_current_user_validated_exercise, 'Exercise previously validated');
         Iplayers_registryDispatcher{contract_address: players_registry}
             .validate_exercise(account, workshop_id, exercise_id);
     }
@@ -121,7 +120,7 @@ mod Ex00Base {
         let is_admin = Iplayers_registryDispatcher{contract_address: players_registry}
             .is_exercise_or_admin(sender_address);
 
-        assert (check_boolean(is_admin) == check_boolean(true), 'CALLER_NO_ADMIN_RIGHTS');
+        assert (is_admin, 'CALLER_NO_ADMIN_RIGHTS');
         let class_hash: ClassHash = class_hash_in_felt.try_into().unwrap();
         replace_class_syscall(class_hash);
     }

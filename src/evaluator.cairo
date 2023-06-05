@@ -29,7 +29,6 @@ mod Evaluator{
     use starknet_erc721::utils::ex00_base::Ex00Base::ex_initializer;
     use starknet_erc721::utils::ex00_base::Ex00Base::update_class_hash_by_admin;
     use starknet_erc721::utils::helper;
-    use starknet_erc721::utils::helper::check_boolean;
     use starknet_erc721::ERC721::IERC721::IERC721Dispatcher;
     use starknet_erc721::ERC721::IERC721::IERC721DispatcherTrait;
 
@@ -113,7 +112,7 @@ mod Evaluator{
         assert(symbol == assigned_symbol, 'SYMBOL_INCORRECT');
 
         // Checking if the user has validated the exercise before
-        validate_exercise(sender_address);
+        validate_exercise(sender_address, 1_u128);
         // Sending points to the address specified as parameter
         distribute_points(sender_address, 2_u128);
     }
@@ -139,7 +138,7 @@ mod Evaluator{
         assert(check_owner_of == _contract_address, 'NOT_THE_OWNER');
 
         // Checking if the user has validated the exercise before
-        validate_exercise(sender_address);
+        validate_exercise(sender_address, 2_u128);
         // Sending points to the address specified as parameter
         distribute_points(sender_address, 2_u128);
     }
@@ -169,7 +168,7 @@ mod Evaluator{
         assert(balance_c2 == balance_c1 - u256_from_felt252(1), 'BALANCE_INCORRECT');
 
         // Checking if the user has validated the exercise before
-        validate_exercise(sender_address);
+        validate_exercise(sender_address, 3_u128);
         // Sending points to the address specified as parameter
         distribute_points(sender_address, 2_u128);
 
@@ -193,7 +192,7 @@ mod Evaluator{
         assert(approved_address == sender_address, 'ADDRESS_NOT_APPROVED');
         
         // Checking if the user has validated the exercise before
-        validate_exercise(sender_address);
+        validate_exercise(sender_address, 4_u128);
         // Sending points to the address specified as parameter
         distribute_points(sender_address, 2_u128);
 
@@ -216,10 +215,10 @@ mod Evaluator{
         // retrieving result
         let is_approved = IERC721Dispatcher{contract_address: submitted_exercise_address}.is_approved_for_all(_contract_address, sender_address);
 
-        assert(check_boolean(is_approved) == check_boolean(true), 'NOT_APPROVED_FOR_ALL');
+        assert(is_approved, 'NOT_APPROVED_FOR_ALL');
         
         // Checking if the user has validated the exercise before
-        validate_exercise(sender_address);
+        validate_exercise(sender_address, 5_u128);
         // Sending points to the address specified as parameter
         distribute_points(sender_address, 2_u128);     
     }
@@ -256,7 +255,7 @@ mod Evaluator{
         assert(owner_c2 == sender_address, 'OWNER_WRONG');
 
         // Checking if the user has validated the exercise before
-        validate_exercise(sender_address);
+        validate_exercise(sender_address, 6_u128);
         // Sending points to the address specified as parameter
         distribute_points(sender_address, 2_u128);
 
@@ -268,7 +267,7 @@ mod Evaluator{
         let sender_address = get_caller_address();
 
         // Check if exercise has been submited before.
-        assert(check_boolean(has_been_paired::read(exercise_address)) != check_boolean(true), 'SOLUTION_SUBMITED_ALREADY');
+        assert(!has_been_paired::read(exercise_address), 'SOLUTION_ALREADY_SUBMITED');
 
         // Store exercise address
         player_exercise_solution_storage::write(sender_address, exercise_address);
@@ -306,7 +305,7 @@ mod Evaluator{
     fn set_random_names(values: Array::<felt252>) {
         // Check if the random values were already initialized
         let was_initialized_read = was_initialized::read(0_u8);
-        assert(check_boolean(was_initialized_read) != check_boolean(true), 'NOT_INITIALISED');
+        assert(!was_initialized_read, 'NAMES_INITIALISED');
 
         let mut idx: u128 = 0_u128;
         set_a_random_name(idx, values);
@@ -319,7 +318,7 @@ mod Evaluator{
     fn set_random_symbols(values: Array::<felt252>) {
         // Check if the random values were already initialized
         let was_initialized_read = was_initialized::read(1_u8);
-        assert(check_boolean(was_initialized_read) != check_boolean(true), 'NOT_INITIALISED');
+        assert(!was_initialized_read, 'SYMBOLS_INITIALISED');
 
         let mut idx: u128 = 0_u128;
         set_a_random_symbol(idx, values);

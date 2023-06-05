@@ -11,8 +11,8 @@ data_name = []
 data_symbol = []
 
 for i in range(0, 100):
-    data_name.append(str_to_felt(f"BASECAMP_04_TOKEN_{i}"))
-    data_symbol.append(str_to_felt(f"BSC04_{i}"))
+    data_name.append(str_to_felt(f"ERC721_WORKSHOP{i}"))
+    data_symbol.append(str_to_felt(f"ERC721W_{i}"))
     
     
 print(len(data_symbol))
