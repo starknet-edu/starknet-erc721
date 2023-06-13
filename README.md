@@ -40,8 +40,6 @@ Enjoy the workshop! If you have any questions, feel free to contact us on [Disco
 
 ## Tasks list
 
-Before we begin, make sure to check out the `IERC721.cairo` which is interface for the ERC721.
-
 ### Exercise 1 - Deploying and initilizing your ERC721 (2 points)
 
 1. Create your initial ERC721 contract. You will need the following:
