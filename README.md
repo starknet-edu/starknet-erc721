@@ -22,10 +22,10 @@ Now, let's get our hands dirty!
 
 Your objective is to finish the tutorial, and collect all the points.You will mostly interact with the Evaluator contract which can be found in the table below.
 
-| Contract Code                                                                                             | Contract on Starkscan                                                                                                                         | Contract on Voyager                                                                                               |
-| --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| [Evaluator](https://github.com/starknet-edu/starknet-erc721/blob/main/src/evaluator.cairo)                | [Link](https://testnet.starkscan.co/contract/0x02e3ceda622a192488062ed6a453f8a8ebbf472a7b60aaf160cbbc6b485e4155#read-write-contract-sub-read) | [Link](https://goerli.voyager.online/contract/0x02e3ceda622a192488062ed6a453f8a8ebbf472a7b60aaf160cbbc6b485e4155) |
-| [Points Counter ERC20](https://github.com/starknet-edu/starknet-erc721/blob/main/src/token/TDERC20.cairo) | [Link](https://testnet.starkscan.co/contract/0x074b1195731222a7bcbb724d32b93d0c525e173b2c3e9722a2214b101c862801)                              | [Link](https://goerli.voyager.online/contract/0x074b1195731222a7bcbb724d32b93d0c525e173b2c3e9722a2214b101c862801) |
+| Contract Code        | Contract on Starkscan                                                                                                                         | Contract on Voyager                                                                                               |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Evaluator            | [Link](https://testnet.starkscan.co/contract/0x02e3ceda622a192488062ed6a453f8a8ebbf472a7b60aaf160cbbc6b485e4155#read-write-contract-sub-read) | [Link](https://goerli.voyager.online/contract/0x02e3ceda622a192488062ed6a453f8a8ebbf472a7b60aaf160cbbc6b485e4155) |
+| Points Counter ERC20 | [Link](https://testnet.starkscan.co/contract/0x074b1195731222a7bcbb724d32b93d0c525e173b2c3e9722a2214b101c862801)                              | [Link](https://goerli.voyager.online/contract/0x074b1195731222a7bcbb724d32b93d0c525e173b2c3e9722a2214b101c862801) |
 
 ### Counting your points and checking your progress
 
