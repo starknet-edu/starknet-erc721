@@ -1,4 +1,4 @@
-# Starknet ERC721 - An Automated Workshop
+# Starknet ERC721, Part 1 - An Automated Workshop
 
 ## Introduction
 
@@ -43,8 +43,6 @@ Enjoy the workshop! If you have any questions, feel free to contact us on [Disco
 Before we begin, make sure to check out the `IERC721.cairo` which is interface for the ERC721.
 
 ### Exercise 1 - Deploying and initilizing your ERC721 (2 points)
-
-First exercise of this part is to create your ERC721 Contract and your constructor function.
 
 1. Create your initial ERC721 contract. You will need the following:
    1. a constructor function that takes the `name` and `symbol` as input and then initializes the contract with those inputs
