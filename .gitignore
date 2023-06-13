@@ -136,3 +136,5 @@ dmypy.json
 
 goerli.deployments.txt
 Makefile
+
+.vscode
