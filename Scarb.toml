@@ -1,0 +1,10 @@
+[package]
+name = "starknet_erc721"
+version = "0.3.0"
+description = "Workshop to learn the basics of ERC721."
+homepage = "https://github.com/starknet-edu/starknet-erc721"
+
+[dependencies]
+starknet = ">=1.0.0"
+
+[[target.starknet-contract]]

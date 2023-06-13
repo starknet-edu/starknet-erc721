@@ -1,0 +1,2 @@
+[crate_roots]
+starknet_erc721 = "src"
