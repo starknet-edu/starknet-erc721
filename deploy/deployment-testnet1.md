@@ -8,7 +8,6 @@
 | Player Registry | 0x53eb2d57dbc61faec5df58bd5c872c6d42bb27a6c0e434caa33091919ab61a1  | 0x012f6e9c0d1dd578c673bbbde35cd0e6e0990d0246f1c7adb3e20c6121ad08bf | TBA        |
 | TDERC20         | 0x07c75b9f9e69b7126aa71dbc14d81eede1145fc175a7ee19e7c8c77a25e6c2b0 | 0x074b1195731222a7bcbb724d32b93d0c525e173b2c3e9722a2214b101c862801 | TBA        |
 | ---------       | ----------                                                         | -----------------                                                  | ---------- |
-| Evaluator       | TBA                                                                | TBA                                                                | TBA        |
 
 ## Useful comands:
 
