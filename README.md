@@ -1,3 +1,10 @@
+# DISCLAIMER
+Hello Starknet community, this repository is not updated with the latest Cairo syntax and hence, we do not recommend to attempt this tutorial as of today. If you are interested in contributing to the repository to update the tutorial, please create a PR and tag me @gyan0890 on it and we will be happy to support you with the process.
+
+A great resource to get you up to speed with the new Cairo syntax in a Starknet context is [Chapter 2 of the Starknet Book](https://book.starknet.io/chapter_2/index.html).
+
+You can also ping me(@gyanlakshmi) on Telegram to help you assign right tasks.
+
 # ERC721 on StarkNet
 
 Welcome! This is an automated workshop that will explain how to deploy an ERC721 token on StarkNet and customize it to perform specific functions. The ERC721 standard is described [here](https://docs.openzeppelin.com/contracts/3.x/api/token/erc721).
